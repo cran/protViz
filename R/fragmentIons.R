@@ -5,33 +5,83 @@ defaultIons<-function(fi){
     Oxygen <- 15.994915
     Nitrogen <- 14.003074
 
-    y_0 <- fi$y - Oxygen - Hydrogen - Hydrogen
+    #yo <- fi$y - Oxygen - Hydrogen - Hydrogen
     c<- fi$b + (Nitrogen + (3 * Hydrogen))
     z<- fi$y - (Nitrogen + (3 * Hydrogen))
     
-    return(cbind(y_0,c,z))
+    return(cbind(c,z))
 }
 
 
-fragmentIons<-function(sequence, FUN=defaultIons) {
+fragmentIons<-function(sequence, FUN=defaultIons, modified=numeric(), modification=numeric()) {
     if (!is.character(sequence)) {
-        stop ("argument x must be a character")
-    }else{
+
+        R<-list()
+
+        input.n <- length(sequence)
+
+        out <- .C("_computeFragmentIons", n=input.n, 
+            W_=as.double(sequence), 
+            b_=as.double(rep(0,input.n)), 
+            y_=as.double(rep(0,input.n)))
+
+        fi<-as.data.frame(cbind(b=out$b, y=out$y))
+
+        fi<-cbind(fi,as.data.frame(ff<-FUN(fi)))
+
+        R[[1]] <- fi
+
+    }else if (length(modification) > 1) {
                                                     
         FUN<-match.fun(FUN)
 
         R<-list()
         pim<-parentIonMass(sequence)
 
-        Hydrogen <- 1.007825
-        Carbon <- 12.000000
-        Nitrogen <- 14.003074
-        Oxygen <- 15.994915
-        Electron <- 0.000549
         C_term <- 17.002740
         N_term <- 1.007825
+        Oxygen <- 15.994915
+        Carbon <- 12.000000
+        Hydrogen <- 1.007825
+        Nitrogen <- 14.003074
+        Electron <- 0.000549
 
+        for (i in 1:length(sequence)){
+            input.sequence<-sequence[i]
+            input.n<-nchar(input.sequence)
+            input.modified <- as.integer(strsplit(modified[i], '')[[1]])
+            input.pim<-pim[i]+(sum(as.double(as.character(modification[input.modified+1]))))
 
+            if (input.n != length(input.modified))
+                stop (paste("unvalid argument",i,"- number of AA and modification config differ! stop."))
+
+            out <- .C("computeFragmentIonsModification",
+                n=as.integer(input.n),
+                pepSeq=as.character(input.sequence),
+                pim=as.double(input.pim),
+                b=as.double(rep(0.0, input.n)),
+                y=as.double(rep(0.0, input.n)),
+                modified=input.modified,
+                modification=as.double(as.character(modification)))
+
+            fi<-as.data.frame(cbind(b=out$b, y=out$y))
+            fi<-cbind(fi,as.data.frame(ff<-FUN(fi)))
+
+            R[[length(R)+1]] <- fi
+        }
+    } else{
+        FUN<-match.fun(FUN)
+
+        R<-list()
+        pim<-parentIonMass(sequence)
+
+        C_term <- 17.002740
+        N_term <- 1.007825
+        Oxygen <- 15.994915
+        Carbon <- 12.000000
+        Hydrogen <- 1.007825
+        Nitrogen <- 14.003074
+        Electron <- 0.000549
 
         for (i in 1:length(sequence)){
             pepseq<-sequence[i]
@@ -49,7 +99,7 @@ fragmentIons<-function(sequence, FUN=defaultIons) {
             fi<-cbind(fi,as.data.frame(ff<-FUN(fi)))
 
             R[[length(R)+1]] <- fi
-        }
+    }
     }
     return(R)
 }

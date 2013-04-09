@@ -159,3 +159,30 @@ void computeParentIonMass(int *n_, char **seq_,  double *pim_)
         }
     }
 }
+
+void computeParentIonMass2(int *n_, char **seq_,  double *pim_, double *M_, double *N_term_)
+{
+
+    int i;
+    int j;
+    int letter;
+    double pim;
+    double C_term, Electron, Hydrogen;
+
+    C_term = 17.002740;
+    Electron = 0.000549;
+    Hydrogen = 1.007825;
+
+    /* for each sequence */
+    for (i=0; i < n_[0]; i++){ 
+        pim_[i] = C_term + N_term_[0] + Hydrogen - Electron;
+        
+        /* for each letter */
+        for (j = 0; seq_[i][j] != '\0'; j++){
+            letter=seq_[i][j];
+	        if (64 < letter && letter < 92) {
+		        pim_[i] += M_[letter - 65];
+            }
+        }
+    }
+}

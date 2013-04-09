@@ -1,6 +1,7 @@
 \name{pressureProfileSummary}
 
 \alias{pressureProfileSummary}
+\alias{pps}
 
 \title{A misc function for finding NN time slots in pressure profile data.}
 
@@ -13,7 +14,7 @@
 
 \usage{
 
-    pressureProfileSummary(data, time)
+    pps(data, time)
 
 }
 
@@ -26,7 +27,7 @@
 
 \details{
 
-        The function is useful for levelplots. 
+        The function is useful for levelplots. It can be used to make a quality check over a sequence of experiments. At our site, it is used in conjugtion with Eksigent pumps. These devices store a text file at the instrument pc. These files are preprocessed as specified in the file structure.
 
 }
 
@@ -42,7 +43,7 @@ library(lattice)
 data(pressureProfile)
 
 # do the pre processing
-pp<-pressureProfileSummary(pressureProfile, time=seq(25,40,by=5))
+pps.data<-pps(pressureProfile, time=seq(25,40,by=5))
 
 print(xyplot(Pc ~ as.factor(file) | paste("time =", 
     as.character(time), "minutes"),
@@ -58,6 +59,6 @@ print(xyplot(Pc ~ as.factor(file) | paste("time =",
     layout=c(1,4),
     sub='The three read lines indicate avg plus min 5\%.',
     scales = list(x = list(rot = 45)),
-    data=pp))
+    data=pps.data))
 
 }

@@ -42,14 +42,15 @@ dataset.
 \examples{
 
 data(pressureProfile)
-pressureProfilePlot(pressureProfile)
+ppp(pressureProfile[pressureProfile$filename=="F01",])
 
 par(mfrow=c(1,1))
-pp<-pressureProfileSummary(pressureProfile, time=seq(1,140,by=5))
-boxplot(Pc~time, data=pp, xlab='time [in minutes]', ylab='Pc(psi)')
+pps.data<-pps(pressureProfile, time=seq(1,140,by=5))
+boxplot(Pc~time, data=pps.data, 
+    xlab='time [in minutes]', ylab='Pc(psi)')
 
 library(lattice)
-pp<-pressureProfileSummary(pressureProfile, time=seq(25,40,by=5))
+pps.data<-pps(pressureProfile, time=seq(25,40,by=5))
 xyplot(Pc ~ as.factor(file) | paste("time =", as.character(time), "minutes"),
     panel = function(x, y){
         m<-sum(y)/length(y)
@@ -62,7 +63,7 @@ xyplot(Pc ~ as.factor(file) | paste("time =", as.character(time), "minutes"),
     layout=c(1,4),
     sub='The three read lines indicate avg plus min 5\%.',
     scales = list(x = list(rot = 45)),
-    data=pp)
+    data=pps.data)
 
 }
 

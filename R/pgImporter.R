@@ -7,9 +7,9 @@
 
 # 20120430 -> adapted for version 4 of LCMS .. adding info on spectral counts in master map.. 
 
-pgImporter <- function(file){
+pgImporter <- function(file, sep=';'){
   
-  header = as.matrix(read.table(file, nrows=3, sep=";", quote="\"", stringsAsFactors=FALSE))
+  header = as.matrix(read.table(file, nrows=3, sep=sep, quote='\"', stringsAsFactors=FALSE))
   
   ### extract the info about
   ### - the scores that are in the file
@@ -31,7 +31,7 @@ pgImporter <- function(file){
   dataNames = header[3, ]
   
   ## read the real data
-  data = read.table(file, skip=3, sep=";", quote="\"", stringsAsFactors=FALSE)
+  data = read.table(file, skip=3, sep=sep, quote="\"", stringsAsFactors=FALSE)
   
   
   ### build the result

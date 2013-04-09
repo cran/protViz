@@ -35,11 +35,14 @@
 \fcolorbox{black}{NoteGrey} {
 \begin{minipage}{13.5cm}
 \begin{center}
-\textbf{ Vignette for v.0.1.0}\\
-t.b.d for the next release:
+\textbf{ Vignette for v.0.1.45}\\
+new features:
 \begin{itemize}
+\item provide \code{mascotDAT2RData.pl} script
 \item assemble proteins from pg feature map using t3pq algorithm
-\item enable varmods in \code{fragmentIons} and \code{peakplot}
+\item indicate modification in peakplot
+\item new functions \code{mdp} and \code{lcmsmap}
+\item new function \code{PTM\_MarkerFinder}
 \end{itemize}
 \end{center}
 \end{minipage}
@@ -49,14 +52,20 @@ t.b.d for the next release:
 \newpage
 
 \section{Recent changes and updates}
-None
+\begin{itemize}
+\item enable modification in \code{fragmentIons} and \code{peakplot}
+\item bugfix: consider all fragment ions not only b and y sigly charged ions
+\item added \code{msms} data
+\item added an export perl script for Matrix Science Mascot Server dat files
+\item added generate for swath ion libraries
+\end{itemize}
 
 \section{Preliminary Note}
 
 \code{protViz} is an R package to do quality checks, vizualizations and analysis of mass spectrometry data, coming from proteomics experiments.
 The package is developed, tested and used at the Functional Genomics Center Zurich. 
 We use this package mainly for prototyping, teaching, and having \code{fun} with proteomics data.
-But it can also be used to do solid data analysis for small scale data sets.
+But it can also be used to do solid data analysis for small scale data sets. Nevertheless, if one is patient, it also handles large data sets.
 %It is {\em not meant} to be used for large scale hight throuhput data processing.
 
 \section{Related Work}
@@ -64,15 +73,15 @@ But it can also be used to do solid data analysis for small scale data sets.
 There are already packages in R which deal with mass spec related data.
 Some of them are listed here:
 \begin{itemize}
-\item MSnbase package (basic function)\\
+\item MSnbase package (basic functions for mass spec data including quant aspect with iTRAQ data)\\
 \url{http://www.bioconductor.org/packages/release/bioc/html/MSnbase.html}
-\item plgem -- spec counting\\
+\item plgem -- spectral counting quantification, applicable to MudPIT experiments\\
 \url{http://www.bioconductor.org/packages/release/bioc/html/plgem.html}
-\item synapter -- MSe (Top3 Quantification)\\ 
+\item synapter -- MSe (Hi3 = Top3 Quantification) for Waters Q-tof data aquired in MSe mode\\ 
 \url{http://www.bioconductor.org/packages/release/bioc/html/synapter.html}
 \item mzR \\ 
 \url{http://www.bioconductor.org/packages/release/bioc/html/mzR.html}
-\item isobar iTRAQ quantification\\
+\item isobar iTRAQ/TMT quantification package\\
 \url{http://www.bioconductor.org/packages/release/bioc/html/isobar.html}
 
 \item readMzXmlData\\ 
@@ -80,9 +89,10 @@ Some of them are listed here:
 \end{itemize}
 
 \section{Get Data In -- Preprocessing}
-{\em The most time consuming and challenging part for data analysis and visualization is shaping the data that they can easily be processed.}
-\subsection{In-silico from Proteins to Peptides}
-For demonstration we use a sequence of peptides derived from a tryptics digest using the Swissprot {\texttt FETUA\_BOVIN Alpha-2-HS-glycoprotein precursor (Fetuin-A) (Asialofetuin)} protein.
+The most time consuming and challenging part for data analysis and visualization is shaping the data that they can easily be processed. In this package, we intentionally left this part away because it is very infrastructure dependent. Moreover we use also commercial tools to analyze data and export the data into R accessible formats. We provide different kind of importers if these formats are available, but with very little effort, one can bring other exports in a similar format which will make it easy to use our package for a variety of tools.
+
+\subsection{Identification - In-silico from Proteins to Peptides}
+For demonstration we use a sequence of peptides derived from a tryptics digest using the Swissprot \code{FETUA\_BOVIN Alpha-2-HS-glycoprotein precursor (Fetuin-A) (Asialofetuin)} protein.
 
 \code{fcat} and \code{tryptic-digest} are commandline programs which are included in the package.
 \code{fcat} removes the lines starting with \code{>} and all 'new line' character within the protein sequence while \code{tryptic-digest} is doing the triptic digest of a protein sequence applying the rule: cleave after arginine (R) and lysine (K) except followed by proline(P).
@@ -257,14 +267,52 @@ in-silico fragment ion is considered as potential hit.
 @
 
 The graphic above is showing the mass error of the assingment between the MS2 \code{spec} and the singly charged fragment ions of \code{HTLNQIDSVK}.
-The function \code{psm} is doing the peptide sequence assignment. Of course, the more theoretical ions match (up to a small error tolerance, given by the system) the actually measured ion series, the more likely it is, that the measured spectrum indeed is from the inferred peptide (and therefore the protein is identified)
+The function \code{psm} is doing the peptide sequence matching. Of course, the more theoretical ions match (up to a small error tolerance, given by the system) the actually measured ion series, the more likely it is, that the measured spectrum indeed is from the inferred peptide (and therefore the protein is identified)
+\subsection{Modifications}
+<<keep.source = TRUE, eval = TRUE, fig = FALSE>>=
+library(protViz)
+
+ptm.0<-cbind(AA="-", 
+    mono=0.0, avg=0.0, desc="unmodified", unimodAccID=NA)
+
+ptm.616<-cbind(AA='S',
+    mono=-27.010899, avg=NA, desc="Substituition", 
+    unimodAccID=616)
+
+ptm.651<-cbind(AA='N',
+    mono=27.010899, avg=NA, desc="Substituition", 
+    unimodAccID=651)
+
+
+m<-as.data.frame(rbind(ptm.0, ptm.616, ptm.651))
+
+genMod(c('TAFDEAIAELDTLNEESYK','TAFDEAIAELDTLSEESYK'), m$AA)
+
+fi<-fragmentIons(c('TAFDEAIAELDTLSEESYK', 
+    'TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK', 
+    'TAFDEAIAELDTLNEESYK'), 
+        modified=c('0000000000000200000', 
+        '0000000000000100000', '0000000000000000000', 
+        '0000000000000000000'), 
+    modification=m$mono)
+
+#bh<-c('TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK')
+#fi<-fragmentIons(rep('HTLNQIDSVK',2), 
+#    modified=c('0000000100','0000000000'), 
+#    modification=m[,2])
+@
+
 
 \subsection{Labeling Peaklists}
 The labeling of the spectra can be done with the \code{peakplot} function.
 %\SweaveOpts{width=9.5, height=6}
 %\setkeys{Gin}{width=0.95\columnwidth}
 <<keep.source = TRUE, eval = TRUE, fig = TRUE>>=
-peakplot('HTLNQIDSVK', spec)
+data(msms)
+op<-par(mfrow=c(2,1))
+peakplot("TAFDEAIAELDTLNEESYK", msms[[1]])
+peakplot("TAFDEAIAELDTLSEESYK", msms[[2]])
+par(op)
 @
 %\subsection{Finding Glyco Patterns}
 
@@ -276,7 +324,7 @@ In almost all cases there are not more than three to six repitions.
 For the moment there are limited options due to the availabilty of machine time
 and the limits of the technologies.
 
-\subsection{Relative and absolute label-free methods on protein level}
+\subsection{Label-free methods on protein level}
 The data set \code{fetuinLFQ} contains a subset of our results descriped in \cite{20576481}.
 The example below shows a visualization using trellis plots. It graphs 
 the abundance of four protein in dependency from the 
@@ -320,11 +368,11 @@ print(xyplot(abundance~conc|prot*method,
 The plot shows the estimated concentration of the four proteins using the top three most intense peptides. The Fetuin peptides are spiked in with increasing concentration while the three other yeast proteins are kept stable in the background. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{pgLFQ -- LC MS based relative label-free} 
+\subsection{pgLFQ -- LCMS based label-free quantification} 
 
 LCMS based label-free quantification is a very popular method to extract relative quantitative information from mass spectrometry experiments.
 At the FGCZ we use the software ProgenesisLCMS for this workflow \url{http://www.nonlinear.com/products/progenesis/lc-ms/overview/}.
-Progenesis is a graphical software which does the aligning and extracts signal intensities from LCMS maps.
+Progenesis is a graphical software which does the aligning between several LCMS experiments, extracts signal intensities from LCMS maps and annotates the mastermap with peptide and protein labels.
 
 <<keep.source = TRUE, eval = TRUE, fig = TRUE>>=
 data(pgLFQfeature)
@@ -355,7 +403,7 @@ featureDensityPlot(asinh(pgLFQfeature$"Normalized abundance"),
 @
 
 The \code{featureDensityPlot} shows the normalized signal intensity 
-distribution (asinh transformed) over the 24 LCMS runs aligned in this experiment.
+distribution (asinh transformed) over 24 LCMS runs which are aligned in this experiment.
 
 <<keep.source = TRUE, eval = TRUE, fig = TRUE>>=
 op<-par(mfrow=c(1,1),mar=c(18,18,4,1),cex=0.5)
@@ -422,7 +470,7 @@ for (i in 3:10){
 b<-boxplot(asinh(iTRAQ[,c(3:10)]), main='boxplot iTRAQ')
 @
 
-A first check to see if all reporter ion channels are having the same distributions. Shown in the figure are Q-Q plots of the individual reporter channels against a normal distribution.
+A first quality check to see if all reporter ion channels are having the same distributions. Shown in the figure are Q-Q plots of the individual reporter channels against a normal distribution.
 The last is a boxplot for all individual channels.
 
 \subsubsection{On Protein Level}
@@ -485,28 +533,20 @@ q[1:10,]
 A common problem with mass spec setup is the pure reliability of the high pressure pump.
 The following graphics provide visualizations for quality control.
 
-On overview of the pressure profile data can be seen by using the \code{pressureProfilePlot} function.
+On overview of the pressure profile data can be seen by using the \code{ppp} function.
 <<keep.source = TRUE, eval = TRUE, fig = FALSE>>=
 data(pressureProfile)
-pressureProfilePlot(pressureProfile)
+ppp(pressureProfile)
 @
+
 The lines plots the pressure profiles data on a scatter plot 'Pc' versus
 'time' grouped by time range (no figure because of too many data items).
 
+The Trellis \code{xyplot} shows the Pc development over each instrument 
+run to a specified relative run time (25,30,...).
 
-The following boxplots display how the Pc values are distributed over several points in time.
-For determine the plotting data the \code{pressureProfileSummary} has to be used.
 <<keep.source = TRUE, eval = TRUE, fig = TRUE>>=
-data(pressureProfile)
-par(mfrow=c(1,1))
-pp<-pressureProfileSummary(pressureProfile, time=seq(0,110,by=10))
-boxplot(Pc~time, data=pp, xlab='time [in minutes]', ylab='Pc(psi)')
-@
-
-
-The Trellis \code{xyplot} shows the Pc development over each instrument run to a specified relative run time (25,30,...).
-<<keep.source = TRUE, eval = TRUE, fig = TRUE>>=
-pp<-pressureProfileSummary(pressureProfile, time=seq(25,40,by=5))
+pp.data<-pps(pressureProfile, time=seq(25,40,by=5))
 print(xyplot(Pc ~ as.factor(file) | paste("time =", 
     as.character(time), "minutes"),
     panel = function(x, y){
@@ -519,18 +559,18 @@ print(xyplot(Pc ~ as.factor(file) | paste("time =",
     },
     ylab='Pc [psi]',
     layout=c(1,4),
-    sub='The three read lines indicate avg plus min 5%.',
+    sub='The three red lines indicate the average plus min 5%.',
     scales = list(x = list(rot = 45)),
-    data=pp))
+    data=pp.data))
 @
 
 While each panel in the \code{xyplot} above shows the data to a given point in time, we try to use the levelplot 
 to get an overview of the whole pressure profile data.
 <<keep.source = TRUE, eval = TRUE, fig = TRUE>>=
-pp<-pressureProfileSummary(pressureProfile, time=seq(0,140,length=128))
+pp.data<-pps(pressureProfile, time=seq(0,140,length=128))
 print(levelplot(Pc ~ time * as.factor(file),
     main='Pc(psi)',
-    data=pp,
+    data=pp.data,
     col.regions=rainbow(100)[1:80]))
 @
 

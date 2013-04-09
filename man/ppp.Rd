@@ -1,8 +1,9 @@
 \name{pressureProfilePlot}
 
 \alias{pressureProfilePlot}
+\alias{ppp}
 
-\title{plotting pressure profile data}
+\title{Plotting pressure profile data from Eksigent LC pumps}
 
 \description{
     plots the pressure profiles data on a scatter plot \code{Pc} versus \code{time} grouped by time range. 
@@ -10,7 +11,7 @@
 
 \usage{
 
-    pressureProfilePlot(data)
+    ppp(data)
 
 }
 
@@ -22,7 +23,7 @@
 
 \details{
 
-    t.b.d.
+    This is a useful function to generate an overview over a sequence of measurments run with the same LC gradient. It shows the behaviour of the LC pumps basically the pressures over the whole gradient are plotted to spot sources of problems. 
 
 }
 
@@ -35,6 +36,6 @@
 \examples{
 
     data(pressureProfile)
-    pressureProfilePlot(pressureProfile)
+    ppp(pressureProfile[pressureProfile$filename=="F12",])
 
 }

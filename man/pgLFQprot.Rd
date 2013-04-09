@@ -15,6 +15,9 @@ The 24 LC-MSMS runs are aligned with each other using ProgenesisLCMS. "Normalize
 The csv file is an exported Protein data map.
 
 
+We realized, depending on your language and keyboard setting, the separator for the FeatureData as well as for ProteinMeasurements are different (semicolon and commas are used depending on your setting). We assume, that semicolons are and the individual cells are escaped by ". If this differes, we have an option that can be switched in the pgImporter function.
+
+
 More information on the commercial software can be found here:
 \url{http://www.nonlinear.com/products/progenesis/lc-ms/overview/}.
 

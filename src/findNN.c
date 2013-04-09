@@ -28,7 +28,7 @@
     
     why re-inventing the wheel meaning why using NNQuery?
     o ansi-c stdlib bsearch does an exact match otherwise it returns NULL.
-    o using core R findInterval gives by definition only positive mass error.
+    o using core R findInterval gives by definition only positive value.
 */
 int NNQuery(void *key, void *base, size_t n, size_t size,
 	    double (*dst) (const void *, const void *))

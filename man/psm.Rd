@@ -1,14 +1,14 @@
 \name{psm}
 
 \alias{psm}
-\alias{peptidesequencematching}
+\alias{peptidespectrummatching}
 
-\title{compute a matching between a peptide sequence and a MS2}
+\title{compute a matching between a peptide sequence and a MS2 spectrum}
 
 \description{
-    The function computes the matching between a given peptide sequence and an tandem mass spectrum (MS2).
-    \code{psm} determines for each fragment ion mass peak having the smallest mass error.
-    If the mass error is below the given \code{fragmentIonError} the match is considert as hit. 
+    The function computes the matching between a given peptide sequence and a tandem mass spectrum (MS2).
+    \code{psm} determines for each fragment ion mass peak the smallest mass error to a peak in the theretical spectrum from the peptide sequence.
+    If the mass error is below the given \code{fragmentIonError} the match is considered a hit. 
     \code{psm} returns a list of computed fragment ions and a vector of the mass error (Da and ppm).
     \code{psm} uses a generic \code{ansi-c} function to determines the nearest mass peak of array of double 
     values.
@@ -21,8 +21,9 @@
 
     psm(sequence, 
         spec, 
-        FUN,
-        plot, 
+        FUN=defaultIons,
+        plot=TRUE, 
+        fi=fragmentIons(sequence, FUN=FUN)[[1]],
         fragmentIonError)
 
 }
@@ -37,13 +38,14 @@
     use defaultIons.}
   \item{plot}{boolean if the error plot function is to be called.}
 
+  \item{fi}{fragment ion table, if not specified \code{fragmentIons(sequence, FUN=FUN)[[1]]} is called. }
   \item{fragmentIonError}{fragment ion error cut-off. default is 0.6 Da. }
 
 }
 
 \details{
 
-    t.b.d.
+    This function can be very useful to make assignements to spectra. Moreover it is used for validation or clairifying ambiguities between different sequences assigned to the same spectrum. Additinally it can be used to generate spectral libraries.
 
 }
 

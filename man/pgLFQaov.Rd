@@ -43,6 +43,7 @@
 
     data(pgLFQprot)
 
+    par(mfrow=c(4,3))
     ANOVA<-pgLFQaov(pgLFQprot$"Normalized abundance",
         groups=as.factor(pgLFQprot$grouping),
         names=pgLFQprot$output$Accession,

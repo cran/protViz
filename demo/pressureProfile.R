@@ -1,15 +1,20 @@
 #R
 library(lattice)
 data(pressureProfile)
-pressureProfilePlot(pressureProfile)
+ppp(pressureProfile)
 
 
 op<-par(mfrow=c(1,1), mar=c(5,5,5,1))
-pp<-pressureProfileSummary(pressureProfile, time=seq(0,110,by=10))
-boxplot(Pc~time, data=pp, main='pressure profiles', xlab='time [in minutes]', ylab='Pc(psi)')
+pp.data<-pps(pressureProfile, time=seq(0,110,by=10))
+
+boxplot(Pc~time, data=pp.data, 
+    main='pressure profiles', 
+    xlab='time [in minutes]', ylab='Pc(psi)')
+
 par(op)
 
-pp<-pressureProfileSummary(pressureProfile, time=seq(25,40,by=5))
+p.data<-pps(pressureProfile, time=seq(25,40,by=5))
+
 print(xyplot(Pc ~ as.factor(file) | paste("time =", 
     as.character(time), "minutes"),
     panel = function(x, y){
@@ -24,18 +29,19 @@ print(xyplot(Pc ~ as.factor(file) | paste("time =",
     layout=c(1,4),
     sub='The three read lines indicate avg plus min 5%.',
     scales = list(x = list(rot = 45)),
-    data=pp))
+    data=pp.data))
 
-pp<-pressureProfileSummary(pressureProfile, time=seq(0,140,length=128))
+pp.data<-pps(pressureProfile, time=seq(0,140,length=128))
+
 print(levelplot(Pc ~ time * as.factor(file),
     main='pressure profiles',
     sub='color represents Pc(psi)',
-    data=pp,
+    data=pp.data,
     col.regions=rainbow(100)[1:80]))
 
-pp<-pressureProfileSummary(pressureProfile, time=seq(0,100,length=128))
+pp.data<-pps(pressureProfile, time=seq(0,100,length=128))
 print(levelplot(Pc ~ time * as.factor(file),
-    data=pp,
+    data=pp.data,
     main='pressure profiles',
     sub='color represents Pc(psi)',
     col.regions=rainbow(100)[1:80]))

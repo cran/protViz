@@ -14,7 +14,8 @@ findNN<-function(q, vec) {
         n=as.integer(length(vec)),
         q=as.double(q),
         vec=as.double(vec),
-        NN=as.integer(rep(-1, length(q))))
+        NN=as.integer(rep(-1, length(q))),
+        PACKAGE = "protViz")
 
     return (out$NN+1)
 }

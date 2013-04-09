@@ -14,9 +14,9 @@
     the nearest neighbor index \code{o} so that the following remains true:
 
     there is no element \code{k} with \code{1} \eqn{\le} \code{k} 
-    \eqn{\leq} \code{n} and \code{k} is not \code{o} so that 
+    \eqn{\le} \code{n} and \code{k} is not \code{o} so that 
 
-    \code{abs(vec[k] - q[i])} \eqn{\le} \code{abs(vec[o] - q[i])}. 
+    \code{abs(vec[k] - q[i])} < \code{abs(vec[o] - q[i])}. 
 
 
 }
@@ -60,4 +60,12 @@
 
     idx.NN<-findNN(q,DB)
     hist(DB[findNN(q,DB)] - q)
+
+    # definition of findNN holds
+    i<-1:5
+    findNN(3.5, i)
+
+    i<-1:6
+    findNN(3.5, i)
+
 }
