@@ -106,7 +106,8 @@ PTM_MarkerFinder <- function(data,
                 markerIonIntensity=data[[i]]$intensity[idx[b]], 
                 markerIonMzError=mZmarkerIons[b]-data[[i]]$mZ[idx[b]],
                 markerIonPpmError=1e+06 * (mZmarkerIons[b]-data[[i]]$mZ[idx[b]])/data[[i]]$mZ[idx[b]],
-                query=i
+                query=i,
+                pepmass=data[[i]]$pepmass
                 )
 
            rr<-rbind(rr,r)
@@ -354,13 +355,13 @@ PTM_MarkerFinder_util<-function(dataFileName,
     dev.off()
 
     if ( nrow(s) > 1 & write_csv==TRUE ){
-        w<-reshape(s[, c(1,7,3,4)], direction='wide', 
-            timevar="markerIonMZ", idvar=c('scans','query'))
+        w<-reshape(s[, c(1,7,8,3,4)], direction='wide', timevar="markerIonMZ", idvar=c('scans','query','pepmass'))
 
         write.table(w, file=paste(config$dataFileName, "csv", sep='.'),
             sep=',', row.names=FALSE, col.names=TRUE, quote=FALSE)
     }
 
+#    return(s)
 }
 
 # ToDo adapt the parameter mZmarkerIon in all function 

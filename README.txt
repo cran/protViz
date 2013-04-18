@@ -4,6 +4,8 @@ $R_HOME/bin/R CMD build --resave-data --compact-vignettes --md5 protViz
 R CMD build --no-vignettes --resave-data --compact-vignettes --md5 protViz \
 && sudo R CMD INSTALL --build  protViz_0.1.27.tar.gz 
 
+# check
+# R CMD check --timings protViz
 TODO:
 
 #R

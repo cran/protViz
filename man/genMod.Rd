@@ -12,15 +12,15 @@
 
 \usage{
 
-    genMod(peptideSequences, modificationPattern, nModification=2)
+    genMod(sequences, modificationPattern, nModification=2)
 
 }
 
 \arguments{
 
-  \item{peptideSequences}{xxx xxx xx xxxx}
+  \item{sequences}{peptide sequences encoded as character sequence using the 20 amino acid letters.}
 
-  \item{modificationPattern}{xxx xxx xxx}
+  \item{modificationPattern}{a rbind list structure containing the mono and avg mass as well as the description of a the modifications.}
 
   \item{nModification}{number of maximal modifications.}
 
@@ -28,7 +28,8 @@
 
 \details{
 
-  t.b.d. xxx xxxxx 
+  t.b.d.
+
 }
 
 \author{

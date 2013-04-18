@@ -3,10 +3,10 @@
 # 2012-11-20 CP
 # 2012-11-21 Hubert Rehrauer @ FGCZ
 
-genMod<-function(peptideSequences, modificationPattern, nModification=2){
+genMod<-function(sequences, modificationPattern, nModification=2){
 
     R<-list()
-    for (peptideSequence in peptideSequences){
+    for (peptideSequence in sequences){
         n<-nchar(peptideSequence)
         m<-length(modificationPattern)
         idx<-1:n

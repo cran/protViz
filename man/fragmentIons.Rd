@@ -74,7 +74,8 @@
 
 # Example 1
         peptide.AA<-"KINHSFLR";
-        peptide.AA.weights<-c(128.09496,113.08406,114.04293,137.05891,87.03203,147.06841,113.08406,156.10111);
+        peptide.AA.weights<-c(128.09496,113.08406,114.04293,
+            137.05891,87.03203,147.06841,113.08406,156.10111);
         fragmentIons(peptide.AA);
         fragmentIons(peptide.AA.weights);
 

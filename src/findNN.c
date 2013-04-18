@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <float.h>
 
 /*
  *  retrival.c
@@ -26,9 +27,12 @@
 /*
     NOTE by <cp@fgcz.ethz.ch>
     
-    why re-inventing the wheel meaning why using NNQuery?
-    o ansi-c stdlib bsearch does an exact match otherwise it returns NULL.
-    o using core R findInterval gives by definition only positive value.
+    Q: Why did we reinvent the wheel? Why do we not use bsearch instead?
+    A:
+    - ansi-c stdlib bsearch does an exact match otherwise it returns NULL.
+    - using core R findInterval gives by definition only positive values.
+    - NNQuery returns the index so that there is no other index with a closer distance. 
+
 */
 int NNQuery(void *key, void *base, size_t n, size_t size,
 	    double (*dst) (const void *, const void *))
@@ -37,41 +41,42 @@ int NNQuery(void *key, void *base, size_t n, size_t size,
     double d = -1;
     int low = 0;
     int high = n;
-    double minDist = 1000000;
+    double minDist = DBL_MAX;
     int minIdx = -1;
     char *cbase = base;
     char *ckey = key;
 
-    if (high==0)
+    if (high == 0)
        return (-1);
 
     while (low <= high) {
-	mid = ((low + high) / 2);
+	    mid = ((low + high) / 2);
+        if (mid >= n) break;
 
-	d = (*dst) (&cbase[mid * size], ckey);
+	    d = (*dst) (&cbase[mid * size], ckey);
 
-	if (d < 0) {
-	    d = -d;
-	}
-	if (d < minDist) {
-	    minDist = d;
-	    minIdx = mid;
-	}
+	    if (d < 0) {
+	        d = -d;
+	    }
+	    if (d < minDist) {
+	        minDist = d;
+	        minIdx = mid;
+	    }
 
-	d = (*dst) (&cbase[mid * size], ckey);
-	if (d < 0) {
-	    high = mid - 1;
-	} else if (d > 0) {
-	    low = mid + 1;
-	} else {
-	    return (minIdx);
-	}
+	    d = (*dst) (&cbase[mid * size], ckey);
+	    if (d < 0) {
+	        high = mid - 1;
+	    } else if (d > 0) {
+	        low = mid + 1;
+	    } else {
+	        return (minIdx);
+	    }
     }
 
     return (minIdx);
 }
 
-double cmpd (const void *arg_a, const void *arg_b) {
+double distd (const void *arg_a, const void *arg_b) {
     double *b = (double *) arg_b;
     double *a = (double *) arg_a;
 
@@ -83,5 +88,5 @@ void findNN (int *m_, int *n_, double *q_,  double *vec_, int *NN_)
     int i;
 
     for (i = 0; i < m_[0]; i++)
-        NN_[i] = NNQuery(&q_[i], vec_, n_[0], sizeof(vec_[0]), cmpd);
+        NN_[i] = NNQuery(&q_[i], vec_, n_[0], sizeof(vec_[0]), distd);
 }

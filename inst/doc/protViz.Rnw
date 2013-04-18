@@ -34,31 +34,23 @@
 
 \fcolorbox{black}{NoteGrey} {
 \begin{minipage}{13.5cm}
+\vspace{0.5cm}
 \begin{center}
-\textbf{ Vignette for v.0.1.45}\\
-new features:
+\textbf{ Vignette for package version $\ge v.0.1.48$}\\
+\vspace{0.5cm}
+Recent changes, updates, and  new features:
 \begin{itemize}
-\item provide \code{mascotDAT2RData.pl} script
-\item assemble proteins from pg feature map using t3pq algorithm
-\item indicate modification in peakplot
-\item new functions \code{mdp} and \code{lcmsmap}
-\item new function \code{PTM\_MarkerFinder}
+\item 0.1.48 bugfix in in NNQuery \code{src/findNN.c:51}; heap-buffer-overflow 
+\item 0.1.47 added pepmass in pPTM output table
+\item 0.1.46 reduced example data
 \end{itemize}
 \end{center}
+\vspace{0.5cm}
 \end{minipage}
 }
 
 \tableofcontents
 \newpage
-
-\section{Recent changes and updates}
-\begin{itemize}
-\item enable modification in \code{fragmentIons} and \code{peakplot}
-\item bugfix: consider all fragment ions not only b and y sigly charged ions
-\item added \code{msms} data
-\item added an export perl script for Matrix Science Mascot Server dat files
-\item added generate for swath ion libraries
-\end{itemize}
 
 \section{Preliminary Note}
 
