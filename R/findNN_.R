@@ -3,14 +3,13 @@
 # TODO 
 # compute score by sum of error div. by number of hits
 
-findNN<-function(q, vec, check=FALSE) {
+findNN_<-function(q, vec, check=FALSE) {
 
     if (check){ if ( is.unsorted(vec)){
         return (list(error="vec is not sorted"))
     }}
 
-
-    out <- .C("findNN",
+    out <- .C("findNN_",
         m=as.integer(length(q)),
         n=as.integer(length(vec)),
         q=as.double(q),

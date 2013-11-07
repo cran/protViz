@@ -1,3 +1,6 @@
 import("methods")
+import("Rcpp")
+
 exportPattern("^[^\\.]")
-useDynLib( protViz )
+
+useDynLib(protViz)

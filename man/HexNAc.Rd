@@ -11,6 +11,11 @@ fragmentation techniques}
 
 \description{
 
+\code{HexNAc} is intented for demonstration of the \code{PTM_MarkerFinder} methode
+descriped in [PROTEOMICS pmic.201300036].
+It contains the mass pattern (m/z) of 
+\code{c(126.05495, 138.05495, 144.06552, 168.06552, 186.07608, 204.08665)}.
+
 A sample containing enriched glycopeptides from yeast was
 analysed by LC-MS/MS on a LTQ-Orbitrap Velos instrument using sequential
 HCD and ETD fragmentation techniques.

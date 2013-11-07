@@ -21,7 +21,9 @@ PTM_MarkerFinder(data,
     minNumberIons=2,
     itol_ppm=10,
     minMarkerIntensityRatio=5,
-    mgfFilename=-1)
+    mgfFilename=-1,
+    PEAKPLOT=TRUE
+    )
 
 }
 
@@ -55,6 +57,8 @@ intensities.}
   \item{mgfFilename}{if a mgf(mascot generic file) filename is given, 
   the function writes an mgf file containing
   only the ms2 having the \code{mZmarkerIons}.}
+
+  \item{PEAKPLOT}{If this boolean is \code{FALSE} the \code{peakplot} function is not used.}
 
 }
 

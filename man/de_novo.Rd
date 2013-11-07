@@ -2,10 +2,10 @@
 
 \alias{de_novo}
 
-\title{does de-novo on tandem ms}
+\title{de-novo on tandem ms}
 
 \description{
-        xxxx
+        This function computes the mass differences of MS2 peaks and matches the        'delta masses' to the amino acid weights.
 }
 
 \usage{
@@ -20,7 +20,7 @@
 
 \details{
 
-    xxxx
+    This function should only be used for demonstration!
 
 }
 

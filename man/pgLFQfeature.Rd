@@ -45,7 +45,8 @@ axis(2,at=seq(from=0, to=1,
     length.out=length(samples)), labels=samples, las=2)
 par(op)
 
-# example assemble (and quantify) all proteins from peptides using intensities from the master(feature) map
+# example assemble (and quantify) all proteins from peptides 
+# using intensities from the master(feature) map
 # 1239 features
 pgLFQfeature$peptideInfo$Sequence[1239]
 pgLFQfeature$peptideInfo$Protein[1239]

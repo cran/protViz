@@ -23,7 +23,7 @@
 
 \usage{
 
-    findNN(q, vec) 
+    findNN(q, vec, check) 
 
 }
 
@@ -32,6 +32,8 @@
   \item{q}{a double vector which can be considered as query objects.}
 
   \item{vec}{a sorted double vector which can be considered as a data base.}
+
+  \item{check}{boolean enables test if \code{vec} is sorted. default is \code{FALSE}}
 
 }
 
@@ -51,6 +53,10 @@
 }
 
 \examples{
+
+    (NNidx <- findNN(q<-c(1, 1.0001, 1.24, 1.26), DB<-seq(1,5,by=0.25)))
+    (NNidx == c(1,1,2,2))
+
     DB<-sort(rnorm(100, mean=100, sd=10))
 
     # should be 0

@@ -11,15 +11,15 @@
     s <- lapply(data, 
         function(x){ 
             massDeviation <- NA
-            if ( ! is.null(x[['mascotScore']]) ){
-                if(! is.na(x$mascotScore) & as.double(x$modification)==0 & x$mascotScore > minScore ){ 
+            if ( "mascotScore" %in% names(x) ){
+                if( ! is.na(x$mascotScore) & (! "modification" %in% names(x) || as.double(x$modification)==0) & x$mascotScore > minScore ){ 
                     massExp <- ( (x$pepmass * x$charge) - ( (x$charge-1) * Hydrogen) )
                     massInsilico <- parentIonMass(x$peptideSequence)
                     massDeviation <- (1e+06 * (massExp - massInsilico) / massExp)
                 }
             }
-            else if ( ! is.null(x[['score']]) ){
-                if(! is.na(x$score) & as.double(x$modification)==0 & x$score > minScore ){ 
+            else if ( "score" %in% names(x) ){
+                if( ! is.na(x$score) & as.double(x$modification)==0 & x$score > minScore ){ 
                     massExp <- ( (x$pepmass * x$charge) - ( (x$charge-1) * Hydrogen) )
                     massInsilico <- parentIonMass(x$peptideSequence)
                     massDeviation <- (1e+06 * (massExp - massInsilico) / massExp)
@@ -34,7 +34,7 @@
     return (s[ -10 < s & s<10  & !is.na(s) ])
 }
 
-mdp <- function(data){
+mdp <- function(data, sub=data[[1]]$title){
 
     Hydrogen<-1.008
 
@@ -51,7 +51,7 @@ mdp <- function(data){
         h <-hist(ss, seq(-10,10,by=0.5), 
             xlab='Mass error bins [ppm]', 
             col='lightgrey', border='grey', 
-	        sub=data[[1]]$title,
+	        sub=sub,
 	        main="Mass Deviations Plot (bin size is 0.5 ppm)")
 
 

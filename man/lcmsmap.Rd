@@ -15,13 +15,15 @@ The rt is on the x axis and the y axis represents the peptide mass.
 
 \usage{
 
-    lcmsmap(data)
+    lcmsmap(data, sub)
 
 }
 
 \arguments{
 
   \item{data}{an R data  object as it can be obtained by \code{mascotDat2RData.pl}}
+
+  \item{sub}{a sub title for the plot}
 
 }
 

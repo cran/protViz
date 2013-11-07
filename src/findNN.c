@@ -25,7 +25,7 @@
 
 
 /*
-    NOTE by <cp@fgcz.ethz.ch>
+    NOTES by <cp@fgcz.ethz.ch>
     
     Q: Why did we reinvent the wheel? Why do we not use bsearch instead?
     A:

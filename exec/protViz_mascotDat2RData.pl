@@ -424,9 +424,9 @@ sub get_peaklist() {
     my $q=shift || die "no argument given $!.\n";
 
     if ( $q=~/q(\d+)_p\d+/ || $q=~/(\d+)/ ) {
-        my $n=$DAT{"query".$1}; # compute line number
+        my $n=$DAT{"query".$1} || die "can not find spectrum index for query $1 \n"; # compute line number
 
-        for (my $i=0; $DATFILE[$n+$i] !~ /^--/; $i++) {
+        for (my $i=0; $DATFILE[$n + $i] !~ /^--/; $i++) {
             if ($DATFILE[$n+$i] =~ /^Ions1=(\d+.+)$/) {
                 return sort peaklistsort split /,/, $1;
             }
@@ -780,6 +780,7 @@ sub mascotDAT2R() {
             }
         }
 
+        print RFILE "id=".$i.",\n";
         print RFILE "peptideSequence='".$peptideSequence."',\n";
         print RFILE "mascotScore=".$mascotScore.",\n";
         print RFILE "searchEngine='mascot',\n";
@@ -846,7 +847,8 @@ sub main {
         }
 
         my $RdataFileName=&basename($datfilename,".dat");
-        open (RFILE, "| tee /tmp/dump.R | R --no-save --slave") || die "could not open file for writing ...$!\n";
+        open (RFILE, "| R --no-save --slave") || die "could not open file for writing ...$!\n";
+        #open (RFILE, "| tee /tmp/dump.R | R --no-save --slave") || die "could not open file for writing ...$!\n";
 
         &init;
 
@@ -936,6 +938,7 @@ sub printR {
 
         foreach my $peak(@{$self->{_peaklist}}){
             chomp $peak;
+            # print $peak . "\n";
             $count++;
             my ($mZ, $intensity) = split /:/, $peak;
 
@@ -945,6 +948,7 @@ sub printR {
             }
         }
 
+        # exit(0);
         $n = $#INTENSITY;
 
         print $fh "mZ=c(";

@@ -14,13 +14,14 @@ the list attributes \code{pepmass} and \code{peptideSequence}.
 
 \usage{
 
-    mdp(data)
+    mdp(data, sub)
 
 }
 
 \arguments{
 
   \item{data}{an R data  object as it can be obtained by \code{mascotDat2RData.pl}}
+  \item{sub}{a sub title for the plot}
 
 }
 

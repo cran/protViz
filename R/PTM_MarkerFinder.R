@@ -51,6 +51,76 @@
     return(result)
 }
 
+.PTM_MarkerFinder_no_peakplot<-function(data, 
+    modification,
+    modificationName,
+    mZmarkerIons, 
+    minNumberIons=2, 
+    itol_ppm=10, 
+    minMarkerIntensityRatio=5){
+
+    lapply(data, function(x){
+            idx<-findNN(mZmarkerIons, x$mZ)
+             ppm.error <- 1e-06 * itol_ppm * x$mZ[idx]
+             b<-(abs(mZmarkerIons-x$mZ[idx]) < ppm.error)
+
+             sum.mZmarkerIons.intensity <- sum(x$intensity[idx[b]])
+             sum.intensity <- sum(x$intensity) - sum.mZmarkerIons.intensity
+             percent.mZmarkerIons <- round(100 * (sum.mZmarkerIons.intensity / (sum.mZmarkerIons.intensity + sum.intensity)),1)
+
+             if ((length(x$mZ[idx[b]]) >= minNumberIons) & percent.mZmarkerIons > minMarkerIntensityRatio ){
+            split.screen(c(2,1))
+            split.screen(c(1,4), 2)
+            screen(1)
+            plot(x$mZ, x$intensity, type='h', xlab='m/z',ylab='Intensity', xlim=c(0, max(x$mZ)), sub=paste(x$title))
+            points(x$mZ[idx[b]], x$intensity[idx[b]], pch=22, col='#6CC417AA', bg='#6CC417AA', cex=1)
+            legend("topright", paste(c('query', 'pepmass', 'charge'), c(x$id, x$pepmass, x$charge)), cex=0.75)
+
+################################################################################
+            screen(6)
+            pie(x$intensity[idx[b]], 
+                paste(round(100*x$intensity[idx[b]]/sum(x$intensity[idx[b]]),0),"% ", 
+                    round(x$mZ[idx[b]], 2), sep=""), 
+                main=list("relative marker ions %", cex=0.8),
+                cex=0.75)
+
+################################################################################
+            screen(5)
+            pie(c(sum.intensity, sum.mZmarkerIons.intensity), 
+                c('Intensity', paste(percent.mZmarkerIons, '%',sep='')),
+                col=c('white', '#6CC417AA'),
+                main=list("% marker ion intensities", cex=0.8),
+                cex=0.75)
+
+################################################################################
+            screen(3)
+            #plot(mZmarkerIons, (mZmarkerIons-data[[i]]$mZ[idx]),
+            plot(mZmarkerIons[b], 1e+06 * (mZmarkerIons[b] - x$mZ[idx[b]]) / x$mZ[idx[b]],
+                axes=TRUE, type='p', xlab='m/z', ylab='ppm error',log='')# ylim=c(-max(ppm.error),max(ppm.error)))
+            axis(3, mZmarkerIons[b], round(mZmarkerIons[b],1),las=2)
+            abline(h=0.0, col='grey')
+
+################################################################################
+####### P A T T E R N P L O T ##################################################
+            screen(4)
+            plot(x$mZ[idx[b]],
+                x$intensity[idx[b]],
+                col='#6CC417AA', 
+                lwd=2, 
+                type='h',
+                xlab='m/z',
+                ylab='Intensity',
+                axes=TRUE)
+            axis(3, x$mZ[idx[b]],round(x$mZ[idx[b]],1), las=2)
+
+            # readline("Press <Enter> to continue")
+            close.screen(all.screens = TRUE)
+        }
+    close.screen(all.screens = TRUE)
+    }
+    )
+}
+
 # mZmarker which ion you want to see
 PTM_MarkerFinder <- function(data, 
     modification, 
@@ -59,7 +129,19 @@ PTM_MarkerFinder <- function(data,
     minNumberIons=2, 
     itol_ppm=10, 
     minMarkerIntensityRatio=5,
-    mgfFilename=-1){
+    mgfFilename=-1, 
+    PEAKPLOT=TRUE){
+
+    if(!PEAKPLOT){
+        .PTM_MarkerFinder_no_peakplot(data, 
+            modification,
+            modificationName,
+            mZmarkerIons, 
+            minNumberIons, 
+            itol_ppm,
+            minMarkerIntensityRatio)
+        return (TRUE)
+    }
 
 
     query.idx<-1:length(data)
@@ -365,3 +447,4 @@ PTM_MarkerFinder_util<-function(dataFileName,
 }
 
 # ToDo adapt the parameter mZmarkerIon in all function 
+
