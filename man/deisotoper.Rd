@@ -71,7 +71,7 @@
 }
 
 \examples{
-    # just a msms
+    # example1 - tandem ms
     x <- list(mZ = c(726.068, 726.337, 726.589, 726.842, 727.343, 727.846, 728.346, 
         728.846, 729.348, 730.248, 730.336, 730.581, 730.836),
         intensity = c(6.77850e+03, 2.81688e+04, 6.66884e+04, 1.22032e+07, 
@@ -83,4 +83,16 @@
         massError=0.01, PACKAGE="protViz")
 
     out<-deisotoper(data=list(x), Z=2:4, isotopPatternDF=averagine)
+
+    # example2 - a ms from heavy labeld peptide in water background    
+    x <- list(mZ=c(642.572, 643.054, 643.569, 644.062, 644.557),
+        intensity=c(17000, 25000, 12000, 9000,4000))
+
+    diff(x$mZ)
+    diff(x$mZ,lag=2)
+    diff(x$mZ, difference=2)
+
+    out<-deisotoper(data=list(x), Z=1:2, isotopPatternDF=averagine, 
+        massError=0.02, plot=TRUE)
+
 }

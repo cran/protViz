@@ -8,7 +8,7 @@
 \description{
 
     same as \code{findNN} but is uses \code{C++} STL \code{std::lower_bound} methode.
-    this function is going to replaceing \code{findNN}.
+    this function is going to replace \code{findNN}.
 
 }
 

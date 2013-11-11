@@ -30,7 +30,6 @@ deisotoper <- function(data,
                 for (i in 1:length(Z)){
                     mapply(function(xx, ss){
                         if (ss > 0.80 & length(xx)>2){
-                            # print(paste(ss, length(xx)))
                         points(x$mZ[xx+1], x$intensity[xx+1], type='h', col=colormap[i], lwd=max(Z)-i)
 
                         iso.mean<-mean(x$mZ[xx+1])
@@ -40,8 +39,8 @@ deisotoper <- function(data,
                         }
                     }, out$result[[i]], out$score[[i]])
                 }
+                .deisotoperUtilPlot(x, out, Z, colormap)
             }
-            .deisotoperUtilPlot(x, out, Z, colormap)
         }
         return(out)
     })
@@ -56,9 +55,8 @@ deisotoper <- function(data,
             if (! is.na(g[i])){
                 idx<-(out$result[[i]][[g[i] + 1]]) + 1
 
-
                 my.title <- paste("mass=", x$mZ[min(idx)],sep='')
-                plot(x$mZ[min(idx):max(idx)], x$intensity[min(idx):max(idx)], 
+                plot(xx<-x$mZ[min(idx):max(idx)], yy<-x$intensity[min(idx):max(idx)], 
                     type='h', 
                     axes=FALSE,
                     col='grey', 
@@ -68,9 +66,10 @@ deisotoper <- function(data,
                     main=paste("mass=", x$mZ[min(idx)],sep=''),
                     ylab="intensity", 
                 )
-                axis(1, x$mZ[min(idx):max(idx)], round(x$mZ[min(idx):max(idx)],2))
+
+                text(xx,yy,xx,pos=4,cex=0.75)
+                axis(1, x$mZ[min(idx):max(idx)], round(x$mZ[min(idx):max(idx)], 2))
                 axis(2)
-#                legend("bottomleft", paste("mass=", x$mZ[min(idx)], sep=''), cex=2)
                 break;
             }
         }
@@ -79,6 +78,7 @@ deisotoper <- function(data,
         score1 <- rep(NA, length(Z))
         cscore1 <- rep(NA, length(Z))
         cscore <- rep(NA, length(Z))
+
         for (i in 1:length(Z)){
             if (! is.na(g[i])){
                 idx<-(out$result[[i]][[g[i]+1]])
@@ -104,8 +104,6 @@ deisotoper <- function(data,
                 text(a.x, a.y, length(idx), pos=4, col=colormap[i])
             }
         }
- #       legend("topleft", paste("c",Z,'=',score, sep=''), pch=25, col=colormap, title='score', cex=1.0)
- #      legend("topright", paste("c",Z,'=', score1, sep=''), pch=25, col=colormap, title='score1', cex=1.0)
 
         legend("topright", paste("c",Z,'=(',cscore,", ",cscore1,")", sep=''), pch=25, col=colormap, title='C++score', cex=1.0)
 

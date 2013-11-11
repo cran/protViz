@@ -97,8 +97,7 @@ namespace ralab{
 
         template < typename TmassI, typename TinteI >
         void 
-        computeIsotopChains(TmassI beginMass, TmassI endMass, TinteI beginIntensity)
-        {
+        computeIsotopChains(TmassI beginMass, TmassI endMass, TinteI beginIntensity) {
 
           std::vector < int > isoptopGroupsIdx;
 
@@ -116,20 +115,17 @@ namespace ralab{
               // preprocessing for ISOTOP GROUPING
               // step 0: determine all isotop groups for all charge states
               for (std::vector<std::vector< int > >::iterator it = results.begin(); it !=  results.end(); ++it){
-                isoptopGroupsIdx.insert(isoptopGroupsIdx.end(), (*it).begin(), ++(*it).begin());
 
-                std::vector< int >::iterator end__ = (*it).end();
-                --end__;
-
-                isoptopGroupsIdxChargeBegin[zi].push_back(*(*it).begin());
-                isoptopGroupsIdxChargeEnd[zi].push_back(*end__);
+                isoptopGroupsIdx.push_back((*it).front());
+                isoptopGroupsIdxChargeBegin[zi].push_back((*it).front());
+                isoptopGroupsIdxChargeEnd[zi].push_back((*it).back());
 
                 (*it).clear();
               }
               results.clear();
           }
 
-            // ISOTOP GROUPING
+            // ISOTOP GROUPING 
             std::sort (isoptopGroupsIdx.begin(), isoptopGroupsIdx.end());
             std::unique (isoptopGroupsIdx.begin(), isoptopGroupsIdx.end());
 
