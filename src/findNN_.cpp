@@ -1,6 +1,14 @@
 #include <algorithm>
 #include <cmath>
 
+
+/*
+
+$HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/findNN_.cpp $
+$Id: findNN_.cpp 6179 2014-02-27 09:34:04Z cpanse $
+
+*/
+
 extern "C" {
     void findNN_ (int *m_, int *n_, double *q_, double *vec_, int *NN_) {
 

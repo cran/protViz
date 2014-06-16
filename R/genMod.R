@@ -1,7 +1,8 @@
 #R
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/genMod.R $
+# $Id: genMod.R 6178 2014-02-27 09:33:30Z cpanse $
+# $Date: 2014-02-27 10:33:30 +0100 (Thu, 27 Feb 2014) $
 
-# 2012-11-20 CP
-# 2012-11-21 Hubert Rehrauer @ FGCZ
 
 genMod<-function(sequences, modificationPattern, nModification=2){
 

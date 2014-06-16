@@ -1,6 +1,8 @@
 #R
 
-# 2012-11 <{jg,cp}@fgcz.ethz.ch>
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/pgLFQ.R $
+# $Id: pgLFQ.R 6178 2014-02-27 09:33:30Z cpanse $
+# $Date: 2014-02-27 10:33:30 +0100 (Thu, 27 Feb 2014) $
 
 pgLFQtNpq <- function(QuantitativeValue, 
     peptide, protein, 

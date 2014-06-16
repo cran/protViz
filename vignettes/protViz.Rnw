@@ -2,7 +2,6 @@
 \documentclass[12pt]{article}
 
 \usepackage[utf8]{inputenc}
-
 \usepackage{amsmath,pstricks}
 \usepackage{hyperref}
 \usepackage[numbers]{natbib}
@@ -40,21 +39,10 @@
 \vspace{0.5cm}
 Recent changes, updates, and  new features:
 \begin{itemize}
-\item 0.1.67 \code{deisotoper} with isotop grouping
-\item 0.1.66 \code{deisotoper} \code{R} function
-\item 0.1.65 genSwathLib with iRTpeptide fitting
-\item 0.1.63 added \code{AA} and \code{iRTpeptides} data
-\item 0.1.59 deisotoper \code{C++} code via Rcpp 
-\item 0.1.58 added \code{findNN\_} using \code{C++ std::lower\_bound}   
-\item 0.1.50 deisotoper R code
-\item 0.1.49 corrected man; 
-use prefix \code{protViz\_} for all scripts in the exec dir; 
-added \code{protViz\_mgf2RData.pl};
-\code{PEAKPLOT} flag in \code{PTM\_MarkerFinder}
-
-\item 0.1.48 bugfix in NNQuery \code{src/findNN.c:51}; heap-buffer-overflow 
-\item 0.1.47 added pepmass in pPTM output table
-\item 0.1.46 reduced example data
+\item 0.1.92 added unit tests.
+\item 0.1.91 bugfix rt normailzation in \code{genSwathLib}. 
+\item 0.1.89 replace \code{fragmentIons} by \code{fragmentIon}. 
+\item 0.1.77 bugfix xlim in \code{peakplot} 
 \end{itemize}
 \end{center}
 \vspace{0.5cm}
@@ -77,19 +65,20 @@ But it can also be used to do solid data analysis for small scale data sets. Nev
 There are already packages in R which deal with mass spec related data.
 Some of them are listed here:
 \begin{itemize}
-\item MSnbase package (basic functions for mass spec data including quant aspect with iTRAQ data)\\
+\item \code{MSnbase} package (basic functions for mass spec data including quant aspect with iTRAQ data)\\
 \url{http://www.bioconductor.org/packages/release/bioc/html/MSnbase.html}
-\item plgem -- spectral counting quantification, applicable to MudPIT experiments\\
+\item \code{plgem} -- spectral counting quantification, applicable to MudPIT experiments\\
 \url{http://www.bioconductor.org/packages/release/bioc/html/plgem.html}
-\item synapter -- MSe (Hi3 = Top3 Quantification) for Waters Q-tof data aquired in MSe mode\\ 
+\item \code{synapter} -- MSe (Hi3 = Top3 Quantification) for Waters Q-tof data aquired in MSe mode\\ 
 \url{http://www.bioconductor.org/packages/release/bioc/html/synapter.html}
-\item mzR \\ 
+\item \code{mzR} \\ 
 \url{http://www.bioconductor.org/packages/release/bioc/html/mzR.html}
 \item isobar iTRAQ/TMT quantification package\\
 \url{http://www.bioconductor.org/packages/release/bioc/html/isobar.html}
-
-\item readMzXmlData\\ 
+\item \code{readMzXmlData}\\ 
 \url{http://cran.r-project.org/web/packages/readMzXmlData/}
+\item \code{msQC}\\
+\url{http://bioconductor.org/packages/3.0/bioc/html/msQC.html}
 \end{itemize}
 
 \section{Get Data In -- Preprocessing}
@@ -174,19 +163,19 @@ hist(pm, xlab="peptide mass [in Da]")
 
 \subsection{In-silico Peptide Fragmentation}
 The fragment ions of a peptide can be computed following the rules proposed in \cite{pmid6525415}.
-Beside the \code{b} and \code{y} ions the \code{FUN} argument of \code{fragmentIons} defines 
+Beside the \code{b} and \code{y} ions the \code{FUN} argument of \code{fragmentIon} defines 
 which ions are computed.
-the default ions beeing computed are defined in the function \code{defaultIons}.
+the default ions beeing computed are defined in the function \code{defaultIon}.
 The are no limits for defining other forms of fragment ions for ETD (c and z ions) CID (b and y ions).
 <<keep.source = TRUE, eval = TRUE, fig = FALSE>>=
-defaultIons
+defaultIon
 @
 
 <<keep.source = TRUE, eval = TRUE, fig = TRUE>>=
 peptides<-c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
 
 pim<-parentIonMass(peptides)
-fi<-fragmentIons(peptides)
+fi<-fragmentIon(peptides)
 
 par(mfrow=c(3,1)); 
 for (i in 1:length(peptides)){
@@ -213,7 +202,7 @@ for (i in 1:length(peptides)){
 The next lines compute the singly and doubly charged fragment ions of the \code{HTLNQIDSVK} peptide. Which are usually the ones that can be used to make an identification.
 <<keep.source = TRUE, eval = TRUE, fig = FALSE>>=
 Hydrogen<-1.007825
-(fi.HTLNQIDSVK.1<-fragmentIons('HTLNQIDSVK'))[[1]]
+(fi.HTLNQIDSVK.1<-fragmentIon('HTLNQIDSVK'))[[1]]
 (fi.HTLNQIDSVK.2<-(fi.HTLNQIDSVK.1[[1]] + Hydrogen) / 2)
 @
 
@@ -246,7 +235,7 @@ in-silico fragment ion is considered as potential hit.
     1267, 1542, 979.2, 9577, 3283, 9441, 1520, 1310, 1.8e+04,
     587.5, 2685, 671.7, 3734, 8266, 3309))
 
-    fi<-fragmentIons(peptideSequence)
+    fi<-fragmentIon(peptideSequence)
     n<-nchar(peptideSequence)
 
     by.mZ<-c(fi[[1]]$b, fi[[1]]$y)
@@ -292,7 +281,7 @@ m<-as.data.frame(rbind(ptm.0, ptm.616, ptm.651))
 
 genMod(c('TAFDEAIAELDTLNEESYK','TAFDEAIAELDTLSEESYK'), m$AA)
 
-fi<-fragmentIons(c('TAFDEAIAELDTLSEESYK', 
+fi<-fragmentIon(c('TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK'), 
         modified=c('0000000000000200000', 
@@ -301,7 +290,7 @@ fi<-fragmentIons(c('TAFDEAIAELDTLSEESYK',
     modification=m$mono)
 
 #bh<-c('TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK')
-#fi<-fragmentIons(rep('HTLNQIDSVK',2), 
+#fi<-fragmentIon(rep('HTLNQIDSVK',2), 
 #    modified=c('0000000100','0000000000'), 
 #    modification=m[,2])
 @
@@ -387,13 +376,13 @@ featureDensityPlot<-function(data, n=ncol(data), nbins=30){
     mids<-numeric()
     density<-numeric()
     for (i in 1:n) { 
-        h<-hist(data[,i],nbins, plot=F)
+        h<-hist(data[,i],nbins, plot=FALSE)
         mids<-c(mids, h$mids)
         density<-c(density, h$density)
     }
     plot(mids,density, type='n')
     for (i in 1:n) { 
-        h<-hist(data[,i],nbins, plot=F)
+        h<-hist(data[,i],nbins, plot=FALSE)
         lines(h$mids,h$density, col=my.col[i])
     }
     legend("topleft", names(data), cex=0.5,
@@ -506,7 +495,7 @@ for (i in 1:nrow(group1Protein)){
         main=row.names(group1Protein)[i],
         sub=paste("t-Test: p-value =", round(tt.p_value,2)),
         col=boxplot.color,
-        axes=F)
+        axes=FALSE)
     axis(1, 1:2, c('group_1','group_2')); axis(2); box()
 
     points(rep(1,b$n[1]), as.numeric(group1Protein[i,]), col='blue')
@@ -526,7 +515,7 @@ q<-iTRAQ2GroupAnalysis(data=iTRAQ,
     group1=c(3,4,5,6), 
     group2=7:10, 
     INDEX=paste(iTRAQ$prot,iTRAQ$peptide), 
-    plot=F)
+    plot=FALSE)
 q[1:10,]
 @
 
@@ -580,9 +569,16 @@ print(levelplot(Pc ~ time * as.factor(file),
 
 \label{lab:datapreparation}
 
-\nocite{pmid23000593}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\bibliography{protViz}{}
+%\section{Session information}\label{sec:sessionInfo}
+
+%The following lines show the version information about R and attached or loaded packages.
+%<<sessioninfo, results='asis', echo=FALSE>>=
+%toLatex(sessionInfo())
+%@
+
+\bibliography{protViz}
 \bibliographystyle{plain}
 
 \end{document}

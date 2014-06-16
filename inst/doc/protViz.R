@@ -2,7 +2,7 @@
 ### Encoding: UTF-8
 
 ###################################################
-### code chunk number 1: protViz.Rnw:152-172
+### code chunk number 1: protViz.Rnw:141-161
 ###################################################
 library(protViz)
 op<-par(mfrow=c(1,1))
@@ -27,18 +27,18 @@ hist(pm, xlab="peptide mass [in Da]")
 
 
 ###################################################
-### code chunk number 2: protViz.Rnw:181-182
+### code chunk number 2: protViz.Rnw:170-171
 ###################################################
-defaultIons
+defaultIon
 
 
 ###################################################
-### code chunk number 3: protViz.Rnw:185-210
+### code chunk number 3: protViz.Rnw:174-199
 ###################################################
 peptides<-c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
 
 pim<-parentIonMass(peptides)
-fi<-fragmentIons(peptides)
+fi<-fragmentIon(peptides)
 
 par(mfrow=c(3,1)); 
 for (i in 1:length(peptides)){
@@ -63,15 +63,15 @@ for (i in 1:length(peptides)){
 
 
 ###################################################
-### code chunk number 4: protViz.Rnw:214-217
+### code chunk number 4: protViz.Rnw:203-206
 ###################################################
 Hydrogen<-1.007825
-(fi.HTLNQIDSVK.1<-fragmentIons('HTLNQIDSVK'))[[1]]
+(fi.HTLNQIDSVK.1<-fragmentIon('HTLNQIDSVK'))[[1]]
 (fi.HTLNQIDSVK.2<-(fi.HTLNQIDSVK.1[[1]] + Hydrogen) / 2)
 
 
 ###################################################
-### code chunk number 5: protViz.Rnw:231-270
+### code chunk number 5: protViz.Rnw:220-259
 ###################################################
     peptideSequence<-'HTLNQIDSVK'
     spec<-list(scans=1138,
@@ -90,7 +90,7 @@ Hydrogen<-1.007825
     1267, 1542, 979.2, 9577, 3283, 9441, 1520, 1310, 1.8e+04,
     587.5, 2685, 671.7, 3734, 8266, 3309))
 
-    fi<-fragmentIons(peptideSequence)
+    fi<-fragmentIon(peptideSequence)
     n<-nchar(peptideSequence)
 
     by.mZ<-c(fi[[1]]$b, fi[[1]]$y)
@@ -115,7 +115,7 @@ Hydrogen<-1.007825
 
 
 ###################################################
-### code chunk number 6: protViz.Rnw:276-306
+### code chunk number 6: protViz.Rnw:265-295
 ###################################################
 library(protViz)
 
@@ -135,7 +135,7 @@ m<-as.data.frame(rbind(ptm.0, ptm.616, ptm.651))
 
 genMod(c('TAFDEAIAELDTLNEESYK','TAFDEAIAELDTLSEESYK'), m$AA)
 
-fi<-fragmentIons(c('TAFDEAIAELDTLSEESYK', 
+fi<-fragmentIon(c('TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK'), 
         modified=c('0000000000000200000', 
@@ -144,13 +144,13 @@ fi<-fragmentIons(c('TAFDEAIAELDTLSEESYK',
     modification=m$mono)
 
 #bh<-c('TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK')
-#fi<-fragmentIons(rep('HTLNQIDSVK',2), 
+#fi<-fragmentIon(rep('HTLNQIDSVK',2), 
 #    modified=c('0000000100','0000000000'), 
 #    modification=m[,2])
 
 
 ###################################################
-### code chunk number 7: protViz.Rnw:314-319
+### code chunk number 7: protViz.Rnw:303-308
 ###################################################
 data(msms)
 op<-par(mfrow=c(2,1))
@@ -160,7 +160,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 8: protViz.Rnw:337-369
+### code chunk number 8: protViz.Rnw:326-358
 ###################################################
 library(lattice)
 data(fetuinLFQ)
@@ -197,7 +197,7 @@ print(xyplot(abundance~conc|prot*method,
 
 
 ###################################################
-### code chunk number 9: protViz.Rnw:381-406
+### code chunk number 9: protViz.Rnw:370-395
 ###################################################
 data(pgLFQfeature)
 data(pgLFQprot)
@@ -207,13 +207,13 @@ featureDensityPlot<-function(data, n=ncol(data), nbins=30){
     mids<-numeric()
     density<-numeric()
     for (i in 1:n) { 
-        h<-hist(data[,i],nbins, plot=F)
+        h<-hist(data[,i],nbins, plot=FALSE)
         mids<-c(mids, h$mids)
         density<-c(density, h$density)
     }
     plot(mids,density, type='n')
     for (i in 1:n) { 
-        h<-hist(data[,i],nbins, plot=F)
+        h<-hist(data[,i],nbins, plot=FALSE)
         lines(h$mids,h$density, col=my.col[i])
     }
     legend("topleft", names(data), cex=0.5,
@@ -227,7 +227,7 @@ featureDensityPlot(asinh(pgLFQfeature$"Normalized abundance"),
 
 
 ###################################################
-### code chunk number 10: protViz.Rnw:412-426
+### code chunk number 10: protViz.Rnw:401-415
 ###################################################
 op<-par(mfrow=c(1,1),mar=c(18,18,4,1),cex=0.5)
 samples<-names(pgLFQfeature$"Normalized abundance")
@@ -246,7 +246,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 11: protViz.Rnw:431-441
+### code chunk number 11: protViz.Rnw:420-430
 ###################################################
 op<-par(mfrow=c(1,1),mar=c(18,18,4,1),cex=0.5)
 image(cor(asinh(pgLFQprot$"Normalized abundance")),
@@ -261,7 +261,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 12: protViz.Rnw:448-454
+### code chunk number 12: protViz.Rnw:437-443
 ###################################################
 par(mfrow=c(2,2),mar=c(6,3,4,1))
 ANOVA<-pgLFQaov(pgLFQprot$"Normalized abundance", 
@@ -272,7 +272,7 @@ ANOVA<-pgLFQaov(pgLFQprot$"Normalized abundance",
 
 
 ###################################################
-### code chunk number 13: protViz.Rnw:465-474
+### code chunk number 13: protViz.Rnw:454-463
 ###################################################
 data(iTRAQ)
 x<-rnorm(100)
@@ -286,7 +286,7 @@ b<-boxplot(asinh(iTRAQ[,c(3:10)]), main='boxplot iTRAQ')
 
 
 ###################################################
-### code chunk number 14: protViz.Rnw:481-514
+### code chunk number 14: protViz.Rnw:470-503
 ###################################################
 data(iTRAQ)
 group1Protein<-numeric()
@@ -315,7 +315,7 @@ for (i in 1:nrow(group1Protein)){
         main=row.names(group1Protein)[i],
         sub=paste("t-Test: p-value =", round(tt.p_value,2)),
         col=boxplot.color,
-        axes=F)
+        axes=FALSE)
     axis(1, 1:2, c('group_1','group_2')); axis(2); box()
 
     points(rep(1,b$n[1]), as.numeric(group1Protein[i,]), col='blue')
@@ -324,26 +324,26 @@ for (i in 1:nrow(group1Protein)){
 
 
 ###################################################
-### code chunk number 15: protViz.Rnw:523-530
+### code chunk number 15: protViz.Rnw:512-519
 ###################################################
 data(iTRAQ)
 q<-iTRAQ2GroupAnalysis(data=iTRAQ, 
     group1=c(3,4,5,6), 
     group2=7:10, 
     INDEX=paste(iTRAQ$prot,iTRAQ$peptide), 
-    plot=F)
+    plot=FALSE)
 q[1:10,]
 
 
 ###################################################
-### code chunk number 16: protViz.Rnw:541-543
+### code chunk number 16: protViz.Rnw:530-532
 ###################################################
 data(pressureProfile)
 ppp(pressureProfile)
 
 
 ###################################################
-### code chunk number 17: protViz.Rnw:552-568
+### code chunk number 17: protViz.Rnw:541-557
 ###################################################
 pp.data<-pps(pressureProfile, time=seq(25,40,by=5))
 print(xyplot(Pc ~ as.factor(file) | paste("time =", 
@@ -364,7 +364,7 @@ print(xyplot(Pc ~ as.factor(file) | paste("time =",
 
 
 ###################################################
-### code chunk number 18: protViz.Rnw:573-578
+### code chunk number 18: protViz.Rnw:562-567
 ###################################################
 pp.data<-pps(pressureProfile, time=seq(0,140,length=128))
 print(levelplot(Pc ~ time * as.factor(file),

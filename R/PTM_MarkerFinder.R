@@ -1,14 +1,9 @@
 #R
 
-# 2012-11-29
-# 2012-12-06
-# 2012-12-18 (2h) sequence with modification
-# 2012-12-19 (6h) MGF
-# Christian Panse <cp@fgcz.ethz.ch>
-# Paolo Nanni
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/PTM_MarkerFinder.R $
+# $Id: PTM_MarkerFinder.R 6318 2014-04-02 13:02:51Z cpanse $
+# $Date: 2014-04-02 15:02:51 +0200 (Wed, 02 Apr 2014) $
 
-
-# TODO: change the proteinInformation in the dat2RData.pl program and not in this script
 
 .PTM_MarkerFinder_writeMGF_Header <- function(mgfFilename){
     FILE <- file(mgfFilename, "a")
@@ -200,15 +195,15 @@ PTM_MarkerFinder <- function(data,
 
     ####### P E A K P L O T ########################################################
             if (!is.na(data[[i]]$mascotScore) ){
-                fi<-fragmentIons(sequence=data[[i]]$peptideSequence, 
-                    FUN=defaultIons,
+                fi<-fragmentIon(sequence=data[[i]]$peptideSequence, 
+                    FUN=defaultIon,
                     modified=substr(data[[i]]$modification, 2, nchar(data[[i]]$modification)-1),
                     modification=modification)
 
                 fi.by<-as.data.frame(cbind(b=fi[[1]]$b, y=fi[[1]]$y))
 
                 peakplot(data[[i]]$peptideSequence, 
-                    spec=data[[i]], fi=fi.by, ion.axes=F,  
+                    spec=data[[i]], fi=fi.by, ion.axes=FALSE,  
                     main=paste("scantype: HCD / peptide sequence: ", 
                         .PTM_MarkerFinder_(data[[i]]$peptideSequence, data[[i]]$modification, modificationName), sep=''),
                     xlim=c(0,max(data[[i]]$mZ)))
@@ -254,8 +249,8 @@ PTM_MarkerFinder <- function(data,
                 .PTM_MarkerFinder_writeMGF(data[[k]], mgfFilename)
            }
 
-            fi<-fragmentIons(sequence=data[[k]]$peptideSequence, 
-                FUN=defaultIons,
+            fi<-fragmentIon(sequence=data[[k]]$peptideSequence, 
+                FUN=defaultIon,
                 modified=substr(data[[k]]$modification, 2, nchar(data[[k]]$modification)-1),
                 modification=modification)
 
@@ -341,7 +336,7 @@ PTM_MarkerFinder <- function(data,
 # Intel(R) Xeon(R) CPU  X5650  @ 2.67GHz
 
 .PTM_MarkerFinder_summaryPlot<-function(s, config){
-    plot(0,0,xlab='', ylab='', axes=F, type='n')
+    plot(0,0,xlab='', ylab='', axes=FALSE, type='n')
     legend(-0.95,+0.5, paste(c(names(config), 'R', 'protViz.version', 'create date'), 
         c(config, R.version.string, as.character(packageVersion('protViz')), date()), 
         sep=": "), cex=2.0)

@@ -36,6 +36,11 @@ NOTE:
 
     Cysteine mono mass is 103.00919
 
+
+$HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/computeFragmentIons.c $
+$Id: computeFragmentIons.c 6179 2014-02-27 09:34:04Z cpanse $
+
+
 */
 
 double *initAminoAcidMass(void)

@@ -27,9 +27,15 @@
 /*
  * Christian Panse <cp@fgcz.ethz.ch> 
  * Mit Nov  1 17:50:33 CET 2006
- */
 
-int trypticdigest (int argc, char **argv)
+ $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/tryptic-digest.c $
+ $Id: tryptic-digest.c 6179 2014-02-27 09:34:04Z cpanse $
+
+	gcc -o tryptic-digest tryptic-digest.c -O3 -pedantic -Wall
+
+*/
+
+int trypticdigest ()
 {
 
     int i;
@@ -61,3 +67,6 @@ int trypticdigest (int argc, char **argv)
     return 0;
 }
 
+int main(int argc, char *argv[]) { 
+return (trypticdigest());
+}

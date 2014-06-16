@@ -1,4 +1,7 @@
 #!/bin/bash
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/exec/protViz_fun.bash $
+# $Id: protViz_fun.bash 6089 2014-02-11 08:02:53Z cpanse $
+
 
 find ../ -type f \
 | egrep "Rd|Rnw" \

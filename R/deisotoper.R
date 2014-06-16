@@ -1,9 +1,8 @@
 #R
 
-# cp@fgcz.ethz.ch
-# 2013-06-26 0915
-# 2013-10-12 1715
-# Thu Oct 31 13:11:44 CET 2013
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/deisotoper.R $
+# $Id: deisotoper.R 6178 2014-02-27 09:33:30Z cpanse $
+# $Date: 2014-02-27 10:33:30 +0100 (Thu, 27 Feb 2014) $
 
 deisotoper <- function(data,
     Z=1:4,
@@ -48,7 +47,7 @@ deisotoper <- function(data,
 }
 
 .deisotoperUtilPlot <- function(x, out, Z, colormap){
-    op<-par(mfrow=c(4, 4), mar=c(3,3,3,1))
+    op<-par(mfrow=c(2, 2), mar=c(3,3,3,1))
 
     lapply(out$group, function(g){
         for (i in 1:length(Z)){

@@ -1,9 +1,8 @@
 #R
 
-# Mass Deviations Plot
-# Christian Panse / Jonas Grossmann <{cp,jg}@fgcz.ethz.ch>
-# 2013-02-07
-
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/mdp.R $
+# $Id: mdp.R 6178 2014-02-27 09:33:30Z cpanse $
+# $Date: 2014-02-27 10:33:30 +0100 (Thu, 27 Feb 2014) $
 
 .mdp_get <- function (data, minScore=0){
     Hydrogen<-1.008

@@ -1,14 +1,8 @@
 #R
 
-# <cp@fgcz.ethz.ch>, Bernd Roschitzki <bernd.roschitzki@fgcz.uzh.ch>, Christian Trachsel <christian.trachsel@fgcz.uzh.ch>
-
-# 2012-08-28 CP,BR
-# 2012-09-06 CP,BR
-# 2012-09-18 CP,CT
-# 2012-11-08 CP,CT
-# 2013-03-14 CP
-# 2013-03-19 CP
-
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/pp.R $
+# $Id: pp.R 6178 2014-02-27 09:33:30Z cpanse $
+# $Date: 2014-02-27 10:33:30 +0100 (Thu, 27 Feb 2014) $
 
 ppp<-function(data){
     # iterate over all files group files having similar rt range

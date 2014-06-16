@@ -19,12 +19,12 @@ fetuin<-c('MK', 'SFVLLFCLAQLWGCHSIPLDPVAGYK',
 plot(pim<-parentIonMass(fetuin), ylab="parent ion mass", main="FETUA_BOVIN")
 hist(pim, main="Histogram of parent ion mass of FETUA_BOVIN", xlab="m/Z")
 
-fi<-fragmentIons(fetuin)
+fi<-fragmentIon(fetuin)
 
 peptides<-c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
 
 pim<-parentIonMass(peptides)
-fi<-fragmentIons(peptides)
+fi<-fragmentIon(peptides)
 
 par(mfrow=c(3,1)); 
 for (i in 1:length(peptides)){
@@ -85,7 +85,7 @@ abline(v=c(-1000,1000),col='grey')
         peptides<-c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
 
         pim<-parentIonMass(peptides)
-        fi<-fragmentIons(peptides)
+        fi<-fragmentIon(peptides)
 
         op<-par(mfrow=c(3,1)); 
         for (i in 1:length(peptides)){
@@ -129,7 +129,7 @@ m<-as.data.frame(rbind(ptm.0, ptm.616, ptm.651))
 
 genMod(c('TAFDEAIAELDTLNEESYK','TAFDEAIAELDTLSEESYK'), m$AA)
 
-fi<-fragmentIons(c('TAFDEAIAELDTLSEESYK', 
+fi<-fragmentIon(c('TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK'),
         modified=c('0000000000000200000', 

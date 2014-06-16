@@ -1,11 +1,15 @@
 #R
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/psm.R $
+# $Id: psm.R 6222 2014-03-13 14:22:34Z cpanse $
+# $Date: 2014-03-13 15:22:34 +0100 (Thu, 13 Mar 2014) $
+
 
 # TODO 
 # compute score by sum of error div. by number of hits
 
-psm<-function(sequence, spec, FUN=defaultIons,
+psm<-function(sequence, spec, FUN=defaultIon,
     plot=TRUE, 
-    fi=fragmentIons(sequence, FUN=FUN)[[1]],
+    fi=fragmentIon(sequence, FUN=FUN)[[1]],
     fragmentIonError=0.6) { 
 
     n<-nchar(sequence)
@@ -26,13 +30,7 @@ psm<-function(sequence, spec, FUN=defaultIons,
     }
 
 
-    # this is an alternative to the NN c funktion
-    # ansi-c bsearch  does not work since it is searching for an 
-    # exact match
-    #idx<-findInterval(by.mZ, spec$mZ)
-    #mZ.error<-spec$mZ[idx+1]-by.mZ
-
-    out <- .C("findNN",
+    out <- .C("findNN_",
         nbyion=as.integer(length(by.mZ)),
         nmZ=as.integer(length(spec$mZ)),
         byion=as.double(by.mZ),
@@ -80,6 +78,6 @@ psm<-function(sequence, spec, FUN=defaultIons,
         label=by.label, 
         score=-1, 
         sequence=sequence,
-        fragmentIons=fi))
+        fragmentIon=fi))
 }
 

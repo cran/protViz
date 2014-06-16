@@ -79,7 +79,7 @@
             1.15869e+03, 2.14788e+03, 5.37853e+03, 5.79094e+02))
 
     # the plain C interface function
-    out <- .Call("deisotoper_main", x$mZ, x$intensity, Z=2, averagine, 
+    out1 <- .Call("deisotoper_main", x$mZ, x$intensity, Z=1:4, averagine, 
         massError=0.01, PACKAGE="protViz")
 
     out<-deisotoper(data=list(x), Z=2:4, isotopPatternDF=averagine)
@@ -92,7 +92,7 @@
     diff(x$mZ,lag=2)
     diff(x$mZ, difference=2)
 
-    out<-deisotoper(data=list(x), Z=1:2, isotopPatternDF=averagine, 
+    out2<-deisotoper(data=list(x), Z=1:2, isotopPatternDF=averagine, 
         massError=0.02, plot=TRUE)
 
 }

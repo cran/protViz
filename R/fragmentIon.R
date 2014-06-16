@@ -1,19 +1,23 @@
 #R
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/fragmentIon.R $
+# $Id: fragmentIon.R 6222 2014-03-13 14:22:34Z cpanse $
+# $Date: 2014-03-13 15:22:34 +0100 (Thu, 13 Mar 2014) $
 
-defaultIons<-function(fi){
+
+defaultIon<-function(b, y){
     Hydrogen <- 1.007825
     Oxygen <- 15.994915
     Nitrogen <- 14.003074
 
     #yo <- fi$y - Oxygen - Hydrogen - Hydrogen
-    c<- fi$b + (Nitrogen + (3 * Hydrogen))
-    z<- fi$y - (Nitrogen + (3 * Hydrogen))
+    c<- b + (Nitrogen + (3 * Hydrogen))
+    z<- y - (Nitrogen + (3 * Hydrogen))
     
-    return(cbind(c,z))
+    return(cbind(b, y, c ,z))
 }
 
 
-fragmentIons<-function(sequence, FUN=defaultIons, modified=numeric(), modification=numeric()) {
+fragmentIon <- function(sequence, FUN=defaultIon, modified=numeric(), modification=numeric()) {
     if (!is.character(sequence)) {
 
         R<-list()
@@ -25,11 +29,7 @@ fragmentIons<-function(sequence, FUN=defaultIons, modified=numeric(), modificati
             b_=as.double(rep(0,input.n)), 
             y_=as.double(rep(0,input.n)))
 
-        fi<-as.data.frame(cbind(b=out$b, y=out$y))
-
-        fi<-cbind(fi,as.data.frame(ff<-FUN(fi)))
-
-        R[[1]] <- fi
+        R[[1]] <- as.data.frame(FUN(out$b, out$y))
 
     }else if (length(modification) > 1) {
                                                     
@@ -64,11 +64,9 @@ fragmentIons<-function(sequence, FUN=defaultIons, modified=numeric(), modificati
                 modified=input.modified,
                 modification=as.double(as.character(modification)))
 
-            fi<-as.data.frame(cbind(b=out$b, y=out$y))
-            fi<-cbind(fi,as.data.frame(ff<-FUN(fi)))
-
-            R[[length(R)+1]] <- fi
+            R[[length(R)+1]] <- as.data.frame(FUN(out$b, out$y))
         }
+
     } else{
         FUN<-match.fun(FUN)
 
@@ -95,11 +93,10 @@ fragmentIons<-function(sequence, FUN=defaultIons, modified=numeric(), modificati
                 y=as.double(rep(0.0,nchar(pepseq))))
 
 
-            fi<-as.data.frame(cbind(b=out$b, y=out$y))
-            fi<-cbind(fi,as.data.frame(ff<-FUN(fi)))
 
-            R[[length(R)+1]] <- fi
-    }
+            R[[length(R)+1]] <- as.data.frame(FUN(out$b, out$y))
+        }
     }
     return(R)
 }
+

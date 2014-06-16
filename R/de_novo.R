@@ -1,5 +1,8 @@
 #R
 
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/de_novo.R $
+# $Id: de_novo.R 6178 2014-02-27 09:33:30Z cpanse $
+# $Date: 2014-02-27 10:33:30 +0100 (Thu, 27 Feb 2014) $
 
 .de_novo_rev <- function (x, ax=0){
 

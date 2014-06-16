@@ -2,6 +2,7 @@
 
 \alias{genSwathIonLib}
 \alias{swath}
+\alias{SWATH}
 
 \title{swath library generator}
 
@@ -24,9 +25,9 @@
         topN = 10, 
         fragmentIonMzRange = c(200, 2000),
         fragmentIonRange = c(2, 100),
-        fragmentIonTyp = c('b', 'y'),
-        iRT=iRTpeptides)
-
+        fragmentIonFUN,
+        iRT=iRTpeptides,
+        data.fit)
 }
 
 \arguments{
@@ -45,13 +46,15 @@
 
   \item{topN}{returns the most \code{N} intense fragment ion only.}
 
-  \item{fragmentIonMzRange}{mZ range filter of framgent ions.}
+  \item{fragmentIonMzRange}{mZ range filter of framgent ion.}
 
-  \item{fragmentIonRange}{range filter of the number of identified fragment ions set in \code{fragmentIonTyp}.}
+  \item{fragmentIonRange}{range filter of the number of identified fragment ion set in \code{fragmentIonTyp}.}
 
-  \item{fragmentIonTyp}{is a filter. Set parameter to \code{'y'}, \code{'b'}, or \code{c('y', 'b')}. default is b and y. }
+  \item{fragmentIonFUN}{\code{function (b, y)} which derives all requested fragment ion out a given tuble of \code{b} and \code{y} ion. If the parameter is not specified the methode uses an internal function similar as the example below.}
 
   \item{iRT}{optional table which contains iRT peptides. If an iRT table is provided (default) a \code{lm} is applied to normalize the rt in \code{data}. See also \code{?iRT}. A necessary condition is that \code{data} contains at least two iRT peptides.}
+
+  \item{data.fit}{data set containing mZ and peptide sequence which is used for normalizing rt using a lineat model \code{lm(formula = rt ~ aggregateInputRT * fileName, data)}. The rt aggregation for the model uses \code{median}.}
 
 }
 
@@ -91,8 +94,26 @@
         varModification=c(0,0,0,0,0,0,0,0,0,0,0,0,0),
         mascotScore=83.1,
         proteinInformation='',
+        fileName='frac1',
         rtinseconds=61.55
         ); 
 
-    genSwathIonLib(my.data)
+    myFragmentIon <- function (b, y) {
+        Hydrogen <- 1.007825
+        Oxygen <- 15.994915
+        Nitrogen <- 14.003074
+
+        b1_ <- (b )
+        y1_ <- (y ) 
+
+        b2_ <- (b + Hydrogen) / 2
+        y2_ <- (y + Hydrogen) / 2 
+
+        b3_ <- (b + 2 * Hydrogen) / 3
+        y3_ <- (y + 2 * Hydrogen) / 3
+
+        return( cbind(b1_, y1_, b2_, y2_, b3_, y3_) )
+    }
+
+    genSwathIonLib(my.data, fragmentIonFUN=myFragmentIon)
 }

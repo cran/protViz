@@ -1,5 +1,9 @@
 #R
-# aggregate
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/iTRAQ2GroupAnalysis.R $
+# $Id: iTRAQ2GroupAnalysis.R 6178 2014-02-27 09:33:30Z cpanse $
+# $Date: 2014-02-27 10:33:30 +0100 (Thu, 27 Feb 2014) $
+
+
 iTRAQ2GroupAnalysis<-function(data, 
     group1, 
     group2, 

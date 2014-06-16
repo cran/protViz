@@ -1,6 +1,8 @@
 #R
 
-# PEAKPLOT Christian Panse <cp@fgcz.ethz.ch> 2006-2012
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/peakplot.R $
+# $Id: peakplot.R 6222 2014-03-13 14:22:34Z cpanse $
+# $Date: 2014-03-13 15:22:34 +0100 (Thu, 13 Mar 2014) $
 
 .peakplot.putlabel<-function(MASS, INTENSITY, LABEL, 
     l.col="green", 
@@ -123,8 +125,8 @@
 }                      
 
 peakplot <- function(peptideSequence, spec, 
-    FUN=defaultIons, 
-    fi=fragmentIons(peptideSequence, FUN=FUN)[[1]],
+    FUN=defaultIon, 
+    fi=fragmentIon(peptideSequence, FUN=FUN)[[1]],
     main=NULL,
     sub=paste(peptideSequence, spec$title, sep=" / "),
     xlim=range(spec$mZ, na.rm=TRUE),
@@ -148,7 +150,7 @@ peakplot <- function(peptideSequence, spec,
         ylab='Intensity',
         type='h',
         main=main,
-        xlim=c(min(spec$mZ), max(spec$mZ)),
+        xlim=xlim,
         ylim=c(0,1.2*yMax),
         sub=sub,
         axes='F'

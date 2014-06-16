@@ -3,7 +3,6 @@
 #define RCPPDEISOTOPERENVELOPE_H
 
 
-
 /*
 
 Authors   : Witold Eryk Wolski <wewolski@gmail.com> and Christian Panse <cp@fgcz.ethz.ch>
@@ -13,6 +12,11 @@ o http://cran.r-project.org/web/packages/protViz/index.html under GPLv3
 o https://github.com/wolski/rl under three-clause BSD license
 
 Copyright : Functional Genomics Center Zurich | UZH | ETHZ and  ETH Zurich 2013
+
+
+$HeadURL: $
+$Id: $
+
 
 */
 
@@ -69,8 +73,8 @@ namespace ralab{
             std::vector<double> isotopeEnvelope(double mass ) 
             {
 
-               int nrows=df_.nrows();
-               int size=df_.size();
+               //int nrows=df_.nrows();
+               //int size=df_.size();
 
                std::vector<std::string> sNames = df_.attr("names");
                std::vector< double > dNames;

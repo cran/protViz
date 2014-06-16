@@ -33,6 +33,12 @@
     - using core R findInterval gives by definition only positive values.
     - NNQuery returns the index so that there is no other index with a closer distance. 
 
+
+    $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/findNN.c $
+    $Id: findNN.c 6179 2014-02-27 09:34:04Z cpanse $
+
+
+
 */
 int NNQuery(void *key, void *base, size_t n, size_t size,
 	    double (*dst) (const void *, const void *))

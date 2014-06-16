@@ -17,8 +17,8 @@
 \usage{
 
     peakplot(peptideSequence, spec, 
-        FUN=defaultIons, 
-        fi=fragmentIons(peptideSequence, FUN=FUN)[[1]],
+        FUN=defaultIon, 
+        fi=fragmentIon(peptideSequence, FUN=FUN)[[1]],
         main=NULL,
         sub=paste(peptideSequence, spec$title, sep=" / "),
         xlim=range(spec$mZ, na.rm=TRUE),
@@ -39,11 +39,11 @@ the 20 amino acid letters.}
 eq sized vectors calles mZ and intensity. mZ values are sorted.}
 
   \item{FUN}{the function to be applied to compute further ions. If no 
-function is assigned \code{fragmentIons} will
-    use defaultIons.}
+function is assigned \code{fragmentIon} will
+    use \code{defaultIon}.}
 
   \item{fi}{fragment ion table, if not specified 
-  \code{fragmentIons(sequence, FUN=FUN)[[1]]} is called.
+  \code{fragmentIon(sequence, FUN=FUN)[[1]]} is called.
   This argument is usefull if you have PTM or specific ion series.}
 
   \item{sub}{a sub title for the plot}
@@ -110,7 +110,7 @@ on online version can be found here:
 
 
     # filter cand. fragment ions
-    fi<-fragmentIons("TAFDEAIAELDTLNEESYK")
+    fi<-fragmentIon("TAFDEAIAELDTLNEESYK")
     fi.cyz<-as.data.frame(cbind(c=fi[[1]]$c, y=fi[[1]]$y, z=fi[[1]]$z))
 
     p<-peakplot("TAFDEAIAELDTLNEESYK", spec=msms[[1]],

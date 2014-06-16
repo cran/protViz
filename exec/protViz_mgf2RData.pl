@@ -73,17 +73,19 @@ sub main(){
 
         if (/^BEGIN IONS/){
             $_scan='NA';
+            $_charge='NA';
+            $_pepmass='NA';
             $_title=$i;
             $_rtinseconds='NA';
         }elsif (/^END IONS/){
-            $_charge = "NA";
+            #$_charge = "NA";
 
             print RFILE "\n". $Rdata . "[[" . $i . "]] <- list(\n";
             print RFILE "title=\"" . $_title ."\",\n";
             print RFILE "rtinseconds=" . $_rtinseconds.",\n";
             print RFILE "charge=" . $_charge.",\n";
             print RFILE "scan=" . $_scan.",\n";
-            print RFILE "pepmass=" . $_scan.",\n";
+            print RFILE "pepmass=" . $_pepmass.",\n";
 
             print RFILE "mZ=c(";
             for (my $ii=0; $ii < $#mZ; $ii++){
@@ -111,7 +113,7 @@ sub main(){
 
         }elsif (/^TITLE=(.+)/){
             $_title = $1;
-        }elsif (/^PEPMASS=(.+)\ (.+)/){
+        }elsif (/^PEPMASS=(\d+\.\d+)\s(\d+\.\d+)$/){
             $_pepmass = $1;
         }elsif (/^CHARGE=(\d+)./){
             $_charge = $1;

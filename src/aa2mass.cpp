@@ -18,6 +18,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA *
+
+
+ $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/aa2mass.cpp $
+ $Id: aa2mass.cpp 6179 2014-02-27 09:34:04Z cpanse $
+
 */
 
 #include <string>

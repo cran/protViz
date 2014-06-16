@@ -21,9 +21,9 @@
 
     psm(sequence, 
         spec, 
-        FUN=defaultIons,
+        FUN=defaultIon,
         plot=TRUE, 
-        fi=fragmentIons(sequence, FUN=FUN)[[1]],
+        fi=fragmentIon(sequence, FUN=FUN)[[1]],
         fragmentIonError)
 
 }
@@ -34,11 +34,11 @@
 
   \item{spec}{MS2 which is a R list having a sorted mZ vector and an intensity vector of the same size.}
 
-  \item{FUN}{this function is passed to the fragmentIons function. the function to be applied to compute further ions. If no function is assigned \code{fragmentIons} will
-    use defaultIons.}
+  \item{FUN}{this function is passed to the \code{fragmentIon} function. the function to be applied to compute further ions. If no function is assigned \code{fragmentIon} will
+    use \code{defaultIon}.}
   \item{plot}{boolean if the error plot function is to be called.}
 
-  \item{fi}{fragment ion table, if not specified \code{fragmentIons(sequence, FUN=FUN)[[1]]} is called. }
+  \item{fi}{fragment ion table, if not specified \code{fragmentIon(sequence, FUN=FUN)[[1]]} is called. }
   \item{fragmentIonError}{fragment ion error cut-off. default is 0.6 Da. }
 
 }

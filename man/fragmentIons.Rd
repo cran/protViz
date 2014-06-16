@@ -1,11 +1,11 @@
-\name{fragmentIons}
+\name{fragmentIon}
 
-\alias{fragmentIons}
+\alias{fragmentIon}
 \alias{bymatrix}
 \alias{ionseries}
-\alias{defaultIons}
+\alias{defaultIon}
 
-\title{Compute b and y Fragment Ions of a Peptide Sequence}
+\title{Compute the b and y Fragment Ions of a Peptide Sequence}
 
 \description{
 
@@ -18,7 +18,7 @@
 
 \usage{
 
-    fragmentIons(sequence, FUN, modified, modification)
+    fragmentIon(sequence, FUN, modified, modification)
 
 }
 
@@ -27,7 +27,7 @@
   \item{sequence}{peptide sequence encoded as character sequence using the 20 amino acid letters or a double vector of amino acid weights.}
 
   \item{FUN}{the function to be applied to compute further ions. 
-  If no function is assigned \code{fragmentIons} will use \code{defaultIons}.}
+  If no function is assigned \code{fragmentIon} will use \code{defaultIon}.}
 
   \item{modified}{a vector of interger containing the varmod id of the peptide position.}
 
@@ -38,9 +38,9 @@
 \details{
 
     The fragment ions of a peptide can be computed following the rules proposed in PMID:6525415.
-    Beside the \code{b} and \code{y} ions the \code{FUN} argument of \code{fragmentIons} defines
+    Beside the \code{b} and \code{y} ions the \code{FUN} argument of \code{fragmentIon} defines
     which ions are computed.
-    the default ions beeing computed are defined in the function \code{defaultIons}.
+    the default ions beeing computed are defined in the function \code{defaultIon}.
     The are no limits for defining other forms of fragment ions for ETD (c and z ions) CID (b and y ions).
 
     NOTE:
@@ -48,7 +48,7 @@
     160.030649 (Cysteine mono mass is 103.00919).
     The fixed modifications setting are not enabled in the package yet.
 
-    If only a vector of amino acids weights is given \code{fragmentIons} computes the ions series according to weights.
+    If only a vector of amino acids weights is given \code{fragmentIon} computes the ions series according to weights.
     If this case applies, the function returns only a list having one data frame.
     
 }
@@ -76,12 +76,12 @@
 peptide.AA<-"KINHSFLR";
 peptide.AA.weights<-c(128.09496,113.08406,114.04293,
     137.05891,87.03203,147.06841,113.08406,156.10111);
-fragmentIons(peptide.AA);
-fragmentIons(peptide.AA.weights);
+fragmentIon(peptide.AA);
+fragmentIon(peptide.AA.weights);
 
 
 # Example 2
-myIons<-function(fi){
+myIon<-function(fi){
     Hydrogen <- 1.007825
     Oxygen <- 15.994915
     Nitrogen <- 14.003074
@@ -95,7 +95,7 @@ myIons<-function(fi){
 peptides<-c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
 
 pim<-parentIonMass(peptides)
-fi<-fragmentIons(peptides)
+fi<-fragmentIon(peptides)
 
 op<-par(mfrow=c(3,1)); 
 for (i in 1:length(peptides)){
@@ -124,7 +124,7 @@ for (i in 1:length(peptides)){
 par(op)
 
 
-fi<-fragmentIons(c("ATSFYK","XGXFNAGVGK"))[[2]]
+fi<-fragmentIon(c("ATSFYK","XGXFNAGVGK"))[[2]]
 fi$b[1]+fi$y[9]
 fi$b[2]+fi$y[8]
 

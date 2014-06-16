@@ -1,7 +1,7 @@
 #R
-# Mass Deviations Plot
-# Christian Panse / Jonas Grossmann <{cp,jg}@fgcz.ethz.ch>
-# 2013-02-07
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/lcmsmap.R $
+# $Id: lcmsmap.R 6178 2014-02-27 09:33:30Z cpanse $
+# $Date: 2014-02-27 10:33:30 +0100 (Thu, 27 Feb 2014) $
 
 lcmsmap<-function(data, sub=data[[1]]$title){
     s.rtinseconds<-lapply(data, function(x){return (x$rtinseconds)})

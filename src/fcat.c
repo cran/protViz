@@ -37,8 +37,12 @@
  * EXAMPLE:
  * ./fcat < fgcz_swissprot_20041208.fasta > /tmp/o
  *
- */
 
+ $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/fcat.c $
+ $Id: fcat.c 6179 2014-02-27 09:34:04Z cpanse $
+
+
+ */
 
 int fcat()
 {
@@ -59,4 +63,9 @@ int fcat()
 
 
     return 0;
+}
+
+
+int main(int argc, char *argv[]) { 
+return (fcat());
 }

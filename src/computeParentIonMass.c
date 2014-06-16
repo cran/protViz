@@ -41,6 +41,11 @@
  r<-.C("computeParentIonMass", "TEST", n=as.integer(1), pim_=as.double(1))
 #include <stdio.h>
  *
+
+ $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/computeParentIonMass.c $
+ $Id: computeParentIonMass.c 6179 2014-02-27 09:34:04Z cpanse $
+
+
  */
 
 static double M[26];

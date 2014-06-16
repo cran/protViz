@@ -1,10 +1,20 @@
 #!/usr/bin/python
+# -*- coding: latin1 -*-
 
 
 # Christian Panse <cp@fgcz.ethz.ch>
-#
+
+# Copyright (C) 2014 Functional Genomics Center Zurich ETHZ|UZH. All rights reserved.
+# 
+# # Licensed under  GPL version 3
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/exec/protViz_bibliospec2RData.py $
+# $Id: protViz_bibliospec2RData.py 6318 2014-04-02 13:02:51Z cpanse $
+
+
+"""
 # INPUT: bibliospec sqlite files
 # OUTPUT: extracts MS2 
+"""
 
 import sqlite3
 import zlib
@@ -100,6 +110,7 @@ def myquery(sqllitedb):
 
         myRFile.write("); \n \n")
 
+    # todo run R 
     myRFile.write("save(" + myRDataName + ", file='" + myRDataName + ".RData', compress=TRUE)")
 
 

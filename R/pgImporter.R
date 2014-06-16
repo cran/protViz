@@ -1,11 +1,8 @@
-# ProgenesisDataImporter from Hubi
+#R
+# $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/pgImporter.R $
+# $Id: pgImporter.R 6178 2014-02-27 09:33:30Z cpanse $
+# $Date: 2014-02-27 10:33:30 +0100 (Thu, 27 Feb 2014) $
 
-#file = "FeatureDataMap_first100_TechReps.csv"
-#file = "Top1000Lines.csv"
-# result = readProgenesis(file)
-#ProgenesisFeatureMap_136 <- readProgenesis("MasterMap_216min.csv")
-
-# 20120430 -> adapted for version 4 of LCMS .. adding info on spectral counts in master map.. 
 
 pgImporter <- function(file, sep=';'){
   
