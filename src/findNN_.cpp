@@ -13,7 +13,7 @@ extern "C" {
     void findNN_ (int *m_, int *n_, double *q_, double *vec_, int *NN_) {
 
         size_t dist;
-        double d1, d2;
+        double d;
 
         for (int i = 0; i < *m_; i++){
 
@@ -22,11 +22,11 @@ extern "C" {
             NN_[i] = dist ;
 
             if (dist > 0){
-                d1 = std::fabs(q_[i] - vec_[dist - 1]);
-                d2 = std::fabs(q_[i] - vec_[dist]);
+                d = std::fabs(q_[i] - vec_[dist - 1]);
 
-                if (d1 < d2)
-                    NN_[i] = dist - 1 ;
+                if (dist <  *n_)
+                    if (d < std::fabs(q_[i] - vec_[dist]))
+                        NN_[i] = dist - 1 ;
             }
         }
     }

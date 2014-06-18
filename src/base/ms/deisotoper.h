@@ -311,7 +311,8 @@ namespace ralab{
 
 // monoisotop peak is determined prepare the output
                 nPeakCand = std::distance(result_.isotopChains[max_zIdx][max_chainIdx].begin(), result_.isotopChains[max_zIdx][max_chainIdx].end());
-                if (result_.isotopInnerProducts[max_zIdx][max_chainIdx] > eps || (nPeakCand > 3 && result_.isotopInnerProducts1[max_zIdx][chainIdx] > eps)){
+                if (result_.isotopInnerProducts.size() <= max_zIdx && result_.isotopInnerProducts[max_zIdx].size() <= max_chainIdx){
+                    if (result_.isotopInnerProducts[max_zIdx][max_chainIdx] > eps || (nPeakCand > 3 && result_.isotopInnerProducts1[max_zIdx][chainIdx] > eps)){
                     // chose mono isotopic peak
 
                     int monoIsotopicPeakIdx = *(result_.isotopChains[max_zIdx][max_chainIdx].begin()) + max_peakShift;
@@ -358,7 +359,9 @@ namespace ralab{
 
                     it_chain = result_.isotopChains[max_zIdx][max_chainIdx].begin();
                 }
-		}
+		}}else{
+			warnings.push_back("prevent use of uninitialised memory in methode 'result_.isotopInnerProducts'.");
+            }
             }//foreach group (isotop cluster)
          }
 
@@ -414,10 +417,12 @@ namespace ralab{
                                                                           const T & val) {
           Iterator it = std::upper_bound(first, last, val);
 
-          if (it != first) {
-              Iterator it_pre = it - 1;
-              if (std::fabs(val - *it_pre) < std::fabs(val - *it) || it == last) {
-                  return (it_pre);
+          if (it == last)
+              return (it--);
+          if (it != first && it - 1 != first) {
+              if (std::fabs(val - *(it - 1)) < std::fabs(val - *it) || it == last) {
+                 // return (it - 1);
+                 it--;
                 }
             }
 
@@ -440,15 +445,18 @@ namespace ralab{
                           int z,
                           Iterator firstMz,
                           Iterator lastMz) {
+          int idx=-1;
           for (Iterator itMz = firstMz; itMz != lastMz; ++itMz)
             {
 
-              double dQmZ = (*itMz + (hydrogenMass_ /z));
+              double dQmZ = (*itMz + (hydrogenMass_ / z));
               Iterator itNNmZ = findNearestNeighbor(firstMz, lastMz, dQmZ);
 
-              if (std::fabs(*itNNmZ - dQmZ) < massError_)
-                G[std::distance(firstMz, itMz)] =
-                    std::distance(firstMz, itNNmZ);
+              idx=std::distance(firstMz, itMz);
+
+              if (itNNmZ != lastMz && std::fabs(*itNNmZ - dQmZ) < massError_ && idx <= G.size()){
+                G[idx] = std::distance(firstMz, itNNmZ);
+              }
             }
           return 0;
         }

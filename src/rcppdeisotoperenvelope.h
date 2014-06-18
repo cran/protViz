@@ -72,10 +72,6 @@ namespace ralab{
 
             std::vector<double> isotopeEnvelope(double mass ) 
             {
-
-               //int nrows=df_.nrows();
-               //int size=df_.size();
-
                std::vector<std::string> sNames = df_.attr("names");
                std::vector< double > dNames;
 

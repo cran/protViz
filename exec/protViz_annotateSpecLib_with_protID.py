@@ -7,7 +7,7 @@
 # # Licensed under  GPL version 3
 #
 # $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/exec/protViz_annotateSpecLib_with_protID.py $
-# $Id: protViz_annotateSpecLib_with_protID.py 6222 2014-03-13 14:22:34Z cpanse $
+# $Id: protViz_annotateSpecLib_with_protID.py 6530 2014-06-17 08:03:50Z cpanse $
 
 import os
 import sys
