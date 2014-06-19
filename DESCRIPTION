@@ -2,8 +2,8 @@ Package: protViz
 Type: Package
 Title: Visualizing and Analyzing Mass Spectrometry Related Data in
         Proteomics
-Version: 0.1.96
-Date: 2014-06-18
+Version: 0.1.97
+Date: 2014-06-19
 Author: Christian Panse <cp@fgcz.ethz.ch>, Jonas Grossmann <jg@fgcz.ethz.ch>, 
     Simon Barkow-Oesterreicher <sb@fgcz.ethz.ch>
 Maintainer: Christian Panse <cp@fgcz.ethz.ch>
@@ -23,7 +23,7 @@ Collate: parentIonMass.R fragmentIon.R psm.R findNN.R findNN_.R
         genMod.R swath.R PTM_MarkerFinder.R mdp.R lcmsmap.R de_novo.R
         deisotoper.R
 LazyData: true
-Packaged: 2014-06-18 09:47:11 UTC; cpanse
+Packaged: 2014-06-19 05:49:54 UTC; cpanse
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2014-06-18 15:50:47
+Date/Publication: 2014-06-19 09:43:14

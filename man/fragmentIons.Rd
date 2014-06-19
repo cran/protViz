@@ -81,16 +81,19 @@ fragmentIon(peptide.AA.weights);
 
 
 # Example 2
-myIon<-function(fi){
+myIon<-function(b, y){
     Hydrogen <- 1.007825
     Oxygen <- 15.994915
     Nitrogen <- 14.003074
 
-    y_0 <- fi$y - Oxygen - Hydrogen - Hydrogen
-    c<- fi$b + (Nitrogen + (3 * Hydrogen))
-    z<- fi$y - (Nitrogen + (3 * Hydrogen))
+    y_0 <- y - Oxygen - Hydrogen - Hydrogen
+    c<- b + (Nitrogen + (3 * Hydrogen))
+    z<- y - (Nitrogen + (3 * Hydrogen))
+
     return(cbind(y_0,c,z))
 }
+
+fragmentIon(peptide.AA, FUN=myIon)
         
 peptides<-c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
 

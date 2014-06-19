@@ -23,7 +23,7 @@ This code belongs to two projects:
     Copyright : Functional Genomics Center Zurich | UZH | ETHZ 2013
 
     $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/base/ms/deisotoper.h $
-    $Id: deisotoper.h 6357 2014-04-16 07:37:03Z cpanse $
+    $Id: deisotoper.h 6534 2014-06-18 12:09:31Z cpanse $
 
 
 */

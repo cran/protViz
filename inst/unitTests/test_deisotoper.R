@@ -15,13 +15,6 @@ function(){
 
     checkEqualsNumeric(out1$result[[1]][[1]], c(1, 4, 6, 8), tolerance=0.0)
     checkEqualsNumeric(out1$result[[2]][[1]], c(1, 3, 4, 5, 6, 7, 8), tolerance=0.0)
-
-    x <- list(mZ=c(642.572, 643.054, 643.569, 644.062, 644.557),
-                 intensity=c(17000, 25000, 12000, 9000,4000))
-
-    out2<-deisotoper(data=list(x), Z=1:2, isotopPatternDF=averagine, 
-                 massError=0.02, plot=FALSE)
-
 }
 
 test_deisotoper()

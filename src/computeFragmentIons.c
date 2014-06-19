@@ -38,7 +38,7 @@ NOTE:
 
 
 $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/computeFragmentIons.c $
-$Id: computeFragmentIons.c 6179 2014-02-27 09:34:04Z cpanse $
+$Id: computeFragmentIons.c 6535 2014-06-18 15:21:13Z cpanse $
 
 
 */
@@ -143,6 +143,7 @@ void computeFragmentIons(int *n_, char **seq_, double *pim_, double *b_,
 	    }
 	}
     }
+    free(M);
 }
 
 
@@ -185,6 +186,7 @@ void computeFragmentIonsModification(int *n_, char **seq_, double *pim_,
 	    }
 	}
     }
+    free(M);
 }
 
 void computeFragmentIonsFixedVariableModification(int *n_, char **seq_,
@@ -235,6 +237,7 @@ void computeFragmentIonsFixedVariableModification(int *n_, char **seq_,
 	    y -= (M[letter - 65] + modification_[modified_[i]]);
 	}
     }
+    free(M);
 }
 
 
@@ -289,5 +292,6 @@ void _computeFragmentIons(int *n_, double *W_,
 		y_[*n_ - i - 1] = y;
 		y -= W_[i];
 	}
+    free(M);
 }
 
