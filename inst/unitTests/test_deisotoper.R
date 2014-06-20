@@ -13,8 +13,8 @@ function(){
     out1 <- .Call("deisotoper_main", x$mZ, x$intensity, Z=1:4, averagine, 
         massError=0.01, PACKAGE="protViz")
 
-    checkEqualsNumeric(out1$result[[1]][[1]], c(1, 4, 6, 8), tolerance=0.0)
-    checkEqualsNumeric(out1$result[[2]][[1]], c(1, 3, 4, 5, 6, 7, 8), tolerance=0.0)
+    checkEqualsNumeric(out1$result[[1]][[1]], c(1, 4, 6, 8), tolerance=1.0e-6)
+    checkEqualsNumeric(out1$result[[2]][[1]], c(1, 3, 4, 5, 6, 7, 8), tolerance=1.0e-6)
 }
 
 test_deisotoper()

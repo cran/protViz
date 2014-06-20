@@ -24,8 +24,8 @@ function(){
      peptide.AA.weights<-c(128.09496,113.08406,114.04293,
          137.05891,87.03203,147.06841,113.08406,156.10111);
 
-     checkEqualsNumeric(fragmentIon(peptide.AA.weights)[[1]]$b, fragmentIon(peptide.AA)[[1]]$b, tolerance=0.0)
-     checkEqualsNumeric(fragmentIon(peptide.AA.weights)[[1]]$y, fragmentIon(peptide.AA)[[1]]$y, tolerance=0.0)
+     checkEqualsNumeric(fragmentIon(peptide.AA.weights)[[1]]$b, fragmentIon(peptide.AA)[[1]]$b, tolerance=1.0e-3)
+     checkEqualsNumeric(fragmentIon(peptide.AA.weights)[[1]]$y, fragmentIon(peptide.AA)[[1]]$y, tolerance=1.0e-3)
 
      
 # check 2

@@ -1,4 +1,4 @@
-2d3112b62065ab1d90d268f4aca787e0 *DESCRIPTION
+c43615f17cab7c45bf61e3983eea15c2 *DESCRIPTION
 728ebf33ea1aef70077646bc96f6c2ab *NAMESPACE
 8ca983336d2cf1e4c0d63d78b81538be *NEWS
 5e5c7521ce6a891d4804c3322878c10e *R/PTM_MarkerFinder.R
@@ -45,13 +45,13 @@ ca2fe9383a60b3c8a0d63481dbf38f9d *exec/protViz_extractPressureProfiles.bash
 d7b700475e45f401dcb548155f9dc896 *exec/protViz_mgf2RData.pl
 a522ed667afe63761093cc378ce7f5f5 *inst/doc/PTM_MarkerFinder.R
 6fbccef02442cf6de72f6873cd49bdde *inst/doc/PTM_MarkerFinder.Rnw
-c86662214c1ef5a55d06fbed97094bed *inst/doc/PTM_MarkerFinder.pdf
+014ae5840a8841a700b8bb4bf867bcb6 *inst/doc/PTM_MarkerFinder.pdf
 562b0460398e7e730bb738f08ff1fb47 *inst/doc/protViz.R
 2e72d8e0a7c28ebcf8ba10338ec7bbe9 *inst/doc/protViz.Rnw
-db9fc6479f234d2400b2c8754eb54662 *inst/doc/protViz.pdf
-726a8b2551b99305af5c4e7bb945ef91 *inst/unitTests/test_deisotoper.R
+b28814509ec123a7296fc8e09ced836c *inst/doc/protViz.pdf
+160cd629849a1f616b961a0c51a9555a *inst/unitTests/test_deisotoper.R
 3228aadbc629a636f6ca31a7781e6bcd *inst/unitTests/test_findNN_.R
-750ab648afb5f8b5d6f37cc3728b98a1 *inst/unitTests/test_fragmentIon.R
+b3fd9b4c5437d1b6e94e66176440d0ac *inst/unitTests/test_fragmentIon.R
 3e54b239107ead34b9c31ad712f05c44 *inst/unitTests/test_psm.R
 9e862547b1dfb45463a1e03e389b8361 *man/AA.Rd
 7c991c49284819c1e7e26fb98c8fdd50 *man/HexNAc.Rd
