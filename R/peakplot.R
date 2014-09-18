@@ -1,8 +1,12 @@
 #R
 
 # $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/R/peakplot.R $
-# $Id: peakplot.R 6222 2014-03-13 14:22:34Z cpanse $
-# $Date: 2014-03-13 15:22:34 +0100 (Thu, 13 Mar 2014) $
+# $Id: peakplot.R 6683 2014-09-18 06:52:41Z cpanse $
+# $Date: 2014-09-18 08:52:41 +0200 (Thu, 18 Sep 2014) $
+
+# TODO: make a class peakplot
+# peakplot.print
+# peakplot.plot
 
 .peakplot.putlabel<-function(MASS, INTENSITY, LABEL, 
     l.col="green", 
@@ -11,17 +15,6 @@
     maxIntensity=max(INTENSITY)) {
 
 	noise<-seq(0, 2 * delta, length=length(MASS))
-
-    # 
-	# if(delta==0){
-	#	segments(min(MASS), 0, max(MASS), 0, col="green", cex=2, lwd=3)
-	# }
-
-
-	#segments(min(s$MASS), yMin, max(s$MASS), yMin, col=l.col, cex=2, lwd=3)
-	#segments(min(s$MASS), yMin+delta, max(s$MASS), yMin+delta, col=l.col, cex=2, lwd=1)
-
-	#charge<-as.character(s$CHARGE)
 
 	segments(MASS, 
 		INTENSITY+0.03*maxIntensity,
@@ -35,12 +28,6 @@
 		lwd=0.5)
 
 	segments(MASS, INTENSITY, MASS, rep(0, length(MASS)), lwd=1.5, col=l.col)
-
-#	text(MASS, yMin+noise,
-#		paste(LABEL), 
-#		pos=3, 
-#		cex=0.66,
-#		col=l.col)
 
 
 	text(MASS, yMin+noise, round(MASS,2), 
@@ -124,7 +111,8 @@
     pie(c(i.abc,i.xyz,i.rest), c(l.abc, l.xyz, "rest"), col=c(rep("blue",length(i.abc)), rep("grey",length(i.abc)), "white"))
 }                      
 
-peakplot <- function(peptideSequence, spec, 
+peakplot <- function(peptideSequence,
+    spec, 
     FUN=defaultIon, 
     fi=fragmentIon(peptideSequence, FUN=FUN)[[1]],
     main=NULL,
@@ -143,15 +131,13 @@ peakplot <- function(peptideSequence, spec,
     max.intensity<-max(spec$intensity, na.rm=TRUE)
     yMax <- 1.0 * max.intensity
 
-    op<-par(mar=c(5,5,5,5), cex=0.75)
-
     plot(spec$mZ, spec$intensity,
         xlab='m/z',
         ylab='Intensity',
         type='h',
         main=main,
         xlim=xlim,
-        ylim=c(0,1.2*yMax),
+        ylim=c(0, 1.2 * yMax),
         sub=sub,
         axes='F'
     ) 
@@ -161,11 +147,11 @@ peakplot <- function(peptideSequence, spec,
 
     if (ion.axes){
         if (length(m$idx[LABEL.abc]) > 0){
-            axis(1,spec$mZ[m$idx[LABEL.abc]], m$label[LABEL.abc],las=2)
+            axis(1, spec$mZ[m$idx[LABEL.abc]], m$label[LABEL.abc],las=2)
         }
         axis(2)
         if (length(m$idx[LABEL.xyz]) > 0){
-            axis(3,spec$mZ[m$idx[LABEL.xyz]], m$label[LABEL.xyz], col.axis='blue', las=2)
+            axis(3, spec$mZ[m$idx[LABEL.xyz]], m$label[LABEL.xyz], col.axis='blue', las=2)
         }
     }else{
         axis(1)
@@ -174,23 +160,17 @@ peakplot <- function(peptideSequence, spec,
         a.label <- m$label[LABEL.abc | LABEL.xyz]
 
         if (length(a.at)>0) {
-            axis(3,a.at, a.label,
-                col.axis='black', las=2)
+            axis(3,a.at, a.label, col.axis='black', las=2)
         } else {
             print ("WARNING")
             print (a.at)
             print (a.label)
         }
-
-
-        
         box()
     }
     axis(4,seq(0,yMax,length=6), seq(0,100,length=6))
 
     .peakplot.label(spec=spec, match=m, yMax=yMax)
-
-    par(op)
 
     return(m)
 }                      

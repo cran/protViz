@@ -53,9 +53,9 @@ function is assigned \code{fragmentIon} will
 
   \item{itol}{fragment ion tolerance default is 0.6 Dalton. values below are considered as hit.}
 
-  \item{pattern.abc}{\code{regexpr pattern} for a,b,c like ions. if the pattern does not match ion are not plotted.}
+  \item{pattern.abc}{\code{regexpr pattern} for a, b, c like ions. if the pattern does not match ion are not plotted.}
 
-  \item{pattern.xyz}{\code{regexpr pattern} for x,y,z like ions.}
+  \item{pattern.xyz}{\code{regexpr pattern} for x, y, z like ions.}
 
   \item{ion.axes}{boolean default is \code{TRUE}. determines wether the fragment ion labels should be plotted instead of m/z values.}
 

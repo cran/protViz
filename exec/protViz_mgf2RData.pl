@@ -87,10 +87,13 @@ sub main(){
             print RFILE "scan=" . $_scan.",\n";
             print RFILE "pepmass=" . $_pepmass.",\n";
 
+            push @mZ, 0;
+            push @intensity, 0;
             print RFILE "mZ=c(";
             for (my $ii=0; $ii < $#mZ; $ii++){
                 print RFILE $mZ[$ii];                    
-                print RFILE ", " if ($ii < $#mZ-1);
+
+                print RFILE ", " if ($ii < ($#mZ - 1)); # print a , but at the end
             }
             print RFILE "),\n";
 
@@ -121,10 +124,13 @@ sub main(){
             $_scan = $1;
         }elsif (/^RTINSECONDS=(.+)/){
             $_rtinseconds = $1;
-        }elsif (/^(\d+\.\d+)\s(\d+\.{0,1}\d+)/){
+        }elsif (/^(\d+\.\d+)\s(\d+\.\d{1,10}).*$/){
             push @mZ, $1;
             push @intensity, $2;
         }
+        else{
+        }
+            
    }
 
    print RFILE "save($Rdata , file='" . $Rdata . ".RData', compress=TRUE)\n";

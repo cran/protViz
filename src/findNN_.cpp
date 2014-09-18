@@ -5,7 +5,7 @@
 /*
 
 $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/findNN_.cpp $
-$Id: findNN_.cpp 6534 2014-06-18 12:09:31Z cpanse $
+$Id: findNN_.cpp 6603 2014-08-12 11:17:31Z cpanse $
 
 */
 
@@ -24,9 +24,13 @@ extern "C" {
             if (dist > 0){
                 d = std::fabs(q_[i] - vec_[dist - 1]);
 
-                if (dist <  *n_)
+                if (dist <  *n_){
                     if (d < std::fabs(q_[i] - vec_[dist]))
-                        NN_[i] = dist - 1 ;
+                        NN_[i] = dist - 1;
+                }else if (NN_[i] >= *n_){
+                        NN_[i]--;
+                }
+
             }
         }
     }

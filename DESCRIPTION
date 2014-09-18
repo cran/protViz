@@ -2,8 +2,8 @@ Package: protViz
 Type: Package
 Title: Visualizing and Analyzing Mass Spectrometry Related Data in
         Proteomics
-Version: 0.1.98
-Date: 2014-06-20
+Version: 0.2.06
+Date: 2014-09-18
 Author: Christian Panse <cp@fgcz.ethz.ch>, Jonas Grossmann <jg@fgcz.ethz.ch>, 
     Simon Barkow-Oesterreicher <sb@fgcz.ethz.ch>
 Maintainer: Christian Panse <cp@fgcz.ethz.ch>
@@ -18,12 +18,12 @@ Description: This R package helps with quality checks, visualizations
     used to do solid data analysis for small scale data sets.
 License: GPL-3
 URL: http://fgcz-data.uzh.ch/~cpanse/protViz/
-Collate: parentIonMass.R fragmentIon.R psm.R findNN.R findNN_.R
-        peakplot.R iTRAQ2GroupAnalysis.R pgImporter.R pgLFQ.R pp.R
-        genMod.R swath.R PTM_MarkerFinder.R mdp.R lcmsmap.R de_novo.R
-        deisotoper.R
+Collate: aa2mass.R deisotoper.R de_novo.R findNN_.R findNN.R
+        fragmentIon.R genMod.R iTRAQ2GroupAnalysis.R lcmsmap.R mdp.R
+        parentIonMass.R peakplot.R pgImporter.R pgLFQ.R pp.R psm.R
+        PTM_MarkerFinder.R
 LazyData: true
-Packaged: 2014-06-20 12:50:33 UTC; cpanse
+Packaged: 2014-09-18 07:02:25 UTC; cpanse
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2014-06-25 09:52:30
+Date/Publication: 2014-09-18 09:56:16

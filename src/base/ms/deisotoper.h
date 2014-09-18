@@ -23,7 +23,7 @@ This code belongs to two projects:
     Copyright : Functional Genomics Center Zurich | UZH | ETHZ 2013
 
     $HeadURL: http://fgcz-svn.unizh.ch/repos/fgcz/testing/proteomics/R/protViz/src/base/ms/deisotoper.h $
-    $Id: deisotoper.h 6534 2014-06-18 12:09:31Z cpanse $
+    $Id: deisotoper.h 6678 2014-09-17 12:01:18Z cpanse $
 
 
 */
@@ -360,7 +360,7 @@ namespace ralab{
                     it_chain = result_.isotopChains[max_zIdx][max_chainIdx].begin();
                 }
 		}}else{
-			warnings.push_back("prevent use of uninitialised memory in methode 'result_.isotopInnerProducts'.");
+			//warnings.push_back("prevent use of uninitialised memory in methode 'result_.isotopInnerProducts'.");
             }
             }//foreach group (isotop cluster)
          }

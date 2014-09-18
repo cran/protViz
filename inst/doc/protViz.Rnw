@@ -39,10 +39,8 @@
 \vspace{0.5cm}
 Recent changes, updates, and  new features:
 \begin{itemize}
-\item 0.1.92 added unit tests.
-\item 0.1.91 bugfix rt normailzation in \code{genSwathLib}. 
-\item 0.1.89 replace \code{fragmentIons} by \code{fragmentIon}. 
-\item 0.1.77 bugfix xlim in \code{peakplot} 
+\item 0.2.05 export aa2mass
+\item 0.2.00 peakplot margin bug fix
 \end{itemize}
 \end{center}
 \vspace{0.5cm}
@@ -571,12 +569,12 @@ print(levelplot(Pc ~ time * as.factor(file),
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\section{Session information}\label{sec:sessionInfo}
+\section{Session information}\label{sec:sessionInfo}
 
-%The following lines show the version information about R and attached or loaded packages.
-%<<sessioninfo, results='asis', echo=FALSE>>=
-%toLatex(sessionInfo())
-%@
+<<keep.source = TRUE, eval = TRUE, fig = FALSE>>=
+sessionInfo()
+packageDescription('protViz')
+@
 
 \bibliography{protViz}
 \bibliographystyle{plain}
