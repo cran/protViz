@@ -1,12 +1,10 @@
 %\VignetteIndexEntry{protViz primer}
+
 \documentclass[12pt]{article}
 
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath,pstricks}
 \usepackage{hyperref}
-\usepackage[numbers]{natbib}
 \usepackage{color}
-\usepackage[scaled]{helvet}
 \renewcommand*\familydefault{\sfdefault}
 
 \definecolor{NoteGrey}{rgb}{0.96,0.97,0.98}
@@ -39,8 +37,9 @@
 \vspace{0.5cm}
 Recent changes, updates, and  new features:
 \begin{itemize}
-\item 0.2.05 export aa2mass
-\item 0.2.00 peakplot margin bug fix
+\item 0.2.9 added \code{sigmamix} data
+\item 0.2.5 export aa2mass
+\item 0.2.0 peakplot margin bug fix
 \end{itemize}
 \end{center}
 \vspace{0.5cm}
@@ -55,8 +54,7 @@ Recent changes, updates, and  new features:
 \code{protViz} is an R package to do quality checks, visualizations and analysis of mass spectrometry data, coming from proteomics experiments.
 The package is developed, tested and used at the Functional Genomics Center Zurich. 
 We use this package mainly for prototyping, teaching, and having \code{fun} with proteomics data.
-But it can also be used to do solid data analysis for small scale data sets. Nevertheless, if one is patient, it also handles large data sets.
-%It is {\em not meant} to be used for large scale hight throuhput data processing.
+But it can also be used to do data analysis for small scale data sets. Nevertheless, if one is patient, it also handles large data sets.
 
 \section{Related Work}
 {\em The methode of choice in proteomics is mass spectrometry.}

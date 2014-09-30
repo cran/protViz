@@ -2,12 +2,9 @@
 \documentclass[12pt]{article}
 
 \usepackage[utf8]{inputenc}
-
-\usepackage{amsmath,pstricks}
 \usepackage{hyperref}
-\usepackage[numbers]{natbib}
 \usepackage{color}
-\usepackage[scaled]{helvet}
+
 \renewcommand*\familydefault{\sfdefault}
 
 \definecolor{NoteGrey}{rgb}{0.96,0.97,0.98}
