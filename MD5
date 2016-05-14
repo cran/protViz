@@ -1,13 +1,12 @@
-e818e72f34c5d128e5c90b0e8c3951ae *DESCRIPTION
-b13f3275c18182ee7605dc787fb534a9 *NAMESPACE
-8ca983336d2cf1e4c0d63d78b81538be *NEWS
+385a07ea1ddcf9aad6c0402fe2f84f9b *DESCRIPTION
+1457564521b14b100db776cab9424c9b *NAMESPACE
 5e5c7521ce6a891d4804c3322878c10e *R/PTM_MarkerFinder.R
 641de10c9c6b19b24a92971faea5427c *R/aa2mass.R
 e474472ae1e9a38ba5d12c4f45fda68f *R/de_novo.R
 9d1f99cdebb11e0b49c3b98b767b9879 *R/deisotoper.R
 071d0e5dfaa178d1978fda0428fd4c16 *R/findNN.R
 c9931c1f2b1a0bd2eb4b37868db20896 *R/findNN_.R
-7ac619119b9e57e85823c02d1e6a9fa1 *R/fragmentIon.R
+ecc561e9985b6436127d14b2c478d4da *R/fragmentIon.R
 451317ef11b6a2f96b8694a36552047c *R/genMod.R
 383914886d1596b45fdde36cd38553ce *R/iTRAQ2GroupAnalysis.R
 7930fab3d0babd3a14884a285341909c *R/lcmsmap.R
@@ -19,7 +18,8 @@ c36eba240126b1af709dad766791c406 *R/pgImporter.R
 1bdb82885d61c7ee79332a277f5a2220 *R/pp.R
 c394bb4d63f3b430d55c7ac6ca32027a *R/psm.R
 7593968ba9533e62fd8c752f2a8c01bb *R/sysdata.rda
-477ad30f462815f343afd89090515a84 *build/vignette.rds
+86c8788f5724da476cc923ea755352e6 *README.md
+f2782c65ebcef3889d850ed631447de8 *build/vignette.rds
 a4b835997fe3fe64238836eb5d979742 *data/AA.RData
 a7d9cde11a9f003614841335f8e079e5 *data/HexNAc.RData
 ce174ecc08dde8c7e9a20f639f366228 *data/averagine.RData
@@ -45,6 +45,8 @@ ca2fe9383a60b3c8a0d63481dbf38f9d *exec/protViz_extractPressureProfiles.bash
 6e56290871832dfca27d85b031322397 *exec/protViz_fun.bash
 445006929eb20f78f61818fa48037c71 *exec/protViz_mascotDat2RData.pl
 61612465d8709a41239b82546bdf8876 *exec/protViz_mgf2RData.pl
+43b1b837a44e4473528a37c7781d44cd *inst/CITATION
+270a4fa91b90872abcac93e30c21af87 *inst/NEWS.Rd
 32499fd2711af1d578de0606654541cd *inst/doc/PTM_MarkerFinder.R
 406ab7e25b27085990835e7753a67006 *inst/doc/PTM_MarkerFinder.Rnw
 07f3ced3a0150bd69dfcf5aa71c1a9c7 *inst/doc/PTM_MarkerFinder.pdf
@@ -68,7 +70,7 @@ b164fa16c5abdbd02328de98905ef623 *man/de_novo.Rd
 a61b49e4c574c28df134635ad3d3b0a3 *man/fetuinLFQ.Rd
 82f534e54db0f4fe114185c5f5733437 *man/findNN.Rd
 8f40a136d0cbb23143b2a97c277aae27 *man/findNN_.Rd
-8d47af9f5dcbdb7cf67bc1f23bf02b36 *man/fragmentIons.Rd
+e57eee40e0f0e66062b970b1b430df33 *man/fragmentIons.Rd
 3f2228152c2bb7caff29ea9e450bd78c *man/genMod.Rd
 17dfd02637a460a2a333f75ca66e594c *man/iRTpeptides.Rd
 2e31ca5b84385e4b4f73073444a22cda *man/iTRAQ.Rd
@@ -102,6 +104,6 @@ fe61c67e26d3b61e6c93fc19c1f6d33b *src/computeParentIonMass.c
 75f3ba46f2e925198b12edf3a8d73f5d *src/rcppdeisotoperenvelope.h
 42adb67f2cafa7634115ec6edcb8454d *src/tryptic-digest.c
 868765044bc32c775d787e37ed57fb6a *tests/runTests.R
-406ab7e25b27085990835e7753a67006 *vignettes/PTM_MarkerFinder.Rnw
+a8f3635f4663fe2c2bbd733dd709079c *vignettes/PTM_MarkerFinder.Rnw
 a85bb6ee6a45437f69da79468f5c3151 *vignettes/protViz.Rnw
 389e1eb3e1ceaee3b6ab9010c17c04f8 *vignettes/protViz.bib
