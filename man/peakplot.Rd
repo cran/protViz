@@ -4,6 +4,7 @@
 \alias{peakplot.putlabel}
 \alias{peakplot.pie}
 \alias{peakplot}
+\alias{protViz}
 
 \title{Labelling of Peptide Fragment Mass Spectra}
 
@@ -12,6 +13,8 @@
      \code{peakplot} labels a mass spectrum from a peptide sequence  
      assignment by using the \code{psm} function with the appropriate 
      fragment ion labels.
+     Using \code{peakplot} it is possible to compute the fragment ion 
+     coverage and customize the fragmentation ions used for labelling.
 }
 
 \usage{
@@ -80,40 +83,66 @@ visual clustering effect the abc and xyz ions are drawn on different y-axis
 levels using different colours. Ion types considered for labelling is 
 dependent on the instrument setting applied during the initial search.
 
-on online version can be found here:
-\url{http://fgcz-peakplot.uzh.ch}
+}
+
+\value{
+
+	returns a list object containing all the peptide spectrum match information.
 
 }
 
 \author{
 
-   Bertran Gerrits, Christian Panse 2006-2012; 
+   Bertran Gerrits, Christian Panse 
    
-   \code{peakplot} has been used for generating supplemental material in
+   2006-2016; 
 
-    \url{http://www.ncbi.nlm.nih.gov/pubmed/17114649}
+}
+   
+\references{
 
-    \url{http://www.ncbi.nlm.nih.gov/pubmed/17940529}
+   \code{\link{peakplot}} has been used for generating 
+   figures and supplemental material in
+   
+   \itemize{
 
-    \url{http://www.ncbi.nlm.nih.gov/pubmed/22693562}
+    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/17114649}}
 
+    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/17940529}}
+
+    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/22693562}}
+
+    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/23713006}}
+    
+    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/26944343}}
+}
+}
+
+\seealso{
+\itemize{
+	 \item{\code{\link{fragmentIon}}}
+	 
+	 \item{\code{\link{psm}}}
+	 
+	 \item{\code{\link{PTM_MarkerFinder}}}
+		}
 }
 
 
 \examples{
 
     data(msms)
-    op<-par(mfrow=c(2,1))
+    op <- par(mfrow=c(2,1))
     peakplot("TAFDEAIAELDTLNEESYK", msms[[1]])
     peakplot("TAFDEAIAELDTLSEESYK", msms[[2]])
     par(op)
 
 
     # filter cand. fragment ions
-    fi<-fragmentIon("TAFDEAIAELDTLNEESYK")
-    fi.cyz<-as.data.frame(cbind(c=fi[[1]]$c, y=fi[[1]]$y, z=fi[[1]]$z))
+    fi <- fragmentIon("TAFDEAIAELDTLNEESYK")
+    fi.cyz <- as.data.frame(cbind(c=fi[[1]]$c, y=fi[[1]]$y, z=fi[[1]]$z))
 
-    p<-peakplot("TAFDEAIAELDTLNEESYK", spec=msms[[1]],
+    p <- peakplot("TAFDEAIAELDTLNEESYK", spec=msms[[1]],
         fi=fi.cyz,
         itol=0.6,
         ion.axes=FALSE)

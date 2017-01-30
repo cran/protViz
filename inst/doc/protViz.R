@@ -1,8 +1,13 @@
 ### R code from vignette source 'protViz.Rnw'
-### Encoding: UTF-8
 
 ###################################################
-### code chunk number 1: protViz.Rnw:137-157
+### code chunk number 1: protViz.Rnw:39-40
+###################################################
+options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
+
+
+###################################################
+### code chunk number 2: protViz.Rnw:128-148
 ###################################################
 library(protViz)
 op<-par(mfrow=c(1,1))
@@ -27,13 +32,13 @@ hist(pm, xlab="peptide mass [in Da]")
 
 
 ###################################################
-### code chunk number 2: protViz.Rnw:166-167
+### code chunk number 3: protViz.Rnw:157-158
 ###################################################
 defaultIon
 
 
 ###################################################
-### code chunk number 3: protViz.Rnw:170-195
+### code chunk number 4: protViz.Rnw:161-186
 ###################################################
 peptides<-c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
 
@@ -63,15 +68,15 @@ for (i in 1:length(peptides)){
 
 
 ###################################################
-### code chunk number 4: protViz.Rnw:199-202
+### code chunk number 5: protViz.Rnw:190-193
 ###################################################
 Hydrogen<-1.007825
-(fi.HTLNQIDSVK.1<-fragmentIon('HTLNQIDSVK'))[[1]]
-(fi.HTLNQIDSVK.2<-(fi.HTLNQIDSVK.1[[1]] + Hydrogen) / 2)
+(fi.HTLNQIDSVK.1 <- fragmentIon('HTLNQIDSVK'))[[1]]
+(fi.HTLNQIDSVK.2 <-(fi.HTLNQIDSVK.1[[1]] + Hydrogen) / 2)
 
 
 ###################################################
-### code chunk number 5: protViz.Rnw:216-255
+### code chunk number 6: protViz.Rnw:207-246
 ###################################################
     peptideSequence<-'HTLNQIDSVK'
     spec<-list(scans=1138,
@@ -90,14 +95,14 @@ Hydrogen<-1.007825
     1267, 1542, 979.2, 9577, 3283, 9441, 1520, 1310, 1.8e+04,
     587.5, 2685, 671.7, 3734, 8266, 3309))
 
-    fi<-fragmentIon(peptideSequence)
-    n<-nchar(peptideSequence)
+    fi <- fragmentIon(peptideSequence)
+    n <- nchar(peptideSequence)
 
     by.mZ<-c(fi[[1]]$b, fi[[1]]$y)
     by.label<-c(paste("b",1:n,sep=''), paste("y",n:1,sep=''))
 
     # should be a R-core function as findInterval!
-    idx<-findNN(by.mZ, spec$mZ) 
+    idx <- findNN(by.mZ, spec$mZ) 
 
     mZ.error<-abs(spec$mZ[idx]-by.mZ)
 
@@ -115,7 +120,7 @@ Hydrogen<-1.007825
 
 
 ###################################################
-### code chunk number 6: protViz.Rnw:261-291
+### code chunk number 7: protViz.Rnw:252-282
 ###################################################
 library(protViz)
 
@@ -150,17 +155,51 @@ fi<-fragmentIon(c('TAFDEAIAELDTLSEESYK',
 
 
 ###################################################
-### code chunk number 7: protViz.Rnw:299-304
+### code chunk number 8: protViz.Rnw:290-295
 ###################################################
 data(msms)
-op<-par(mfrow=c(2,1))
+op <- par(mfrow=c(2,1))
 peakplot("TAFDEAIAELDTLNEESYK", msms[[1]])
 peakplot("TAFDEAIAELDTLSEESYK", msms[[2]])
 par(op)
 
 
 ###################################################
-### code chunk number 8: protViz.Rnw:322-354
+### code chunk number 9: protViz.Rnw:304-333
+###################################################
+peptideSearch <- function (x, 
+                           peptideSequence, 
+                           pimIdx = parentIonMass(peptideSequence), 
+    peptideMassTolerancePPM = 5, 
+    framentIonMassToleranceDa = 0.01, 
+    FUN = .byIon) 
+{
+    query.mass <- ((x$pepmass * x$charge)) - (1.007825 * (x$charge - 
+        1))
+    eps <- query.mass * peptideMassTolerancePPM * 1e-06
+    lower <- findNN(query.mass - eps, pimIdx)
+    upper <- findNN(query.mass + eps, pimIdx)
+    rv <- lapply(peptideSequence[lower:upper], function(p) {
+        psm(p, x, plot = FALSE, FUN = FUN)
+    })
+    rv.error <- sapply(rv, function(p) {
+        sum(abs(p$mZ.Da.error) < framentIonMassToleranceDa)
+    })
+    idx.tophit <- which(rv.error == max(rv.error))[1]
+    data.frame(mass_error = eps, 
+               idxDiff = upper - lower, 
+               charge = x$charge, 
+              pepmass = query.mass, 
+              peptideSequence = rv[[idx.tophit]]$sequence, 
+              groundTrue.peptideSequence = x$peptideSequence, 
+              ms2hit = (rv[[idx.tophit]]$sequence == 
+              x$peptideSequence), hit = (x$peptideSequence %in% 
+              peptideSequence[lower:upper]))
+}
+
+
+###################################################
+### code chunk number 10: protViz.Rnw:351-383
 ###################################################
 library(lattice)
 data(fetuinLFQ)
@@ -197,7 +236,7 @@ print(xyplot(abundance~conc|prot*method,
 
 
 ###################################################
-### code chunk number 9: protViz.Rnw:366-391
+### code chunk number 11: protViz.Rnw:395-420
 ###################################################
 data(pgLFQfeature)
 data(pgLFQprot)
@@ -227,7 +266,7 @@ featureDensityPlot(asinh(pgLFQfeature$"Normalized abundance"),
 
 
 ###################################################
-### code chunk number 10: protViz.Rnw:397-411
+### code chunk number 12: protViz.Rnw:426-440
 ###################################################
 op<-par(mfrow=c(1,1),mar=c(18,18,4,1),cex=0.5)
 samples<-names(pgLFQfeature$"Normalized abundance")
@@ -246,7 +285,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 11: protViz.Rnw:416-426
+### code chunk number 13: protViz.Rnw:445-455
 ###################################################
 op<-par(mfrow=c(1,1),mar=c(18,18,4,1),cex=0.5)
 image(cor(asinh(pgLFQprot$"Normalized abundance")),
@@ -261,7 +300,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 12: protViz.Rnw:433-439
+### code chunk number 14: protViz.Rnw:462-468
 ###################################################
 par(mfrow=c(2,2),mar=c(6,3,4,1))
 ANOVA<-pgLFQaov(pgLFQprot$"Normalized abundance", 
@@ -272,7 +311,7 @@ ANOVA<-pgLFQaov(pgLFQprot$"Normalized abundance",
 
 
 ###################################################
-### code chunk number 13: protViz.Rnw:450-459
+### code chunk number 15: protViz.Rnw:479-488
 ###################################################
 data(iTRAQ)
 x<-rnorm(100)
@@ -286,7 +325,7 @@ b<-boxplot(asinh(iTRAQ[,c(3:10)]), main='boxplot iTRAQ')
 
 
 ###################################################
-### code chunk number 14: protViz.Rnw:466-499
+### code chunk number 16: protViz.Rnw:495-528
 ###################################################
 data(iTRAQ)
 group1Protein<-numeric()
@@ -324,7 +363,7 @@ for (i in 1:nrow(group1Protein)){
 
 
 ###################################################
-### code chunk number 15: protViz.Rnw:508-515
+### code chunk number 17: protViz.Rnw:537-544
 ###################################################
 data(iTRAQ)
 q<-iTRAQ2GroupAnalysis(data=iTRAQ, 
@@ -336,14 +375,14 @@ q[1:10,]
 
 
 ###################################################
-### code chunk number 16: protViz.Rnw:526-528
+### code chunk number 18: protViz.Rnw:555-557
 ###################################################
 data(pressureProfile)
 ppp(pressureProfile)
 
 
 ###################################################
-### code chunk number 17: protViz.Rnw:537-553
+### code chunk number 19: protViz.Rnw:566-582
 ###################################################
 pp.data<-pps(pressureProfile, time=seq(25,40,by=5))
 print(xyplot(Pc ~ as.factor(file) | paste("time =", 
@@ -364,7 +403,7 @@ print(xyplot(Pc ~ as.factor(file) | paste("time =",
 
 
 ###################################################
-### code chunk number 18: protViz.Rnw:558-563
+### code chunk number 20: protViz.Rnw:587-592
 ###################################################
 pp.data<-pps(pressureProfile, time=seq(0,140,length=128))
 print(levelplot(Pc ~ time * as.factor(file),
@@ -374,7 +413,7 @@ print(levelplot(Pc ~ time * as.factor(file),
 
 
 ###################################################
-### code chunk number 19: protViz.Rnw:572-574
+### code chunk number 21: protViz.Rnw:601-603
 ###################################################
 sessionInfo()
 packageDescription('protViz')
