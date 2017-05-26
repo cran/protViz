@@ -4,25 +4,26 @@
 # $Date: 2014-03-13 15:22:34 +0100 (Thu, 13 Mar 2014) $
 
 
+
 # TODO 
 # compute score by sum of error div. by number of hits
 
-psm<-function(sequence, spec, FUN=defaultIon,
-    plot=TRUE, 
-    fi=fragmentIon(sequence, FUN=FUN)[[1]],
-    fragmentIonError=0.6) { 
+psm <- function(sequence, spec, FUN = defaultIon,
+    plot = TRUE, 
+    fi = fragmentIon(sequence, FUN=FUN)[[1]],
+    fragmentIonError = 0.6) { 
 
-    n<-nchar(sequence)
+    n <- nchar(sequence)
 
-    pim<-fi$y[nrow(fi)]
+    pim <- fi$y[nrow(fi)]
 
     # consider only b and y ions
     # by.mZ<-c(fi$b, fi$y)
     # by.label<-c(paste("b",1:n,sep=''), paste("y",1:n,sep=''))
 
-    by.mZ<-numeric()
-    by.label<-character()
-    fi.names<-names(fi)
+    by.mZ <- numeric()
+    by.label <- character()
+    fi.names <- names(fi)
 
     for (i in 1:ncol(fi)){
         by.mZ <- c(by.mZ, fi[,i])
@@ -30,7 +31,7 @@ psm<-function(sequence, spec, FUN=defaultIon,
     }
 
 
-    out <- .C("findNN_",
+    out <- .C("__findNN_",
         nbyion=as.integer(length(by.mZ)),
         nmZ=as.integer(length(spec$mZ)),
         byion=as.double(by.mZ),

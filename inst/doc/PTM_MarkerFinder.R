@@ -139,7 +139,13 @@ S <- PTM_MarkerFinder(data = d, modification = m$mono,
 
 
 ###################################################
-### code chunk number 14: sessioninfo
+### code chunk number 14: PTM_MarkerFinder.Rnw:257-258
+###################################################
+ADP_Ribose <- c(136.0618, 250.0935, 348.0704, 428.0367)
+
+
+###################################################
+### code chunk number 15: sessioninfo
 ###################################################
 toLatex(sessionInfo())
 

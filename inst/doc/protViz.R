@@ -24,8 +24,8 @@ fetuin<-c('MK', 'SFVLLFCLAQLWGCHSIPLDPVAGYK',
 'VTCTLFQTQPVIPQPQPDGAEAEAPSAVPDAAGPTPSAAGPPVASVVVGPSVVAVPLPLHR',
 'AHYDLR', 'HTFSGVASVESSSGEAFHVGK',
 'TPIVGQPSIPGGPVR', 'LCPGR', 'IR', 'YFK', 'I')
-(pm<-parentIonMass(fetuin))
-op<-par(mfrow=c(2,1))
+(pm <- parentIonMass(fetuin))
+op <- par(mfrow=c(2,1))
 plot(pm, ylab="peptide mass [in Da]", 
     main="Fetuin Peptide tryptic digested.")
 hist(pm, xlab="peptide mass [in Da]")
@@ -104,7 +104,7 @@ Hydrogen<-1.007825
     # should be a R-core function as findInterval!
     idx <- findNN(by.mZ, spec$mZ) 
 
-    mZ.error<-abs(spec$mZ[idx]-by.mZ)
+    mZ.error <- abs(spec$mZ[idx]-by.mZ)
 
     plot(mZ.error[mZ.error.idx<-order(mZ.error)],
         main="Error Plot",
@@ -124,23 +124,23 @@ Hydrogen<-1.007825
 ###################################################
 library(protViz)
 
-ptm.0<-cbind(AA="-", 
+ptm.0 <- cbind(AA="-", 
     mono=0.0, avg=0.0, desc="unmodified", unimodAccID=NA)
 
-ptm.616<-cbind(AA='S',
+ptm.616 <- cbind(AA='S',
     mono=-27.010899, avg=NA, desc="Substituition", 
     unimodAccID=616)
 
-ptm.651<-cbind(AA='N',
+ptm.651 <- cbind(AA='N',
     mono=27.010899, avg=NA, desc="Substituition", 
     unimodAccID=651)
 
 
-m<-as.data.frame(rbind(ptm.0, ptm.616, ptm.651))
+m <- as.data.frame(rbind(ptm.0, ptm.616, ptm.651))
 
 genMod(c('TAFDEAIAELDTLNEESYK','TAFDEAIAELDTLSEESYK'), m$AA)
 
-fi<-fragmentIon(c('TAFDEAIAELDTLSEESYK', 
+fi <- fragmentIon(c('TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK'), 
         modified=c('0000000000000200000', 
