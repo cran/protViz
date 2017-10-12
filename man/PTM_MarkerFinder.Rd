@@ -2,6 +2,9 @@
 
 \alias{PTM_MarkerFinder}
 \alias{pPTM}
+\alias{findMz}
+\alias{findMz.mascot}
+\alias{findMz.psmSet}
 
 \title{PTM MarkerFinder}
 
@@ -24,6 +27,12 @@ PTM_MarkerFinder(data,
     mgfFilename=-1,
     PEAKPLOT=TRUE
     )
+
+findMz(data, mZmarkerIons, itol_ppm = 10, minNumberIons = 2, minMarkerIntensityRatio = 10)
+
+\method{findMz}{psmSet}(data, mZmarkerIons, itol_ppm, minNumberIons, minMarkerIntensityRatio)
+
+\method{findMz}{mascot}(data, mZmarkerIons, itol_ppm = 10, minNumberIons = 2, minMarkerIntensityRatio = 10)
 
 }
 
@@ -60,6 +69,7 @@ intensities.}
 
   \item{PEAKPLOT}{If this boolean is \code{FALSE} the \code{peakplot} function is not used.}
 
+  \item{\dots}{passed}
 }
 
 \details{
@@ -69,7 +79,8 @@ Translational Modifications (PTMs). The function requires an R-object containing
 the mass spectrometric measurement, the peptide assignments, potential
 modification information, and a list of marker ions. The R-object can be
 retrieved right out of the Mascot Server search result dat files using a perl
-script \code{mascotDat2RData.pl} which is include as  protViz.
+script \code{mascotDat2RData.pl} which is included in the package's \code{exec/} 
+directory.
 
 The functions iterates over each spectrum of the mass spectrometric measurement
 and searches for the as input provided marker ions. If a certain number of

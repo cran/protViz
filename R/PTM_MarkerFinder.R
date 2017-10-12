@@ -478,4 +478,3 @@ PTM_MarkerFinder_util<-function(dataFileName,
 }
 
 # ToDo adapt the parameter mZmarkerIon in all function 
-

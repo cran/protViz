@@ -5,6 +5,7 @@
 \alias{peakplot.pie}
 \alias{peakplot}
 \alias{protViz}
+\alias{plot.psm}
 
 
 \title{Labelling of Peptide Fragment Mass Spectra}
@@ -48,7 +49,7 @@ function is assigned \code{fragmentIon} will
 
   \item{fi}{fragment ion table, if not specified 
   \code{fragmentIon(sequence, FUN=FUN)[[1]]} is called.
-  This argument is usefull if you have PTM or specific ion series.}
+  This argument is useful if you have PTM or specific ion series.}
 
   \item{sub}{a sub title for the plot}
   \item{main}{a main title for the plot}
@@ -61,15 +62,17 @@ function is assigned \code{fragmentIon} will
 
   \item{pattern.xyz}{\code{regexpr pattern} for x, y, z like ions.}
 
-  \item{ion.axes}{boolean default is \code{TRUE}. determines wether the fragment ion labels should be plotted instead of m/z values.}
+  \item{ion.axes}{boolean default is \code{TRUE}. determines whether the fragment ion labels should be plotted instead of m/z values.}
 
 }
 
 \details{
 
-\code{peakplot} computes the in-silico fragment ion and matches them again 
-the MS2. If the mass error between the in-silico peak and the meassured one 
-is below a 0.6 Da (default setting) the match is considered has hit.
+\code{peakplot} computes the in-silico fragment ion, using the 
+\code{\link{fragmentIon}} function, and matches them again 
+the MS2. If the mass error between the in-silico peak and the measured one 
+is below a 0.6 Da (default setting) the peptide spectrum match 
+(\code{\link{psm}}) is considered has hit.
 
 The major objective of the labelling is avoidance of overlapping labels for 
 which purpose \code{peakplot} applies filtering. A label is only drawn if the 
@@ -79,8 +82,8 @@ a good cut off value. To most efficiently use the limited screen and printout
 space and to ensure that labels representing important local peaks are also 
 considered for drawing, \code{peakplot} divides the display space into a 
 number of bins depending on the peptide sequence length along the m/z axis. 
-From these bins the top n labels are ordered according to abundance. For the 
-visual clustering effect the abc and xyz ions are drawn on different y-axis 
+From these bins, the top n labels are ordered according to abundance. For the 
+visual clustering effect, the abc and xyz ions are drawn on different y-axis 
 levels using different colours. Ion types considered for labelling is 
 dependent on the instrument setting applied during the initial search.
 
@@ -88,7 +91,8 @@ dependent on the instrument setting applied during the initial search.
 
 \value{
 
-	returns a list object containing all the peptide spectrum match information.
+	returns a list object containing all the peptide spectrum match relevant
+	information.
 
 }
 
@@ -96,16 +100,35 @@ dependent on the instrument setting applied during the initial search.
 
    Bertran Gerrits, Christian Panse 
    
-   2006-2016; 
+   2006-2017; 
 
 }
    
 \references{
 
-   \code{\link{peakplot}} has been used for generating 
-   figures and supplemental material in
+  \itemize{
+  \item PEAKPLOT: Visualizing Fragmented Peptide Mass Spectra in Proteomics (2009)
+  Panse Christian, Gerrits Bertran, Schlapbach Ralph, useR!2009,
+  
+  abstract: \url{https://www.r-project.org/conferences/useR-2009/abstracts/pdf/Panse+Gerrits+Schlapbach.pdf},
+  
+  slides: \url{https://www.r-project.org/conferences/useR-2009/slides/Panse+Gerrits+Schlapbach.pdf}.
+  }
+}
+
+\seealso{
+\itemize{
+
+   \item \link{mascot}
    
-   \itemize{
+	 \item{\code{\link{fragmentIon}}}
+	 
+	 \item{\code{\link{psm}}}
+	 
+	 \item{\code{\link{PTM_MarkerFinder}}}
+		
+		\item \code{\link{peakplot}} has been used for generating 
+   figures and supplemental material in:    \itemize{
 
     \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/17114649}}
 
@@ -116,17 +139,8 @@ dependent on the instrument setting applied during the initial search.
     \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/23713006}}
     
     \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/26944343}}
-}
-}
-
-\seealso{
-\itemize{
-	 \item{\code{\link{fragmentIon}}}
-	 
-	 \item{\code{\link{psm}}}
-	 
-	 \item{\code{\link{PTM_MarkerFinder}}}
-		}
+    }
+  }
 }
 
 
@@ -147,6 +161,20 @@ dependent on the instrument setting applied during the initial search.
         fi=fi.cyz,
         itol=0.6,
         ion.axes=FALSE)
+        
+          
+    # customizing the ion series
+    ions <- function(b, y){
+      Hydrogen <- 1.007825
+      Oxygen <- 15.994915
+      Nitrogen <- 14.003074
+  
+      y0 <- fi$y - Oxygen - Hydrogen - Hydrogen
+      c <- b + (Nitrogen + (3 * Hydrogen))
+      z <- y - (Nitrogen + (3 * Hydrogen))
+      
+      return(cbind(b, y, c ,z, y0))
+  }
 
 }
 

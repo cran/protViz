@@ -3,11 +3,19 @@
 \newcommand{\ghpr}{\href{https://github.com/protViz/protViz/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/protViz/protViz/issues/#1}{##1}}
 
+\section{Changes in protViz version 0.2.37 (2017-10-11)}{
+  \itemize{
+    \item \code{initial as.data.frame} function.
+    \item added unit test for \code{ssrc} function.
+    \item  deleted  superfluous sigmamix data; please use \url{http://bioconductor.org/packages/msqc1/} described in \url{http://doi.org/10.1002/pmic.201500502}.
+  }
+}
+
 \section{Changes in protViz version 0.2.31 (2017-05-26)}{
   \itemize{
     \item fixed ``register native routine issue'' by using \code{tools::package_native_routine_registration_skeleton(".")} and renaming .C exports to \code{__findNN_} and \code{__findNN} \ghit{1}.
     
-    \item added suport for Matrixce Sciense Mascot xml export; new S3classes: \code{mascot} and \code{mascot_query}.
+    \item added support for Matrixce Sciense Mascot xml export; new S3classes: \code{mascot} and \code{mascot_query}.
     
     \item cosmetics on \code{protViz.Rnw} vignette file.
     

@@ -2,11 +2,12 @@ Package: protViz
 Type: Package
 Title: Visualizing and Analyzing Mass Spectrometry Related Data in
         Proteomics
-Version: 0.2.31
-Authors@R: c(person("Christian", "Panse", email = "cp@fgcz.ethz.ch", role = c("aut", "cre")),
+Version: 0.2.37
+Authors@R: c(person("Christian", "Panse", email = "cp@fgcz.ethz.ch", role = c("aut", "cre"), 
+        comment = c(ORCID = "0000-0003-1975-3064")),
 	person("Jonas", "Grossmann", email = "jg@fgcz.ethz.ch", role = "aut"),
 	person("Simon", "Barkow-Oesterreicher", role = "ctb"))
-Author: Christian Panse [aut, cre],
+Author: Christian Panse [aut, cre] (0000-0003-1975-3064),
 	Jonas Grossmann [aut],
 	Simon Barkow-Oesterreicher [ctb]
 Maintainer: Christian Panse <cp@fgcz.ethz.ch>
@@ -29,5 +30,5 @@ Collate: aa2mass.R deisotoper.R de_novo.R findNN_.R findNN.R
 LazyData: true
 NeedsCompilation: yes
 Repository: CRAN
-Packaged: 2017-05-26 15:19:00 UTC; cpanse
-Date/Publication: 2017-05-26 21:23:22 UTC
+Packaged: 2017-10-11 14:35:28 UTC; cp
+Date/Publication: 2017-10-12 20:51:46 UTC

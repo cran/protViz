@@ -14,9 +14,20 @@ vignette('PTM_MarkerFinder')
 ### CRAN
 
 ```
-install.package('protViz')
+install.packages('protViz')
 ```
 
+
+### from [github](https://github.com/protViz/protViz)
+
+install the latest development version
+
+```{r}
+install.packages('devtools')
+library(devtools)
+install_git('https://github.com/protViz/protViz', build_vignettes = TRUE, quiet = FALSE)
+library(protViz)
+```
 
 ### Docker
 
@@ -30,14 +41,16 @@ connect to http://yourdockerhost:8791  using a web browser
 * username: rstudio
 * password: rstudio
 
-## Author
 
-Christian Panse, 2006-2017
+## Documentation
 
-## License
+The package ships with a package vignette (browseVignettes('protViz') and a reference manual (just type ?protViz on the R shell).
 
-[GPL 3](http://www.gnu.org/licenses/gpl-3.0.en.html)
+Both documents are also available on the [package's CRAN](https://CRAN.R-project.org/package=protViz) page.
 
+
+## Related approaches
+
+* [RforProteomics](http://bioconductor.org/packages/RforProteomics/)
 
 [![Research software impact](http://depsy.org/api/package/cran/protViz/badge.svg)](http://depsy.org/package/r/protViz)
-
