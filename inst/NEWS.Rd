@@ -3,6 +3,15 @@
 \newcommand{\ghpr}{\href{https://github.com/protViz/protViz/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/protViz/protViz/issues/#1}{##1}}
 
+\section{Changes in protViz version 0.2.45 (2017-11-17)}{
+  \itemize{
+    \item implement Rcpp module \code{Fasta} \ghit{3}.
+    \item added the Swiss-Prot P12763 protein for testing.
+    \item added \code{C++} STL \code{lower_bound} method.
+	  \item added orcid in DESCRIPTION file 
+  }
+}
+
 \section{Changes in protViz version 0.2.37 (2017-10-11)}{
   \itemize{
     \item \code{initial as.data.frame} function.

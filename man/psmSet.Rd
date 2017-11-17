@@ -3,7 +3,6 @@
 \alias{is.psmSet}
 \alias{as.psmSet.mascot}
 \alias{as.psmSet}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
   psmSet - a set of peptide spectrum matches
 }
@@ -14,17 +13,16 @@ defines a class of peptide spectrum matches.
 
 is.psmSet(object)
 
+
  \method{as.psmSet}{mascot}(object, \dots)
 
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
+  
   an \code{psmSet} S3 class object
 }
-  \item{\dots}{
-...
-}
+\item{\dots}{whatoever}
 }
 \details{
 the \code{is.psmSet} method checks if the as input given objects fullfills the 
@@ -37,5 +35,5 @@ while \code{is.psmSet} returns \code{TRUE} or \code{FALSE},
 \code{as.psmSet} returns an instance of \code{psmSet} or \code{NULL}.
 }
 \author{
-Christian Panse
+  Christian Panse 2017
 }

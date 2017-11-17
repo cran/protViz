@@ -1,10 +1,18 @@
 #R
 # Christian Panse <cp@fgcz.ethz.ch> 20170525
 
-.get_ <- function(obj, attribute = 'query_moverz') {
-  as.vector(unlist(lapply(obj$queries, function(x){
-    x[attribute]
-  })))
+.get_ <- function(obj, attribute = 'query_moverz', FUN=as.double) {
+  as.vector(unlist(
+    lapply(obj$queries, function(x){
+      
+      if (!attribute %in% names(x)){
+        return(NA)
+      }  
+      rv <- FUN(x[[attribute]])
+              
+      rv
+    })
+  ))
 }
 
 .get_q_peptide <- function(obj, attribute = 'pep_seq'){
@@ -24,7 +32,7 @@
 #'
 #' @param a mascot object 
 #'
-#' @author Bernd Roschitzki, 2017
+#' @author Bernd Roschitzki, 2017,
 #' @return a data.frame
 #' @export
 #'
@@ -41,9 +49,9 @@ as.data.frame.mascot <- function(x, ...){
   # %in%
   # shiny cut-off score
   # reformat charge into integer
-  data.frame(RTINSECONDS = as.numeric(.get_(x, attribute = "RTINSECONDS")), 
-             moverz = as.numeric(.get_(x, attribute = "query_moverz")), 
-             query_charge = .get_(x, attribute = 'query_charge'),
+  data.frame(RTINSECONDS = .get_(x, attribute = "RTINSECONDS"), 
+             moverz = .get_(x, attribute = "query_moverz"), 
+             query_charge = .get_(x, attribute = 'query_charge', FUN=as.character),
              SCANS = .get_(x, attribute = 'SCANS'),
              TotalIonsIntensity = as.numeric(.get_(x, attribute = 'TotalIonsIntensity')),
              pep_exp_mz = .get_q_peptide(x, attribute = 'pep_exp_mz'),
@@ -272,4 +280,61 @@ plot.mascot_query <- function(x, obj = NULL, FUN=defaultIon, ...){
   }
 }
   
+#' compute in-silico MS2 
+#'
+#' @param x list of peptide sequences
+#' @param filename 
+#' @param FUN 
+#'
+#' @description 
+#' BEGIN IONS
+#' TITLE=20051201_01.100.100.2.dta
+#' CHARGE=2+
+#' PEPMASS=413.7629680175
+#' 
+#' @return
+#' @export
+#'
+#' @examples
+.peptide2mgf <- function(x, file = "/dev/stdout" , FUN = defaultIon){
+  fi <- fragmentIon(x, FUN=FUN)
+  mZ <- as.vector(unlist(fi[[1]]))
+  intensity <- rexp(n = length(mZ), rate = 0.001)
+  idx <- order(mZ)
   
+  cat("BEGIN IONS",sep = "\n", file=file, append = TRUE)
+  cat(paste("TITLE", paste("in-silico MS2 spec of", x), sep='='), sep = "\n", file = file, append = TRUE)
+  cat(paste("PEPMASS", parentIonMass(x), sep='='), sep = "\n", file = file, append = TRUE)
+  cat(paste("CHARGE", "1+", sep='='), sep = "\n", file=file, append = TRUE)
+  cat(paste("RTINSECONDS", ssrc(x) * 3600, sep='='), file=file, append = TRUE)
+  cat(paste(mZ[idx], intensity[idx], sep=" "), sep = "\n", file = file, append = TRUE)
+  cat("END IONS", sep = "\n\n", file = file, append = TRUE)
+}
+
+
+#' hydrophobicity prediction ~ RTINSECONDS
+#'
+#' @param x mascot object
+#' @param scores 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' 
+#' load(url("http://fgcz-ms.uzh.ch/~cpanse/p1875/F255744.RData"))
+#' .ssrc.mascot(F255744)
+#' 
+.ssrc.mascot <- function(x, scores=c(10,20,40,50)){
+  x<-as.data.frame.mascot(x)
+  lapply(scores, function(scorecutoff){
+    xx <- x[x$pep_score > scorecutoff  & !is.na(x$pep_score), ]
+    xx.ssrc <- sapply(as.character(xx$pep_seq), ssrc)
+    xx.lm <- lm(xx.ssrc ~ xx$RTINSECONDS)
+    plot(xx.ssrc ~ xx$RTINSECONDS, 
+         pch=16, col=rgb(0.1,0.1,0.1,alpha = 0.1),
+         sub=paste("mascot score cutoff :", scorecutoff, "r.squared: ", round(summary(xx.lm)$r.squared,2)))
+    abline(xx.lm, col='cornflowerblue')
+    summary(xx.lm)
+  })
+}

@@ -1,4 +1,7 @@
+export(Fasta)
+
 useDynLib(protViz, .registration = TRUE)
+#useDynLib(protViz)
 
 import("methods")
 import("Rcpp")
@@ -17,15 +20,17 @@ importFrom("stats", "aov", "cor", "dist", "dnorm", "quantile",
              "reshape", "sd", "t.test")
 
 importFrom("utils", "combn", "packageVersion", "read.table",
-             "write.table")
+             "write.table", "object.size")
 
-importFrom("utils", "packageVersion")
+
+importFrom("stats", "rexp")
+
 
 export("aa2mass")
 export("defaultIon")
 export("deisotoper")
 export("de_novo")
-export("findNN_")
+export("findNN_", "lower_bound_")
 export("findNN")
 export("fragmentIon")
 export("genMod")
@@ -75,4 +80,12 @@ S3method(findMz, mascot)
 S3method(as.psmSet, mascot)
 export("plot.mascot", "plot.mascot_query", "summary.mascot",
        "as.data.frame.mascot", "is.mascot", "is.mascot_query",
-       "findMz.mascot")
+       "findMz.mascot", "as.psm.mascot_query")
+
+
+#S3method(is, FASTA)
+#S3method(as, FASTA)
+#S3method(summary, FASTA)
+
+#export("is.FASTA", "as.FASTA", "summary.FASTA", "read.FASTA")
+#export("summary.FASTA")
