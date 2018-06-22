@@ -28,7 +28,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 3: poster.Rnw:151-154
+### code chunk number 3: poster.Rnw:150-153
 ###################################################
 defaultIon
 peptides <- c('HTLNQIDSVK')
@@ -63,7 +63,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 5: poster.Rnw:188-193
+### code chunk number 5: poster.Rnw:187-192
 ###################################################
 fi.HTLNQIDSVK.1 <- 
 fragmentIon('HTLNQIDSVK')[[1]]
@@ -87,7 +87,7 @@ print.xtable(xtable(df,
 
 
 ###################################################
-### code chunk number 7: poster.Rnw:220-235
+### code chunk number 7: poster.Rnw:219-234
 ###################################################
 spec <- list(scans=1138,
    title = "178: (rt=22.3807) [20080816_23_fetuin_160.RAW]",
@@ -107,7 +107,7 @@ spec <- list(scans=1138,
 
 
 ###################################################
-### code chunk number 8: poster.Rnw:238-247
+### code chunk number 8: poster.Rnw:237-246
 ###################################################
 peptideSequence <- 'HTLNQIDSVK'
 str(spec, nchar.max = 25, vec.len = 2)
@@ -164,7 +164,7 @@ print(xyplot(abundance ~ conc | prot * method,
 
 
 ###################################################
-### code chunk number 11: poster.Rnw:324-326
+### code chunk number 11: poster.Rnw:323-325
 ###################################################
 data(pgLFQfeature)
 data(pgLFQprot)

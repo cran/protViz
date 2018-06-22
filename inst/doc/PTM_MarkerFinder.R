@@ -2,13 +2,13 @@
 ### Encoding: UTF-8
 
 ###################################################
-### code chunk number 1: PTM_MarkerFinder.Rnw:65-66
+### code chunk number 1: PTM_MarkerFinder.Rnw:66-67
 ###################################################
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 
 
 ###################################################
-### code chunk number 2: PTM_MarkerFinder.Rnw:76-79
+### code chunk number 2: PTM_MarkerFinder.Rnw:77-80
 ###################################################
 library(protViz)
 data(HexNAc)
@@ -16,14 +16,14 @@ str(HexNAc[[1]], nchar.max=30)
 
 
 ###################################################
-### code chunk number 3: PTM_MarkerFinder.Rnw:100-102
+### code chunk number 3: PTM_MarkerFinder.Rnw:101-103
 ###################################################
 HexNAc_MarkerIons <- c(126.05495, 138.05495, 144.06552,
    168.06552, 186.07608, 204.08665)
 
 
 ###################################################
-### code chunk number 4: PTM_MarkerFinder.Rnw:108-120
+### code chunk number 4: PTM_MarkerFinder.Rnw:109-121
 ###################################################
 ptm.0 <- cbind(AA = "-",
 	mono = 0.0, avg = 0.0, desc = "unmodified", unimodAccID = NA)
@@ -40,7 +40,7 @@ m <- as.data.frame(rbind(ptm.0, ptm.1, ptm.2))
 
 
 ###################################################
-### code chunk number 5: PTM_MarkerFinder.Rnw:126-132
+### code chunk number 5: PTM_MarkerFinder.Rnw:127-133
 ###################################################
 S <- PTM_MarkerFinder(data = HexNAc,
 	modification = m$mono, 
@@ -58,7 +58,7 @@ print(xtable(S, caption="Result",  label="Table:xtable1"), include.rownames=FALS
 
 
 ###################################################
-### code chunk number 7: PTM_MarkerFinder.Rnw:144-145
+### code chunk number 7: PTM_MarkerFinder.Rnw:145-146
 ###################################################
 summary(S)
 
@@ -92,7 +92,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 9: PTM_MarkerFinder.Rnw:197-203
+### code chunk number 9: PTM_MarkerFinder.Rnw:198-204
 ###################################################
 names(S)[4] <- "mII"
 S.wide <- reshape(S[,c(1,7,3,4)],
@@ -110,7 +110,7 @@ print(xtable(S.wide, caption="Result",  label="Table:xtable2"), include.rownames
 
 
 ###################################################
-### code chunk number 11: PTM_MarkerFinder.Rnw:213-219
+### code chunk number 11: PTM_MarkerFinder.Rnw:214-220
 ###################################################
 write.table(S.wide, 
 	file = "HexNAc_PTM_markerFinder.csv",
@@ -133,13 +133,13 @@ S <- PTM_MarkerFinder(data = d, modification = m$mono,
 
 
 ###################################################
-### code chunk number 13: PTM_MarkerFinder.Rnw:250-251 (eval = FALSE)
+### code chunk number 13: PTM_MarkerFinder.Rnw:251-252 (eval = FALSE)
 ###################################################
 ## demo(PTM_MarkerFinder) 
 
 
 ###################################################
-### code chunk number 14: PTM_MarkerFinder.Rnw:257-258
+### code chunk number 14: PTM_MarkerFinder.Rnw:258-259
 ###################################################
 ADP_Ribose <- c(136.0618, 250.0935, 348.0704, 428.0367)
 

@@ -2,13 +2,13 @@
 ### Encoding: UTF-8
 
 ###################################################
-### code chunk number 1: protViz.Rnw:39-40
+### code chunk number 1: protViz.Rnw:41-42
 ###################################################
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 
 
 ###################################################
-### code chunk number 2: protViz.Rnw:85-88
+### code chunk number 2: protViz.Rnw:83-86
 ###################################################
 library(protViz)
 fname <- system.file("extdata", name='P12763.fasta', package = "protViz")
@@ -16,39 +16,48 @@ F <- Fasta$new(fname)
 
 
 ###################################################
-### code chunk number 3: protViz.Rnw:92-93
+### code chunk number 3: protViz.Rnw:90-91
 ###################################################
 substr(F$getSequences(), 1, 60)
 
 
 ###################################################
-### code chunk number 4: protViz.Rnw:96-97
+### code chunk number 4: protViz.Rnw:94-95
 ###################################################
-F$getTrypticPeptides()
+(fetuin <- F$getTrypticPeptides())
 
 
 ###################################################
-### code chunk number 5: protViz.Rnw:106-115
+### code chunk number 5: protViz.Rnw:106-107
 ###################################################
-op <- par(mfrow = c(1,1))
-fetuin <- F$getTrypticPeptides()
-(pm <- parentIonMass(fetuin))
-op <- par(mfrow = c(2, 1))
-plot(pm, 
-    ylab = "peptide mass [in Da]", 
-    main = "Fetuin Peptide tryptic digested.")
-hist(pm, 
-     xlab = "peptide mass [in Da]")
+(mass <- parentIonMass(fetuin))
 
 
 ###################################################
-### code chunk number 6: protViz.Rnw:124-125
+### code chunk number 6: protViz.Rnw:111-112
+###################################################
+(hydrophobicity <- ssrc(fetuin))
+
+
+###################################################
+### code chunk number 7: protViz.Rnw:118-124
+###################################################
+op <- par(mfrow = c(1, 1))
+plot(hydrophobicity ~ mass, 
+  log = 'xy', 
+  main = "sp|P12763|FETUA_BOVIN Alpha-2-HS-glycoprotein",
+  sub = 'tryptic peptides')
+text(mass, hydrophobicity, fetuin, pos=3, cex=0.5)
+
+
+###################################################
+### code chunk number 8: protViz.Rnw:132-133
 ###################################################
 defaultIon
 
 
 ###################################################
-### code chunk number 7: protViz.Rnw:128-153
+### code chunk number 9: protViz.Rnw:136-161
 ###################################################
 peptides<-c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
 
@@ -78,7 +87,7 @@ for (i in 1:length(peptides)){
 
 
 ###################################################
-### code chunk number 8: protViz.Rnw:157-160
+### code chunk number 10: protViz.Rnw:165-168
 ###################################################
 Hydrogen<-1.007825
 (fi.HTLNQIDSVK.1 <- fragmentIon('HTLNQIDSVK'))[[1]]
@@ -86,7 +95,7 @@ Hydrogen<-1.007825
 
 
 ###################################################
-### code chunk number 9: protViz.Rnw:174-213
+### code chunk number 11: protViz.Rnw:182-221
 ###################################################
     peptideSequence<-'HTLNQIDSVK'
     spec<-list(scans=1138,
@@ -130,7 +139,7 @@ Hydrogen<-1.007825
 
 
 ###################################################
-### code chunk number 10: protViz.Rnw:219-249
+### code chunk number 12: protViz.Rnw:228-258
 ###################################################
 library(protViz)
 
@@ -165,7 +174,7 @@ fi <- fragmentIon(c('TAFDEAIAELDTLSEESYK',
 
 
 ###################################################
-### code chunk number 11: protViz.Rnw:257-262
+### code chunk number 13: protViz.Rnw:266-271
 ###################################################
 data(msms)
 op <- par(mfrow=c(2,1))
@@ -175,7 +184,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 12: protViz.Rnw:271-300
+### code chunk number 14: protViz.Rnw:280-309
 ###################################################
 peptideSearch <- function (x, 
                            peptideSequence, 
@@ -209,7 +218,7 @@ peptideSearch <- function (x,
 
 
 ###################################################
-### code chunk number 13: protViz.Rnw:318-350
+### code chunk number 15: protViz.Rnw:328-360
 ###################################################
 library(lattice)
 data(fetuinLFQ)
@@ -246,7 +255,7 @@ print(xyplot(abundance~conc|prot*method,
 
 
 ###################################################
-### code chunk number 14: protViz.Rnw:362-387
+### code chunk number 16: protViz.Rnw:372-397
 ###################################################
 data(pgLFQfeature)
 data(pgLFQprot)
@@ -276,7 +285,7 @@ featureDensityPlot(asinh(pgLFQfeature$"Normalized abundance"),
 
 
 ###################################################
-### code chunk number 15: protViz.Rnw:393-407
+### code chunk number 17: protViz.Rnw:403-417
 ###################################################
 op<-par(mfrow=c(1,1),mar=c(18,18,4,1),cex=0.5)
 samples<-names(pgLFQfeature$"Normalized abundance")
@@ -295,7 +304,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 16: protViz.Rnw:412-422
+### code chunk number 18: protViz.Rnw:423-433
 ###################################################
 op<-par(mfrow=c(1,1),mar=c(18,18,4,1),cex=0.5)
 image(cor(asinh(pgLFQprot$"Normalized abundance")),
@@ -310,7 +319,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 17: protViz.Rnw:429-435
+### code chunk number 19: protViz.Rnw:441-447
 ###################################################
 par(mfrow=c(2,2),mar=c(6,3,4,1))
 ANOVA<-pgLFQaov(pgLFQprot$"Normalized abundance", 
@@ -321,7 +330,7 @@ ANOVA<-pgLFQaov(pgLFQprot$"Normalized abundance",
 
 
 ###################################################
-### code chunk number 18: protViz.Rnw:446-455
+### code chunk number 20: protViz.Rnw:461-470
 ###################################################
 data(iTRAQ)
 x<-rnorm(100)
@@ -335,7 +344,7 @@ b<-boxplot(asinh(iTRAQ[,c(3:10)]), main='boxplot iTRAQ')
 
 
 ###################################################
-### code chunk number 19: protViz.Rnw:462-495
+### code chunk number 21: protViz.Rnw:477-510
 ###################################################
 data(iTRAQ)
 group1Protein<-numeric()
@@ -373,10 +382,10 @@ for (i in 1:nrow(group1Protein)){
 
 
 ###################################################
-### code chunk number 20: protViz.Rnw:504-511
+### code chunk number 22: protViz.Rnw:520-527
 ###################################################
 data(iTRAQ)
-q<-iTRAQ2GroupAnalysis(data=iTRAQ, 
+q <- iTRAQ2GroupAnalysis(data=iTRAQ, 
     group1=c(3,4,5,6), 
     group2=7:10, 
     INDEX=paste(iTRAQ$prot,iTRAQ$peptide), 
@@ -385,14 +394,14 @@ q[1:10,]
 
 
 ###################################################
-### code chunk number 21: protViz.Rnw:522-524
+### code chunk number 23: protViz.Rnw:538-540
 ###################################################
 data(pressureProfile)
 ppp(pressureProfile)
 
 
 ###################################################
-### code chunk number 22: protViz.Rnw:533-549
+### code chunk number 24: protViz.Rnw:550-566
 ###################################################
 pp.data<-pps(pressureProfile, time=seq(25,40,by=5))
 print(xyplot(Pc ~ as.factor(file) | paste("time =", 
@@ -413,7 +422,7 @@ print(xyplot(Pc ~ as.factor(file) | paste("time =",
 
 
 ###################################################
-### code chunk number 23: protViz.Rnw:554-559
+### code chunk number 25: protViz.Rnw:571-576
 ###################################################
 pp.data<-pps(pressureProfile, time=seq(0,140,length=128))
 print(levelplot(Pc ~ time * as.factor(file),
@@ -423,9 +432,8 @@ print(levelplot(Pc ~ time * as.factor(file),
 
 
 ###################################################
-### code chunk number 24: protViz.Rnw:568-570
+### code chunk number 26: sessioninfo
 ###################################################
-sessionInfo()
-packageDescription('protViz')
+toLatex(sessionInfo())
 
 
