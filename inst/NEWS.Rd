@@ -3,6 +3,13 @@
 \newcommand{\ghpr}{\href{https://github.com/protViz/protViz/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/protViz/protViz/issues/#1}{##1}}
 
+\section{Changes in protViz version 0.4.0 (2019-01-03)}{
+  \itemize{
+    \item resolve \ghit{6}.
+    \item new S3 method for fragmentIon \code{as.data.frame}.
+  }
+}
+
 \section{Changes in protViz version 0.3.0 (2017-06-22)}{
   \itemize{
     \item refactored \code{?findNN} and \code{?AA} man pages.
