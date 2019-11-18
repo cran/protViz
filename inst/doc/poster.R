@@ -28,7 +28,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 3: poster.Rnw:150-153
+### code chunk number 3: poster.Rnw:149-152
 ###################################################
 defaultIon
 peptides <- c('HTLNQIDSVK')
@@ -76,10 +76,11 @@ fi.HTLNQIDSVK.2 <-
 ### code chunk number 6: xtable2
 ###################################################
 df <- as.data.frame(cbind(fi.HTLNQIDSVK.1, fi.HTLNQIDSVK.2))
-names(df)<-c(paste(names(fi.HTLNQIDSVK.1),1,sep=''), paste(names(fi.HTLNQIDSVK.2),2,sep=''))
+names(df) <- c(paste(names(fi.HTLNQIDSVK.1),1,sep=''),
+  paste(names(fi.HTLNQIDSVK.2),2,sep=''))
 library(xtable)
 print.xtable(xtable(df,
-	caption = "Singly and doubly charged fragment ion of the HTLNQIDSVK tryptic peptide of the swissprot P12763 FETUA BOVIN Alpha-2-HS-glycoprotein protein are listed.",
+	caption = "Singly and doubly charged fragment ions of the HTLNQIDSVK tryptic peptide of the SwissProt P12763 FETUA BOVIN Alpha-2-HS-glycoprotein protein are listed.",
 	label = "Table:xtable2"), 
   include.rownames = FALSE, 
   table.placement = "H",
@@ -87,7 +88,7 @@ print.xtable(xtable(df,
 
 
 ###################################################
-### code chunk number 7: poster.Rnw:219-234
+### code chunk number 7: poster.Rnw:221-236
 ###################################################
 spec <- list(scans=1138,
    title = "178: (rt=22.3807) [20080816_23_fetuin_160.RAW]",
@@ -107,7 +108,7 @@ spec <- list(scans=1138,
 
 
 ###################################################
-### code chunk number 8: poster.Rnw:237-246
+### code chunk number 8: poster.Rnw:239-248
 ###################################################
 peptideSequence <- 'HTLNQIDSVK'
 str(spec, nchar.max = 25, vec.len = 2)
@@ -164,7 +165,7 @@ print(xyplot(abundance ~ conc | prot * method,
 
 
 ###################################################
-### code chunk number 11: poster.Rnw:323-325
+### code chunk number 11: poster.Rnw:328-330
 ###################################################
 data(pgLFQfeature)
 data(pgLFQprot)

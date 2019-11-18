@@ -5,6 +5,8 @@
 \alias{peakplot.pie}
 \alias{peakplot}
 \alias{protViz}
+\alias{peaklist}
+\alias{peaklistSet}
 \alias{plot.psm}
 
 
@@ -24,10 +26,7 @@
     peakplot(peptideSequence, spec, 
         FUN=defaultIon, 
         fi=fragmentIon(peptideSequence, FUN=FUN)[[1]],
-        main=NULL,
         sub=paste(peptideSequence, spec$title, sep=" / "),
-        xlim=range(spec$mZ, na.rm=TRUE),
-        ylim=range(spec$intensity, na.rm=TRUE),
         itol=0.6,
         pattern.abc="[abc].*",
         pattern.xyz="[xyz].*",
@@ -40,7 +39,7 @@
   \item{peptideSequence}{peptide sequence encoded as character sequence using 
 the 20 amino acid letters.}
 
-  \item{spec}{ a tandem mass spec data structure which is a list having two 
+  \item{spec}{a \code{peaklist} or a tandem mass spec data structure which is a list having two 
 eq sized vectors calles mZ and intensity. mZ values are sorted.}
 
   \item{FUN}{the function to be applied to compute further ions. If no 
@@ -52,9 +51,6 @@ function is assigned \code{fragmentIon} will
   This argument is useful if you have PTM or specific ion series.}
 
   \item{sub}{a sub title for the plot}
-  \item{main}{a main title for the plot}
-  \item{xlim}{xlim of the plot; default is \code{range(spec$mZ, na.rm=TRUE)}}
-  \item{ylim}{ylim of the plot}
 
   \item{itol}{fragment ion tolerance default is 0.6 Dalton. values below are considered as hit.}
 
@@ -64,8 +60,7 @@ function is assigned \code{fragmentIon} will
 
   \item{ion.axes}{boolean default is \code{TRUE}. determines whether the fragment ion labels should be plotted instead of m/z values.}
 
-  \item{...}{passed to plot function.}
-
+  \item{...}{passed to the default plot function.}
 }
 
 \details{
@@ -92,10 +87,8 @@ dependent on the instrument setting applied during the initial search.
 }
 
 \value{
-
 	returns a list object containing all the peptide spectrum match relevant
 	information.
-
 }
 
 \author{
@@ -130,18 +123,13 @@ dependent on the instrument setting applied during the initial search.
 	 \item{\code{\link{PTM_MarkerFinder}}}
 		
 		\item \code{\link{peakplot}} has been used for generating 
-   figures and supplemental material in:    \itemize{
+   figures and supplemental material in:  
 
-    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/17114649}}
-
-    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/17940529}}
-
-    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/22693562}}
-
-    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/23713006}}
-    
-    \item{\url{http://www.ncbi.nlm.nih.gov/pubmed/26944343}}
-    }
+    \doi{10.1074/mcp.M600046-MCP200},
+    \doi{10.1038/msb4100182},
+    \doi{10.1371/journal.pone.0036980},
+    \doi{10.1002/pmic.201300036},
+    \doi{10.1074/mcp.M115.052548}
   }
 }
 
@@ -177,6 +165,4 @@ dependent on the instrument setting applied during the initial search.
       
       return(cbind(b, y, c ,z, y0))
   }
-
 }
-

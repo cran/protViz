@@ -1,3 +1,9 @@
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/protViz)](https://cran.r-project.org/package=protViz)
+[![Research software impact](http://depsy.org/api/package/cran/protViz/badge.svg)](http://depsy.org/package/r/protViz)
+[![Build Status](https://travis-ci.org/cpanse/protViz.svg)](https://travis-ci.org/cpanse/protViz)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/protViz)](https://cran.r-project.org/package=protViz)
+[![](http://cranlogs.r-pkg.org/badges/protViz)](https://cran.r-project.org/package=protViz)
+
 # protViz - Visualizing and Analyzing Mass Spectrometry Related Data in Proteomics
 
 ## Documentation
@@ -78,7 +84,4 @@ Both documents are also available on the [package's CRAN](https://CRAN.R-project
 ## Related approaches
 
 * [RforProteomics](http://bioconductor.org/packages/RforProteomics/)
-
-[![Research software impact](http://depsy.org/api/package/cran/protViz/badge.svg)](http://depsy.org/package/r/protViz)
-[![Build Status](https://travis-ci.org/protViz/protViz.svg)](https://travis-ci.org/protViz/protViz) 
-
+* [Spectra](https://github.com/rformassspectrometry/Spectra)

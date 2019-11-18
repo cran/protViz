@@ -113,7 +113,7 @@ print(xtable(S.wide, caption="Result",  label="Table:xtable2"), include.rownames
 ### code chunk number 11: PTM_MarkerFinder.Rnw:214-220
 ###################################################
 write.table(S.wide, 
-	file = "HexNAc_PTM_markerFinder.csv",
+	file = file.path(tempdir(), "HexNAc_PTM_markerFinder.csv"),
     	sep = ',', 
 	row.names = FALSE,
 	col.names = TRUE, 
