@@ -2,7 +2,7 @@ Package: protViz
 Type: Package
 Title: Visualizing and Analyzing Mass Spectrometry Related Data in
         Proteomics
-Version: 0.5.1
+Version: 0.6.0
 Authors@R: c(person("Christian", "Panse", email = "cp@fgcz.ethz.ch", role = c("aut", "cre"), 
         comment = c(ORCID = "0000-0003-1975-3064")),
 	person("Jonas", "Grossmann", email = "jg@fgcz.ethz.ch", role = "aut",
@@ -32,9 +32,9 @@ LazyData: true
 NeedsCompilation: yes
 Repository: CRAN
 SystemRequirements: C++11
-Packaged: 2019-11-18 09:04:09 UTC; cp
+Packaged: 2020-02-03 19:06:36 UTC; cpanse
 Author: Christian Panse [aut, cre] (<https://orcid.org/0000-0003-1975-3064>),
   Jonas Grossmann [aut] (<https://orcid.org/0000-0002-6899-9020>),
   Simon Barkow-Oesterreicher [ctb]
 Maintainer: Christian Panse <cp@fgcz.ethz.ch>
-Date/Publication: 2019-11-18 09:40:03 UTC
+Date/Publication: 2020-02-03 20:40:03 UTC
