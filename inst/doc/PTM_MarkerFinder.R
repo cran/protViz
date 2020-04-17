@@ -1,4 +1,5 @@
 ### R code from vignette source 'PTM_MarkerFinder.Rnw'
+### Encoding: UTF-8
 
 ###################################################
 ### code chunk number 1: PTM_MarkerFinder.Rnw:66-67
