@@ -221,13 +221,28 @@
 }
 
 
+# splits profile peakgroups by 0 intensities and ignores peak shapes
+.determine.peakgroups.orbitrap <- function(x){
+	V <- x != 0.0; 
+	n <- length(V); 
+	peakgroup <- rep(0, n)
+
+	count <- 0; 
+	for (i in 1:n){ 
+		if (V[i]){
+			if(!V[i-1]){count <- count + 1}; 
+			peakgroup[i] <- count} 
+	}
+	peakgroup
+}
+
 # simple heuristic 
 #
 # Note: this method will not detect overlapping peaks as it
 # can be done by IMSTOF http://www.tofwerk.com/ libraries.
 #
 # TODO(cp): if the while loops are to slow replace it by some Rcpp constructs
-.determine.peakgroups <- function(x){
+.determine.peakgroups <- function(mZ, x, tolppm){
     peak.idx <- which(sapply(1:length(x), .is.peak, x=x))
     
     n <- length(x)
@@ -239,14 +254,15 @@
         idx <- i
         peakgrps[i] <- count
         
+	eps <- 1e-06 * tolppm * mZ[idx] 
         #lower
-        while (x[idx - 1] < x[idx] & idx > 2){
+        while (x[idx - 1] < x[idx] & idx > 2 & abs(mZ[idx - 1] - mZ[idx]) < eps){
             peakgrps[idx] <- count
-            idx <- idx -1
+            idx <- idx - 1
         }
         #upper
         idx <- i
-        while (x[idx + 1] < x[idx] & idx < n){
+        while (x[idx + 1] < x[idx] & idx < n & abs(mZ[idx + 1] - mZ[idx]) < eps){
             peakgrps[idx] <- count
             idx <- idx + 1
         }
@@ -255,17 +271,20 @@
     peakgrps
 }
 
-centroid <- function(mZ, intensity, debug=FALSE){
+centroid <- function(mZ, intensity, tolppm=100, debug=FALSE){
     stopifnot(length(mZ) == length(intensity))
-    
-    #remove 0
-    idx <- intensity > 0 
-    mZ <- mZ[idx]
-    intensity <- intensity[idx]
+
+    if (debug){
+        plot((diff(mZ)) ~ mZ[2:length(mZ)], log='y');
+        abline(h = 0.1, col='red')
+        points(mZ , tolppm * 1e-06 * mZ, col='green', type='l')
+    }
+
     n <- length(mZ)
     
     # peakgrps <- c(0, cumsum(diff(mZ) > eps))
-    peakgrps <- split(1:n, .determine.peakgroups(intensity))
+    peakgrps <- split(1:n, .determine.peakgroups(mZ, intensity, tolppm))
+
     peakgrps <- peakgrps[names(peakgrps) != '0']
     
     rv <- lapply(peakgrps , FUN=function(i){
@@ -274,22 +293,30 @@ centroid <- function(mZ, intensity, debug=FALSE){
             intensity.auc <- .trapez(mZ[i], intensity[i])
             mZ.centroid <- weighted.mean(x=mZ[i], w=intensity[i])
             # TODO(cp): replace by WEW's f: x -> ax^2+bx+c 
-            # interpolation using the three highes peaks AUC
+            # interpolation using the three highes peaks to  derive AUC
            
              if (debug){
-                 plot(mZ[i], intensity[i], type='h',
+		 plot(diff(mZ[i]))
+
+
+                 plot(mZ[i], intensity[i],
+		      type='h',
                       xlab='mZ',
-                      ylab='intensity')
+                      ylab='intensity',
+		      ylim = c(0, max(intensity[i])))
                  
                 abline(v=mZ.centroid, col='red')
                 
-                points(mZ.centroid, intensity.auc, type='h', col='red', lwd=4)
+                points(mZ.centroid, intensity.auc,
+			type='h', col='red', lwd=4)
+
                 legend("topright", NULL, round(intensity.auc, 3), title="AUC")
                 axis(3, mZ.centroid, mZ.centroid)
              }
             
-            data.frame(mZ=mZ.centroid, intensity=intensity.auc)
+            return (data.frame(mZ=mZ.centroid, intensity=intensity.auc))
         }
+	NULL
     })
     do.call('rbind', rv)
 }

@@ -2,7 +2,7 @@ Package: protViz
 Type: Package
 Title: Visualizing and Analyzing Mass Spectrometry Related Data in
         Proteomics
-Version: 0.6.4
+Version: 0.6.8
 Authors@R: c(person("Christian", "Panse", email = "cp@fgcz.ethz.ch", role = c("aut", "cre"), 
         comment = c(ORCID = "0000-0003-1975-3064")),
 	person("Jonas", "Grossmann", email = "jg@fgcz.ethz.ch", role = "aut",
@@ -12,7 +12,7 @@ Depends: R (>= 3.6), methods
 Imports: Rcpp (>= 1.0)
 LinkingTo: Rcpp (>= 1.0)
 RcppModules: FastaMod
-Suggests: lattice, RUnit, xtable
+Suggests: lattice, testthat, xtable
 Description: Helps with quality checks, visualizations 
     and analysis of mass spectrometry data, coming from proteomics 
     experiments. The package is developed, tested and used at the Functional 
@@ -32,9 +32,9 @@ LazyData: true
 NeedsCompilation: yes
 Repository: CRAN
 SystemRequirements: C++11
-Packaged: 2020-04-17 14:04:45 UTC; cp
+Packaged: 2020-05-02 15:46:02 UTC; cp
 Author: Christian Panse [aut, cre] (<https://orcid.org/0000-0003-1975-3064>),
   Jonas Grossmann [aut] (<https://orcid.org/0000-0002-6899-9020>),
   Simon Barkow-Oesterreicher [ctb]
 Maintainer: Christian Panse <cp@fgcz.ethz.ch>
-Date/Publication: 2020-04-17 21:00:12 UTC
+Date/Publication: 2020-05-02 16:20:05 UTC
