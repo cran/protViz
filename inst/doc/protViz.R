@@ -1,13 +1,13 @@
 ### R code from vignette source 'protViz.Rnw'
 
 ###################################################
-### code chunk number 1: protViz.Rnw:41-42
+### code chunk number 1: protViz.Rnw:44-45
 ###################################################
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 
 
 ###################################################
-### code chunk number 2: protViz.Rnw:85-88
+### code chunk number 2: protViz.Rnw:88-91
 ###################################################
 library(protViz)
 fname <- system.file("extdata", name='P12763.fasta', package = "protViz")
@@ -15,27 +15,27 @@ F <- Fasta$new(fname)
 
 
 ###################################################
-### code chunk number 3: protViz.Rnw:92-93
+### code chunk number 3: protViz.Rnw:95-96
 ###################################################
 substr(F$getSequences(), 1, 60)
 
 
 ###################################################
-### code chunk number 4: protViz.Rnw:96-97
+### code chunk number 4: protViz.Rnw:99-100
 ###################################################
 (fetuin <- F$getTrypticPeptides())
 
 
 ###################################################
-### code chunk number 5: protViz.Rnw:108-109
+### code chunk number 5: protViz.Rnw:111-112
 ###################################################
-mass <- parentIonMass(fetuin)
+mass <- protViz::parentIonMass(fetuin)
 
 
 ###################################################
-### code chunk number 6: protViz.Rnw:113-114
+### code chunk number 6: protViz.Rnw:116-117
 ###################################################
-hydrophobicity <- ssrc(fetuin)
+hydrophobicity <- protViz::ssrc(fetuin)
 
 
 ###################################################
@@ -48,7 +48,7 @@ print(xtable(data.frame(peptide = names(hydrophobicity),
 
 
 ###################################################
-### code chunk number 8: protViz.Rnw:130-136
+### code chunk number 8: protViz.Rnw:133-139
 ###################################################
 op <- par(mfrow = c(1, 1))
 plot(hydrophobicity ~ mass, 
@@ -59,43 +59,43 @@ text(mass, hydrophobicity, fetuin, pos=2, cex=0.5, col = '#CCCCCC88')
 
 
 ###################################################
-### code chunk number 9: protViz.Rnw:144-145
+### code chunk number 9: protViz.Rnw:147-148
 ###################################################
 defaultIon
 
 
 ###################################################
-### code chunk number 10: protViz.Rnw:148-173
+### code chunk number 10: protViz.Rnw:151-176
 ###################################################
-peptides<-c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
+## plot in-silico fragment ions of
+peptides <- c('HTLNQIDSVK', 'ALGGEDVR', 'TPIVGQPSIPGGPVR')
 
-pim<-parentIonMass(peptides)
-fi<-fragmentIon(peptides)
+pims <- peptides |> protViz::parentIonMass()
+fis <- peptides |> protViz::fragmentIon()
 
-par(mfrow=c(3,1)); 
-for (i in 1:length(peptides)){
+par(mfrow = c(3, 1)); 
+rv <- mapply(FUN = function(fi, pim, peptide){
     plot(0,0,
-        xlab='m/Z',
-        ylab='',
-        xlim=range(c(fi[i][[1]]$b,fi[i][[1]]$y)),
-        ylim=c(0,1),
-        type='n',
-        axes=FALSE,
-        sub=paste( pim[i], "Da"));
-    box()
-    axis(1,fi[i][[1]]$b,round(fi[i][[1]]$b,2))
-    pepSeq<-strsplit(peptides[i],"")
-    axis(3,fi[i][[1]]$b,pepSeq[[1]])
+        xlab='m/Z', ylab='',
+        xlim = range(c(fi$b, fi$y)),
+        ylim = c(0,1),
+        type = 'n', axes = FALSE,
+        sub=paste(pim, "Da"));
 
-    abline(v=fi[i][[1]]$b, col='red',lwd=2) 
-    abline(v=fi[i][[1]]$c, col='orange') 
-    abline(v=fi[i][[1]]$y, col='blue',lwd=2)
-    abline(v=fi[i][[1]]$z, col='cyan')
-}
+    axis(1, fi$b,round(fi$b, 2))
+
+    pepSeq <- strsplit(peptide, "")
+    axis(3, fi$b, pepSeq[[1]])
+
+    abline(v = fi$b, col='red', lwd=2) 
+    abline(v = fi$y, col='blue',lwd=2)
+    abline(v = fi$c, col='orange') 
+    abline(v = fi$z, col='cyan')
+  }, fis, pims, peptides)
 
 
 ###################################################
-### code chunk number 11: protViz.Rnw:177-180
+### code chunk number 11: protViz.Rnw:180-183
 ###################################################
 Hydrogen<-1.007825
 (fi.HTLNQIDSVK.1 <- fragmentIon('HTLNQIDSVK'))[[1]]
@@ -103,10 +103,10 @@ Hydrogen<-1.007825
 
 
 ###################################################
-### code chunk number 12: protViz.Rnw:194-233
+### code chunk number 12: protViz.Rnw:196-235
 ###################################################
-    peptideSequence<-'HTLNQIDSVK'
-    spec<-list(scans=1138,
+    peptideSequence <- 'HTLNQIDSVK'
+    spec <- list(scans=1138,
         title="178: (rt=22.3807) [20080816_23_fetuin_160.RAW]",
         rtinseconds=1342.8402,
         charge=2,
@@ -122,14 +122,14 @@ Hydrogen<-1.007825
     1267, 1542, 979.2, 9577, 3283, 9441, 1520, 1310, 1.8e+04,
     587.5, 2685, 671.7, 3734, 8266, 3309))
 
-    fi <- fragmentIon(peptideSequence)
+    fi <- protViz::fragmentIon(peptideSequence)
     n <- nchar(peptideSequence)
 
-    by.mZ<-c(fi[[1]]$b, fi[[1]]$y)
-    by.label<-c(paste("b",1:n,sep=''), paste("y",n:1,sep=''))
+    by.mZ <- c(fi[[1]]$b, fi[[1]]$y)
+    by.label <- c(paste("b",1:n,sep=''), paste("y",n:1,sep=''))
 
     # should be a R-core function as findInterval!
-    idx <- findNN(by.mZ, spec$mZ) 
+    idx <- protViz::findNN(by.mZ, spec$mZ) 
 
     mZ.error <- abs(spec$mZ[idx]-by.mZ)
 
@@ -147,7 +147,7 @@ Hydrogen<-1.007825
 
 
 ###################################################
-### code chunk number 13: protViz.Rnw:240-270
+### code chunk number 13: protViz.Rnw:242-267
 ###################################################
 library(protViz)
 
@@ -167,7 +167,7 @@ m <- as.data.frame(rbind(ptm.0, ptm.616, ptm.651))
 
 genMod(c('TAFDEAIAELDTLNEESYK','TAFDEAIAELDTLSEESYK'), m$AA)
 
-fi <- fragmentIon(c('TAFDEAIAELDTLSEESYK', 
+fi <- protViz::fragmentIon(c('TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK', 
     'TAFDEAIAELDTLNEESYK'), 
         modified=c('0000000000000200000', 
@@ -175,58 +175,93 @@ fi <- fragmentIon(c('TAFDEAIAELDTLSEESYK',
         '0000000000000000000'), 
     modification=m$mono)
 
-#bh<-c('TAFDEAIAELDTLNEESYK', 'TAFDEAIAELDTLSEESYK')
-#fi<-fragmentIon(rep('HTLNQIDSVK',2), 
-#    modified=c('0000000100','0000000000'), 
-#    modification=m[,2])
-
 
 ###################################################
-### code chunk number 14: protViz.Rnw:278-283
+### code chunk number 14: protViz.Rnw:275-280
 ###################################################
 data(msms)
-op <- par(mfrow=c(2,1))
-peakplot("TAFDEAIAELDTLNEESYK", msms[[1]])
-peakplot("TAFDEAIAELDTLSEESYK", msms[[2]])
+op <- par(mfrow = c(2, 1))
+protViz::peakplot("TAFDEAIAELDTLNEESYK", msms[[1]])
+protViz::peakplot("TAFDEAIAELDTLSEESYK", msms[[2]])
 par(op)
 
 
 ###################################################
-### code chunk number 15: protViz.Rnw:292-321
+### code chunk number 15: peptideSearch
 ###################################################
-peptideSearch <- function (x, 
-                           peptideSequence, 
-                           pimIdx = parentIonMass(peptideSequence), 
-    peptideMassTolerancePPM = 5, 
-    framentIonMassToleranceDa = 0.01, 
-    FUN = .byIon) 
+.peptideFragmentIonSpectrumMatch <- function (x, 
+                           peptideSet, 
+                           framentIonMassToleranceDa = 0.1) 
 {
-    query.mass <- ((x$pepmass * x$charge)) - (1.007825 * (x$charge - 
-        1))
-    eps <- query.mass * peptideMassTolerancePPM * 1e-06
-    lower <- findNN(query.mass - eps, pimIdx)
-    upper <- findNN(query.mass + eps, pimIdx)
-    rv <- lapply(peptideSequence[lower:upper], function(p) {
-        psm(p, x, plot = FALSE, FUN = FUN)
-    })
-    rv.error <- sapply(rv, function(p) {
-        sum(abs(p$mZ.Da.error) < framentIonMassToleranceDa)
-    })
-    idx.tophit <- which(rv.error == max(rv.error))[1]
-    data.frame(mass_error = eps, 
-               idxDiff = upper - lower, 
-               charge = x$charge, 
-              pepmass = query.mass, 
-              peptideSequence = rv[[idx.tophit]]$sequence, 
-              groundTrue.peptideSequence = x$peptideSequence, 
-              ms2hit = (rv[[idx.tophit]]$sequence == 
-              x$peptideSequence), hit = (x$peptideSequence %in% 
-              peptideSequence[lower:upper]))
+  ## Here we ignore the peptide mass
+  # peptideMassTolerancePPM = 5
+  # query.mass <- ((x$pepmass[1] * x$charge)) - (1.007825 * (x$charge - 1))
+  # eps <- query.mass * peptideMassTolerancePPM * 1e-06
+  # pimIdx <- protViz::parentIonMass(peptideSequence)
+  # lower <- protViz::findNN(query.mass - eps, pimIdx)
+  # upper <- protViz::findNN(query.mass + eps, pimIdx)
+  
+  
+  rv <- lapply(peptideSet, FUN = protViz::psm, spec = x, plot = FALSE) |>
+    lapply(FUN = function(p) {
+      ## determine peaks considered as hits
+      idx <- abs(p$mZ.Da.error) < framentIonMassToleranceDa
+      intensityRatio <- sum(x$intensity[idx]) / sum(x$intensity)
+      
+      ## derive objectives for a good match
+      data.frame(nHits=sum(idx), intensityRatio = intensityRatio)
+    }) |>
+    Reduce(f=rbind)
+  
+  
+  idx.tophit <- which(rv$nHits == max(rv$nHits))[1]
+  
+  data.frame(peptideMatch = peptideSet[idx.tophit],
+             nHits = max(rv$nHits),
+             nPeaks = length(x$mZ),
+             intensityRatio = rv$intensityRatio[idx.tophit]
+  )
 }
 
 
 ###################################################
-### code chunk number 16: protViz.Rnw:340-372
+### code chunk number 16: protViz.Rnw:323-324
+###################################################
+peptideSet <- c("ELIVSK", 'TAFDEAIAELDTLNEESYK','TAFDEAIAELDTLSEESYK')
+
+
+###################################################
+### code chunk number 17: protViz.Rnw:328-334
+###################################################
+mZ <- protViz::fragmentIon("TAFDEAIAELDTLNEESYK")[[1]] |>
+  unlist() |> sort()
+
+intensity <- mZ |> length() |> sample()
+
+msms.insilico <- list(mZ = mZ, intensity = intensity)
+
+
+###################################################
+### code chunk number 18: protViz.Rnw:338-342
+###################################################
+peptideSet.rev <- peptideSet |>
+  sapply(FUN = function(x){
+    strsplit(x, "")[[1]] |> rev() |> paste0(collapse = "")
+  })
+
+
+###################################################
+### code chunk number 19: protViz.Rnw:347-352
+###################################################
+lapply(list(msms[[1]], msms[[2]], msms.insilico),
+       FUN = .peptideFragmentIonSpectrumMatch,
+       peptideSet = c(peptideSet, peptideSet.rev),
+       framentIonMassToleranceDa = 0.05) |>
+  Reduce(f=rbind)
+
+
+###################################################
+### code chunk number 20: protViz.Rnw:372-404
 ###################################################
 library(lattice)
 data(fetuinLFQ)
@@ -263,7 +298,7 @@ print(xyplot(abundance~conc|prot*method,
 
 
 ###################################################
-### code chunk number 17: protViz.Rnw:384-409
+### code chunk number 21: protViz.Rnw:416-441
 ###################################################
 data(pgLFQfeature)
 data(pgLFQprot)
@@ -293,7 +328,7 @@ featureDensityPlot(asinh(pgLFQfeature$"Normalized abundance"),
 
 
 ###################################################
-### code chunk number 18: protViz.Rnw:415-429
+### code chunk number 22: protViz.Rnw:447-461
 ###################################################
 op<-par(mfrow=c(1,1),mar=c(18,18,4,1),cex=0.5)
 samples<-names(pgLFQfeature$"Normalized abundance")
@@ -312,7 +347,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 19: protViz.Rnw:435-445
+### code chunk number 23: protViz.Rnw:467-477
 ###################################################
 op<-par(mfrow=c(1,1),mar=c(18,18,4,1),cex=0.5)
 image(cor(asinh(pgLFQprot$"Normalized abundance")),
@@ -327,7 +362,7 @@ par(op)
 
 
 ###################################################
-### code chunk number 20: protViz.Rnw:453-459
+### code chunk number 24: protViz.Rnw:485-491
 ###################################################
 par(mfrow=c(2,2),mar=c(6,3,4,1))
 ANOVA<-pgLFQaov(pgLFQprot$"Normalized abundance", 
@@ -338,7 +373,7 @@ ANOVA<-pgLFQaov(pgLFQprot$"Normalized abundance",
 
 
 ###################################################
-### code chunk number 21: protViz.Rnw:473-482
+### code chunk number 25: protViz.Rnw:505-514
 ###################################################
 data(iTRAQ)
 x<-rnorm(100)
@@ -352,7 +387,7 @@ b<-boxplot(asinh(iTRAQ[,c(3:10)]), main='boxplot iTRAQ')
 
 
 ###################################################
-### code chunk number 22: protViz.Rnw:489-522
+### code chunk number 26: protViz.Rnw:521-554
 ###################################################
 data(iTRAQ)
 group1Protein<-numeric()
@@ -370,16 +405,16 @@ for (i in 7:10)
 par(mfrow=c(2,3),mar=c(6,3,4,1))
 for (i in 1:nrow(group1Protein)){
     boxplot.color="#ffcccc"
-    tt.p_value<-t.test(as.numeric(group1Protein[i,]), 
+    tt.p_value <- t.test(as.numeric(group1Protein[i,]), 
         as.numeric(group2Protein[i,]))$p.value       
 
     if (tt.p_value < 0.05)
         boxplot.color='lightgreen'
 
-    b<-boxplot(as.numeric(group1Protein[i,]), 
+    b <- boxplot(as.numeric(group1Protein[i,]), 
         as.numeric(group2Protein[i,]),
         main=row.names(group1Protein)[i],
-        sub=paste("t-Test: p-value =", round(tt.p_value,2)),
+        sub=paste("t.test: p-value =", round(tt.p_value,2)),
         col=boxplot.color,
         axes=FALSE)
     axis(1, 1:2, c('group_1','group_2')); axis(2); box()
@@ -390,7 +425,7 @@ for (i in 1:nrow(group1Protein)){
 
 
 ###################################################
-### code chunk number 23: protViz.Rnw:532-539
+### code chunk number 27: protViz.Rnw:564-571
 ###################################################
 data(iTRAQ)
 q <- iTRAQ2GroupAnalysis(data=iTRAQ, 
@@ -402,14 +437,14 @@ q[1:10,]
 
 
 ###################################################
-### code chunk number 24: protViz.Rnw:550-552
+### code chunk number 28: protViz.Rnw:582-584
 ###################################################
 data(pressureProfile)
 ppp(pressureProfile)
 
 
 ###################################################
-### code chunk number 25: protViz.Rnw:562-578
+### code chunk number 29: protViz.Rnw:594-610
 ###################################################
 pp.data<-pps(pressureProfile, time=seq(25,40,by=5))
 print(xyplot(Pc ~ as.factor(file) | paste("time =", 
@@ -430,7 +465,7 @@ print(xyplot(Pc ~ as.factor(file) | paste("time =",
 
 
 ###################################################
-### code chunk number 26: protViz.Rnw:584-589
+### code chunk number 30: protViz.Rnw:616-621
 ###################################################
 pp.data<-pps(pressureProfile, time=seq(0,140,length=128))
 print(levelplot(Pc ~ time * as.factor(file),
@@ -440,7 +475,7 @@ print(levelplot(Pc ~ time * as.factor(file),
 
 
 ###################################################
-### code chunk number 27: sessioninfo
+### code chunk number 31: sessioninfo
 ###################################################
 toLatex(sessionInfo())
 

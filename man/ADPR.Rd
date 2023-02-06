@@ -1,9 +1,11 @@
 \docType{data}
 \name{ADPR}
 
-\alias{ADPR.annotation}
+\alias{ADPR}
 \alias{ADPR.lim}
 \alias{ADPR.ms2}
+\alias{ADPR.annotation}
+
 
 \title{ADP Ribosylated Peptide}
 
